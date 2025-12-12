@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { useWaterfallLayout } from "../composables/useWaterfallLayout";
 import ResumeMarkdown from "../components/ResumeMarkdown.vue";
-import type { Badge, ResumeAward, ResumeEntry } from "../types/resume";
+import type { ResumeAward, ResumeProject } from "../types/resume";
 import {
   badgeBgClass,
   badgeBorderClass,
@@ -12,6 +13,10 @@ import { useGithubStats } from "../composables/useGithubStats";
 import { useResumeContent } from "../composables/useResumeContent";
 import { useResumeLocale } from "../composables/useResumeLocale";
 import { useThemeColors } from "../composables/useThemeColors";
+
+const runtimeConfig = useRuntimeConfig();
+const buildTime = computed(() => runtimeConfig.public.buildTime || "");
+const buildSha = computed(() => runtimeConfig.public.gitSha || "");
 
 const { locale, localeItems, labels, switchLocale } = useResumeLocale();
 const { resume, pending, error, refresh, resumeView } = await useResumeContent(
@@ -29,52 +34,73 @@ const handleAvatarError = () => {
     avatarSrc.value = "/avatar.sample.svg";
 };
 
-const processedProjects = computed(() => {
-  const projects = resumeView.value.projects || [];
-  return projects.map((project) => {
-    let span = 6;
-    if (project.printWidth) {
-      span = Math.round((project.printWidth / 100) * 12);
-      span = Math.max(1, Math.min(12, span));
-    }
-    return { ...project, printColSpan: span };
-  });
-});
-
-const awardsPrintSpan = computed(() => {
-  const width = resumeView.value.awardsPrintWidth;
-  if (width) {
-    return Math.max(1, Math.min(12, Math.round((width / 100) * 12)));
+const getRoleIcon = (role: string) => {
+  const text = role.toLowerCase();
+  if (
+    text.includes("leader") ||
+    text.includes("president") ||
+    text.includes("captain") ||
+    role.includes("负责人") ||
+    role.includes("主席") ||
+    role.includes("班长")
+  ) {
+    return "i-heroicons-user-group";
   }
-  return 6;
-});
+  if (
+    text.includes("assistant") ||
+    text.includes("ta") ||
+    role.includes("助教") ||
+    role.includes("助理")
+  ) {
+    return "i-heroicons-academic-cap";
+  }
+  return "i-heroicons-user";
+};
 
-useHead(() => ({
-  title: resumeView.value.name
-    ? `${resumeView.value.name} | ${labels.value.title}`
-    : labels.value.title,
-  htmlAttrs: { lang: locale.value },
-  meta: [
-    {
-      name: "description",
-      content:
-        resumeView.value.highlights
-          ?.map((b) =>
-            b.kind === "split"
-              ? `${b.domain} ${b.value}`
-              : b.kind === "svg"
-              ? b.alt ?? b.url
-              : b.label
-          )
-          .join(" / ") || labels.value.subtitle,
-    },
-  ],
-}));
+const getRoleColor = (role: string) => {
+  const text = role.toLowerCase();
+  if (
+    text.includes("leader") ||
+    text.includes("president") ||
+    text.includes("captain") ||
+    role.includes("负责人") ||
+    role.includes("主席") ||
+    role.includes("班长")
+  ) {
+    return "text-primary-600 dark:text-primary-400";
+  }
+  if (
+    text.includes("assistant") ||
+    text.includes("ta") ||
+    role.includes("助教") ||
+    role.includes("助理")
+  ) {
+    return "text-emerald-600 dark:text-emerald-400";
+  }
+  return "text-gray-500 dark:text-gray-400";
+};
+
+const {
+  waterfallContainer,
+  isLayoutReady,
+  pageRootRef,
+  avatarRef,
+  headerInfoRef,
+} = useWaterfallLayout({
+  locale,
+  pending,
+  resume,
+});
 
 const isAwardsHovered = ref(false);
+const hoveredCardTitle = ref<string | null>(null);
+const isCardHovered = (title: string) => hoveredCardTitle.value === title;
 
+// Awards folding rule (pre-refactor): start a new visible group when the award title
+// looks "important"; otherwise fold it under the last important one.
 const isImportantAward = (title: string) => {
   const t = title.toLowerCase();
+  // Explicitly treat these as NOT important (so they get folded).
   if (
     t.includes("校级") ||
     t.includes("省级") ||
@@ -83,298 +109,84 @@ const isImportantAward = (title: string) => {
     t.includes("regional") ||
     t.includes("university") ||
     t.includes("creative group")
-  )
+  ) {
     return false;
+  }
+
   return (
     t.includes("全国") ||
     t.includes("全球") ||
     t.includes("international") ||
-    t.includes("mcm") ||
     t.includes("national") ||
     t.includes("global")
   );
 };
 
-type AwardGroup = {
-  main: ResumeAward;
-  subs: ResumeAward[];
-};
+const clampInt = (value: number, min: number, max: number) =>
+  Math.min(max, Math.max(min, Math.round(value)));
 
-const groupedAwards = computed(() => {
-  const awards = resumeView.value.awards || [];
+const awardsPrintSpan = computed(() => {
+  const width = resumeView.value.awardsPrintWidth;
+  if (typeof width === "number") return clampInt((width / 100) * 12, 3, 12);
+  return 6;
+});
+
+type AwardGroup = { main: ResumeAward; subs: ResumeAward[] };
+const groupedAwards = computed<AwardGroup[]>(() => {
+  const awards = (resumeView.value.awards || []) as ResumeAward[];
   const groups: AwardGroup[] = [];
   let currentGroup: AwardGroup | null = null;
 
-  awards.forEach((award: ResumeAward) => {
-    const isImportant = isImportantAward(award.title);
-    if (isImportant || !currentGroup) {
+  awards.forEach((award) => {
+    const important = isImportantAward(award.title);
+    if (important || !currentGroup) {
       currentGroup = { main: award, subs: [] };
       groups.push(currentGroup);
     } else {
       currentGroup.subs.push(award);
     }
   });
+
   return groups;
 });
 
+const processedProjects = computed(() => {
+  const projects = (resumeView.value.projects || []) as ResumeProject[];
+  return projects.map((p) => {
+    const links = p.links || [];
+    const responsibilities = p.responsibilities || [];
+
+    const spanFromWidth =
+      typeof p.printWidth === "number"
+        ? clampInt((p.printWidth / 100) * 12, 3, 12)
+        : undefined;
+    const printColSpan =
+      typeof p.printColSpan === "number"
+        ? clampInt(p.printColSpan, 3, 12)
+        : spanFromWidth ?? 6;
+
+    return {
+      ...p,
+      links,
+      responsibilities,
+      printColSpan,
+    };
+  });
+});
+
+const chunk = <T>(items: T[], size: number): T[][] => {
+  const safeSize = Math.max(1, Math.floor(size));
+  const out: T[][] = [];
+  for (let i = 0; i < items.length; i += safeSize) {
+    out.push(items.slice(i, i + safeSize));
+  }
+  return out;
+};
+
 const chunkedGames = computed(() => {
   const games = resumeView.value.games || [];
-  const chunkSize = 3;
-  const chunks = [];
-  for (let i = 0; i < games.length; i += chunkSize) {
-    chunks.push(games.slice(i, i + chunkSize));
-  }
-  return chunks;
+  return chunk(games, 2);
 });
-
-const hoveredCardTitle = ref<string | null>(null);
-const isCardHovered = (title: string) => hoveredCardTitle.value === title;
-
-const getRoleIcon = (role: string) => {
-  const r = role.toLowerCase();
-  if (r.includes("团支书") || r.includes("secretary"))
-    return "i-heroicons-flag";
-  if (r.includes("代表") || r.includes("representative"))
-    return "i-heroicons-megaphone";
-  if (r.includes("部长") || r.includes("head") || r.includes("lead"))
-    return "i-heroicons-briefcase";
-  if (
-    r.includes("技术") ||
-    r.includes("开源") ||
-    r.includes("lug") ||
-    r.includes("tech")
-  )
-    return "i-heroicons-command-line";
-  return "i-heroicons-user";
-};
-
-const getRoleColor = (role: string) => {
-  return "text-sky-500 dark:text-sky-400";
-};
-
-const waterfallContainer = ref<HTMLElement | null>(null);
-const isLayoutReady = ref(false);
-
-const { public: publicConfig } = useRuntimeConfig();
-const buildTime = (publicConfig as any).buildTime as string | undefined;
-const buildSha = (publicConfig as any).gitSha as string | undefined;
-
-const pageRootRef = ref<HTMLElement | null>(null);
-
-const avatarRef = ref<HTMLElement | null>(null);
-const headerInfoRef = ref<HTMLElement | null>(null);
-
-const updateAvatarSize = () => {
-  if (!avatarRef.value || !headerInfoRef.value) return;
-
-  const height = headerInfoRef.value.offsetHeight;
-  // Set width to match height (square aspect ratio) using CSS variable
-  avatarRef.value.style.setProperty("--avatar-size", `${height}px`);
-};
-
-let observer: ResizeObserver | null = null;
-let headerObserver: ResizeObserver | null = null;
-
-const nextFrame = () =>
-  new Promise<void>((resolve) => {
-    if (typeof window === "undefined") return resolve();
-    window.requestAnimationFrame(() => resolve());
-  });
-
-const waitForImages = async (root: HTMLElement, timeoutMs = 2500) => {
-  if (typeof window === "undefined") return;
-  const images = Array.from(root.querySelectorAll("img")) as HTMLImageElement[];
-  if (!images.length) return;
-
-  const waitOne = (img: HTMLImageElement) => {
-    if (img.complete) return Promise.resolve();
-    return new Promise<void>((resolve) => {
-      const done = () => resolve();
-      img.addEventListener("load", done, { once: true });
-      img.addEventListener("error", done, { once: true });
-    });
-  };
-
-  await Promise.race([
-    Promise.all(images.map(waitOne)).then(() => undefined),
-    new Promise<void>((resolve) => setTimeout(resolve, timeoutMs)),
-  ]);
-};
-
-let layoutJobId = 0;
-const recalcLayout = async () => {
-  if (typeof window === "undefined") return;
-  const job = ++layoutJobId;
-  isLayoutReady.value = false;
-
-  // Wait until the actual content DOM (and refs) exists.
-  // This avoids the first-load case where resume data is already present
-  // but the watcher doesn't fire and refs are not yet bound.
-  for (let i = 0; i < 30; i++) {
-    await nextTick();
-    if (pageRootRef.value && waterfallContainer.value) break;
-    await nextFrame();
-  }
-
-  const root = pageRootRef.value;
-  const container = waterfallContainer.value;
-  if (!root || !container) {
-    // Nothing to measure; don't block the UI forever.
-    if (job === layoutJobId) isLayoutReady.value = true;
-    return;
-  }
-
-  // Wait for DOM patch (watch flush: 'post' already helps, but keep this to be safe)
-  await nextTick();
-
-  // Wait for fonts + a couple of paints (avoids measuring before text metrics settle)
-  if ("fonts" in document && document.fonts?.ready) {
-    try {
-      await document.fonts.ready;
-    } catch {
-      // ignore
-    }
-  }
-  await nextFrame();
-  await nextFrame();
-
-  // Let avatar/header sizing settle (there is a feedback relationship between header height and avatar size).
-  // We sample a few frames and stop once the header height stabilizes.
-  let lastHeaderH = -1;
-  let stableCount = 0;
-  for (let i = 0; i < 20; i++) {
-    if (job !== layoutJobId) return;
-    updateAvatarSize();
-    await nextFrame();
-    const h = headerInfoRef.value?.offsetHeight ?? -1;
-    if (h === lastHeaderH && h > 0) stableCount++;
-    else stableCount = 0;
-    lastHeaderH = h;
-    if (stableCount >= 2) break;
-  }
-
-  // Wait for images that affect layout (avatar, ghchart, badges...)
-  await waitForImages(root);
-  await nextFrame();
-
-  if (job !== layoutJobId) return;
-  updateWaterfall();
-  updateAvatarSize();
-  setupObserver();
-
-  // One more pass after a paint, to catch late style/font/image effects.
-  await nextFrame();
-  if (job !== layoutJobId) return;
-  updateWaterfall();
-  updateAvatarSize();
-
-  // Final paint before revealing
-  await nextFrame();
-  if (job !== layoutJobId) return;
-  isLayoutReady.value = true;
-};
-
-const updateWaterfall = () => {
-  if (!waterfallContainer.value) return;
-
-  const container = waterfallContainer.value;
-  const items = Array.from(
-    container.querySelectorAll(":scope > .waterfall-item")
-  ) as HTMLElement[];
-  const awardsSection = container.querySelector(
-    "#awards-section"
-  ) as HTMLElement;
-
-  // Read current CSS-driven masonry parameters (we'll restore after measuring)
-  const computed = window.getComputedStyle(container);
-  const rowHeight = Number.parseFloat(computed.gridAutoRows || "1") || 1;
-  const masonryGap =
-    Number.parseFloat(computed.getPropertyValue("--masonry-gap") || "0") || 0;
-
-  // 1. Relax container to allow natural height measurement
-  container.style.gridAutoRows = "auto";
-  container.style.alignItems = "start";
-
-  // Unlock awards section height for accurate measurement
-  if (awardsSection) {
-    awardsSection.style.height = "";
-  }
-
-  // 2. Reset item spans to let them flow naturally
-  items.forEach((el) => {
-    el.style.gridRowEnd = "auto";
-  });
-
-  // 3. Measure
-  const spans = items.map((el) => {
-    const height = el.getBoundingClientRect().height;
-
-    // Masonry trick:
-    // We keep row-gap=0 to avoid extra quantization artifacts, and instead bake
-    // a consistent vertical spacing into the span itself.
-    const denom = Math.max(1, rowHeight);
-    const span = Math.ceil((height + masonryGap) / denom);
-    return Math.max(1, span);
-  });
-
-  // Lock awards section height to prevent layout shift on hover
-  if (awardsSection) {
-    awardsSection.style.height = `${awardsSection.offsetHeight}px`;
-  }
-
-  // 4. Restore container constraint
-  container.style.removeProperty("grid-auto-rows");
-  container.style.removeProperty("align-items");
-
-  // 5. Apply spans
-  items.forEach((el, i) => {
-    el.style.gridRowEnd = `span ${spans[i]}`;
-  });
-};
-
-const setupObserver = () => {
-  if (!waterfallContainer.value || !observer) return;
-
-  const obs = observer;
-  obs.observe(waterfallContainer.value);
-  Array.from(waterfallContainer.value.children).forEach((child) => {
-    obs.observe(child);
-  });
-};
-
-onMounted(() => {
-  // ResizeObserver for robustness
-  observer = new ResizeObserver(() => {
-    window.requestAnimationFrame(updateWaterfall);
-  });
-
-  headerObserver = new ResizeObserver(() => {
-    window.requestAnimationFrame(updateAvatarSize);
-  });
-
-  setupObserver();
-  if (headerInfoRef.value) {
-    headerObserver.observe(headerInfoRef.value);
-  }
-  window.addEventListener("resize", updateAvatarSize);
-
-  // First load: if resume payload is already hydrated, the watcher may not fire.
-  // Measure once after mount to avoid getting stuck in the loading overlay.
-  if (resume.value) {
-    recalcLayout();
-  }
-});
-
-// Watch for data/locale changes and measure AFTER the DOM updates.
-watch(
-  [() => locale.value, pending, resume],
-  () => {
-    // Only measure once the new locale content is actually ready.
-    if (pending.value || !resume.value) return;
-    recalcLayout();
-  },
-  { flush: "post", immediate: true }
-);
 </script>
 
 <template>
