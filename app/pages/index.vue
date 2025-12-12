@@ -655,6 +655,10 @@ const getRoleColor = (role: string) => {
 const waterfallContainer = ref<HTMLElement | null>(null);
 const isLayoutReady = ref(false);
 
+const { public: publicConfig } = useRuntimeConfig();
+const buildTime = (publicConfig as any).buildTime as string | undefined;
+const buildSha = (publicConfig as any).gitSha as string | undefined;
+
 const pageRootRef = ref<HTMLElement | null>(null);
 
 const avatarRef = ref<HTMLElement | null>(null);
@@ -779,6 +783,11 @@ const updateWaterfall = () => {
     "#awards-section"
   ) as HTMLElement;
 
+  // Read current CSS-driven masonry parameters (we'll restore after measuring)
+  const computed = window.getComputedStyle(container);
+  const rowGap = Number.parseFloat(computed.rowGap || "0") || 0;
+  const rowHeight = Number.parseFloat(computed.gridAutoRows || "1") || 1;
+
   // 1. Relax container to allow natural height measurement
   container.style.gridAutoRows = "auto";
   container.style.alignItems = "start";
@@ -795,9 +804,14 @@ const updateWaterfall = () => {
 
   // 3. Measure
   const spans = items.map((el) => {
-    const height = el.offsetHeight;
-    // Calculate span (1px rows + 24px gap)
-    return Math.ceil(height + 24);
+    const height = el.getBoundingClientRect().height;
+
+    // Standard CSS-grid masonry trick:
+    // span = ceil((itemHeight + rowGap) / (rowHeight + rowGap))
+    // Guard against division by zero.
+    const denom = Math.max(1, rowHeight + rowGap);
+    const span = Math.ceil((height + rowGap) / denom);
+    return Math.max(1, span);
   });
 
   // Lock awards section height to prevent layout shift on hover
@@ -1951,6 +1965,18 @@ watch(
               >HSResume</a
             >
           </p>
+
+          <p
+            v-if="buildTime || buildSha"
+            class="text-[10px] text-gray-400/70 dark:text-gray-500/70 opacity-70 select-none"
+          >
+            <span class="font-mono">
+              Built {{ buildTime
+              }}<template v-if="buildSha">
+                · {{ buildSha.slice(0, 7) }}
+              </template>
+            </span>
+          </p>
         </div>
 
         <!-- ICP & PSB -->
@@ -1982,9 +2008,10 @@ watch(
 .waterfall-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  grid-auto-rows: 1px; /* Small unit for precise height */
+  /* Masonry trick: small row unit + real row-gap, then JS sets grid-row-end span */
+  grid-auto-rows: 8px;
   grid-auto-flow: row dense; /* Help fill gaps */
-  row-gap: 0; /* Crucial: handle vertical spacing via JS spans */
+  row-gap: 24px;
 }
 
 .waterfall-item {

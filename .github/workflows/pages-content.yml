@@ -39,6 +39,11 @@ jobs:
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
+      - name: Set build metadata
+        run: |
+          echo "NUXT_PUBLIC_BUILD_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
+          echo "NUXT_PUBLIC_GIT_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
+
       - name: Generate static site
         run: pnpm generate
 
