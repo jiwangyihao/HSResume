@@ -345,7 +345,8 @@ const resumeView = computed<ResumeEntry>(() => {
 const avatarSrc = ref("/avatar.png");
 const handleAvatarError = () => {
   // Fallback for public main branch: use sample SVG when avatar.png is not present.
-  if (avatarSrc.value !== "/avatar.sample.svg") avatarSrc.value = "/avatar.sample.svg";
+  if (avatarSrc.value !== "/avatar.sample.svg")
+    avatarSrc.value = "/avatar.sample.svg";
 };
 
 const { data: githubStats } = await useAsyncData(
@@ -654,6 +655,8 @@ const getRoleColor = (role: string) => {
 const waterfallContainer = ref<HTMLElement | null>(null);
 const isLayoutReady = ref(false);
 
+const pageRootRef = ref<HTMLElement | null>(null);
+
 const avatarRef = ref<HTMLElement | null>(null);
 const headerInfoRef = ref<HTMLElement | null>(null);
 
@@ -667,6 +670,105 @@ const updateAvatarSize = () => {
 
 let observer: ResizeObserver | null = null;
 let headerObserver: ResizeObserver | null = null;
+
+const nextFrame = () =>
+  new Promise<void>((resolve) => {
+    if (typeof window === "undefined") return resolve();
+    window.requestAnimationFrame(() => resolve());
+  });
+
+const waitForImages = async (root: HTMLElement, timeoutMs = 2500) => {
+  if (typeof window === "undefined") return;
+  const images = Array.from(root.querySelectorAll("img")) as HTMLImageElement[];
+  if (!images.length) return;
+
+  const waitOne = (img: HTMLImageElement) => {
+    if (img.complete) return Promise.resolve();
+    return new Promise<void>((resolve) => {
+      const done = () => resolve();
+      img.addEventListener("load", done, { once: true });
+      img.addEventListener("error", done, { once: true });
+    });
+  };
+
+  await Promise.race([
+    Promise.all(images.map(waitOne)).then(() => undefined),
+    new Promise<void>((resolve) => setTimeout(resolve, timeoutMs)),
+  ]);
+};
+
+let layoutJobId = 0;
+const recalcLayout = async () => {
+  if (typeof window === "undefined") return;
+  const job = ++layoutJobId;
+  isLayoutReady.value = false;
+
+  // Wait until the actual content DOM (and refs) exists.
+  // This avoids the first-load case where resume data is already present
+  // but the watcher doesn't fire and refs are not yet bound.
+  for (let i = 0; i < 30; i++) {
+    await nextTick();
+    if (pageRootRef.value && waterfallContainer.value) break;
+    await nextFrame();
+  }
+
+  const root = pageRootRef.value;
+  const container = waterfallContainer.value;
+  if (!root || !container) {
+    // Nothing to measure; don't block the UI forever.
+    if (job === layoutJobId) isLayoutReady.value = true;
+    return;
+  }
+
+  // Wait for DOM patch (watch flush: 'post' already helps, but keep this to be safe)
+  await nextTick();
+
+  // Wait for fonts + a couple of paints (avoids measuring before text metrics settle)
+  if ("fonts" in document && document.fonts?.ready) {
+    try {
+      await document.fonts.ready;
+    } catch {
+      // ignore
+    }
+  }
+  await nextFrame();
+  await nextFrame();
+
+  // Let avatar/header sizing settle (there is a feedback relationship between header height and avatar size).
+  // We sample a few frames and stop once the header height stabilizes.
+  let lastHeaderH = -1;
+  let stableCount = 0;
+  for (let i = 0; i < 20; i++) {
+    if (job !== layoutJobId) return;
+    updateAvatarSize();
+    await nextFrame();
+    const h = headerInfoRef.value?.offsetHeight ?? -1;
+    if (h === lastHeaderH && h > 0) stableCount++;
+    else stableCount = 0;
+    lastHeaderH = h;
+    if (stableCount >= 2) break;
+  }
+
+  // Wait for images that affect layout (avatar, ghchart, badges...)
+  await waitForImages(root);
+  await nextFrame();
+
+  if (job !== layoutJobId) return;
+  updateWaterfall();
+  updateAvatarSize();
+  setupObserver();
+
+  // One more pass after a paint, to catch late style/font/image effects.
+  await nextFrame();
+  if (job !== layoutJobId) return;
+  updateWaterfall();
+  updateAvatarSize();
+
+  // Final paint before revealing
+  await nextFrame();
+  if (job !== layoutJobId) return;
+  isLayoutReady.value = true;
+};
 
 const updateWaterfall = () => {
   if (!waterfallContainer.value) return;
@@ -724,13 +826,6 @@ const setupObserver = () => {
 };
 
 onMounted(() => {
-  // Initial update
-  setTimeout(() => {
-    updateWaterfall();
-    updateAvatarSize();
-    isLayoutReady.value = true;
-  }, 100);
-
   // ResizeObserver for robustness
   observer = new ResizeObserver(() => {
     window.requestAnimationFrame(updateWaterfall);
@@ -745,26 +840,23 @@ onMounted(() => {
     headerObserver.observe(headerInfoRef.value);
   }
   window.addEventListener("resize", updateAvatarSize);
+
+  // First load: if resume payload is already hydrated, the watcher may not fire.
+  // Measure once after mount to avoid getting stuck in the loading overlay.
+  if (resume.value) {
+    recalcLayout();
+  }
 });
 
-// Watch for data changes
+// Watch for data/locale changes and measure AFTER the DOM updates.
 watch(
-  resumeView,
+  [() => locale.value, pending, resume],
   () => {
-    isLayoutReady.value = false;
-    nextTick(async () => {
-      // Wait for fonts to load to ensure accurate measurements
-      await document.fonts.ready;
-      // Add a small delay to ensure DOM is fully stable
-      setTimeout(() => {
-        updateWaterfall();
-        updateAvatarSize();
-        setupObserver();
-        isLayoutReady.value = true;
-      }, 50);
-    });
+    // Only measure once the new locale content is actually ready.
+    if (pending.value || !resume.value) return;
+    recalcLayout();
   },
-  { deep: true }
+  { flush: "post", immediate: true }
 );
 </script>
 
@@ -856,12 +948,13 @@ watch(
 
     <div
       v-else
+      ref="pageRootRef"
       class="bg-white dark:bg-gray-900 rounded-xl shadow-xl print:shadow-none print:rounded-none px-4 py-8 sm:p-8 print:p-0 print:py-4 border border-gray-200 dark:border-gray-800 print:border-none relative"
     >
       <!-- Loading Overlay -->
       <div
         v-if="!isLayoutReady"
-        class="absolute inset-0 z-20 bg-white dark:bg-gray-900 rounded-xl p-8 print:hidden"
+        class="absolute inset-0 z-20 bg-white dark:bg-gray-900 rounded-xl p-8 print:hidden overflow-hidden"
       >
         <!-- Header Skeleton -->
         <div
