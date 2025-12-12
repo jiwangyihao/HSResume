@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useWaterfallLayout } from "../composables/useWaterfallLayout";
-import ResumeMarkdown from "../components/ResumeMarkdown.vue";
+import Markdown from "../components/content/Markdown.vue";
+import SectionHeader from "../components/shared/SectionHeader.vue";
 import type { ResumeAward } from "../types/resume";
 import {
   badgeBgClass,
@@ -578,22 +579,15 @@ const chunkedGames = computed(() => {
           <section
             class="break-inside-avoid waterfall-item col-span-1 md:col-start-1 print:col-span-6 print:col-start-1"
           >
-            <h2
-              class="flex items-center gap-2 text-xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-2 print:border-b-0 print:border-l-4 print:border-(--theme-color) print:pl-2 print:bg-gray-50 print:py-1 print:mb-2 print:text-2xl"
-              :style="{
-                '--theme-color': resolveHexColor(
-                  resumeView.colors?.profile || 'primary'
-                ),
-              }"
-            >
-              <UIcon
-                name="i-heroicons-user"
-                class="w-6 h-6"
-                :class="sectionSettings.profile.icon"
-              />
-              {{ labels.profile }}
-            </h2>
-            <ResumeMarkdown
+            <SectionHeader
+              :title="labels.profile"
+              icon="i-heroicons-user"
+              :icon-class="sectionSettings.profile.icon"
+              :theme-color="
+                resolveHexColor(resumeView.colors?.profile || 'primary')
+              "
+            />
+            <Markdown
               :source="resumeView.summary"
               tag="div"
               class="text-gray-600 dark:text-gray-300 leading-relaxed"
@@ -604,21 +598,14 @@ const chunkedGames = computed(() => {
           <section
             class="break-inside-avoid waterfall-item col-span-1 md:col-start-1 print:col-span-6 print:col-start-auto"
           >
-            <h2
-              class="flex items-center gap-2 text-xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-2 print:border-b-0 print:border-l-4 print:border-(--theme-color) print:pl-2 print:bg-gray-50 print:py-1 print:mb-2 print:text-2xl"
-              :style="{
-                '--theme-color': resolveHexColor(
-                  resumeView.colors?.education || 'primary'
-                ),
-              }"
-            >
-              <UIcon
-                name="i-heroicons-academic-cap"
-                class="w-6 h-6"
-                :class="sectionSettings.education.icon"
-              />
-              {{ labels.education }}
-            </h2>
+            <SectionHeader
+              :title="labels.education"
+              icon="i-heroicons-academic-cap"
+              :icon-class="sectionSettings.education.icon"
+              :theme-color="
+                resolveHexColor(resumeView.colors?.education || 'primary')
+              "
+            />
             <div class="space-y-6 print:space-y-4">
               <div
                 v-for="edu in resumeView.education"
@@ -647,7 +634,7 @@ const chunkedGames = computed(() => {
                       :name="getRoleIcon(role)"
                       :class="['w-4 h-4 mt-0.5 shrink-0', getRoleColor(role)]"
                     />
-                    <ResumeMarkdown :source="role" tag="span" unwrap="p" />
+                    <Markdown :source="role" tag="span" unwrap="p" />
                   </li>
                   <li
                     v-for="honor in edu.honors"
@@ -658,7 +645,7 @@ const chunkedGames = computed(() => {
                       name="i-heroicons-star"
                       class="w-4 h-4 mt-0.5 shrink-0 text-primary-600 dark:text-primary-400"
                     />
-                    <ResumeMarkdown :source="honor" tag="span" unwrap="p" />
+                    <Markdown :source="honor" tag="span" unwrap="p" />
                   </li>
                   <li
                     v-for="scholarship in edu.scholarships"
@@ -669,7 +656,7 @@ const chunkedGames = computed(() => {
                       name="i-heroicons-currency-yen"
                       class="w-4 h-4 mt-0.5 shrink-0 text-yellow-600 dark:text-yellow-400"
                     />
-                    <ResumeMarkdown
+                    <Markdown
                       :source="scholarship"
                       tag="span"
                       unwrap="p"
@@ -685,21 +672,12 @@ const chunkedGames = computed(() => {
             v-if="resumeView.github"
             class="break-inside-avoid waterfall-item col-span-1 md:col-start-1 print:col-span-6 print:col-start-auto"
           >
-            <h2
-              class="flex items-center gap-2 text-xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-2 print:border-b-0 print:border-l-4 print:border-(--theme-color) print:pl-2 print:bg-gray-50 print:py-1 print:mb-2 print:text-2xl"
-              :style="{
-                '--theme-color': resolveHexColor(
-                  resumeView.colors?.github || 'sky'
-                ),
-              }"
-            >
-              <UIcon
-                name="i-iconoir-github"
-                class="w-6 h-6"
-                :class="sectionSettings.github.icon"
-              />
-              {{ labels.github }}
-            </h2>
+            <SectionHeader
+              :title="labels.github"
+              icon="i-iconoir-github"
+              :icon-class="sectionSettings.github.icon"
+              :theme-color="resolveHexColor(resumeView.colors?.github || 'sky')"
+            />
             <div class="space-y-6 print:space-y-4">
               <div
                 class="relative pl-4 border-l-2 border-gray-200 dark:border-gray-700"
@@ -791,26 +769,22 @@ const chunkedGames = computed(() => {
             @mouseenter="isAwardsHovered = true"
             @mouseleave="isAwardsHovered = false"
           >
-            <h2
-              class="flex items-center gap-2 text-xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-2 print:border-b-0 print:border-l-4 print:border-(--theme-color) print:pl-2 print:bg-gray-50 print:py-1 print:mb-2 print:text-2xl"
-              :style="{
-                '--theme-color': resolveHexColor(
-                  resumeView.colors?.awards || 'yellow'
-                ),
-              }"
+            <SectionHeader
+              :title="labels.awards"
+              icon="i-heroicons-trophy"
+              :icon-class="sectionSettings.awards.icon"
+              :theme-color="
+                resolveHexColor(resumeView.colors?.awards || 'yellow')
+              "
             >
-              <UIcon
-                name="i-heroicons-trophy"
-                class="w-6 h-6"
-                :class="sectionSettings.awards.icon"
-              />
-              {{ labels.awards }}
-              <span
-                class="text-xs font-normal text-gray-400 ml-auto opacity-100 group-hover/section:opacity-0 transition-opacity print:hidden"
-              >
-                {{ labels.expand }}
-              </span>
-            </h2>
+              <template #trailing>
+                <span
+                  class="text-xs font-normal text-gray-400 ml-auto opacity-100 group-hover/section:opacity-0 transition-opacity print:hidden"
+                >
+                  {{ labels.expand }}
+                </span>
+              </template>
+            </SectionHeader>
             <div class="space-y-4">
               <div
                 v-for="(group, gIndex) in groupedAwards"
@@ -839,7 +813,7 @@ const chunkedGames = computed(() => {
                       :class="sectionSettings.awards.icon"
                     />
                     <div class="min-w-0 flex-1">
-                      <ResumeMarkdown
+                      <Markdown
                         :source="group.main.title"
                         tag="div"
                         unwrap="p"
@@ -885,7 +859,7 @@ const chunkedGames = computed(() => {
                         class="transition-[max-height] duration-500 ease-out overflow-hidden"
                         :class="isAwardsHovered ? 'max-h-24' : 'max-h-5'"
                       >
-                        <ResumeMarkdown
+                        <Markdown
                           :source="sub.title"
                           tag="div"
                           unwrap="p"
@@ -931,22 +905,15 @@ const chunkedGames = computed(() => {
             class="waterfall-item break-inside-avoid"
             :style="{ '--print-col-span': item.printColSpan }"
           >
-            <h2
+            <SectionHeader
               v-if="index === 0"
-              class="flex items-center gap-2 text-xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-2 print:border-b-0 print:border-l-4 print:border-(--theme-color) print:pl-2 print:bg-gray-50 print:py-1 print:mb-2 print:text-2xl"
-              :style="{
-                '--theme-color': resolveHexColor(
-                  resumeView.colors?.projects || 'primary'
-                ),
-              }"
-            >
-              <UIcon
-                name="i-heroicons-code-bracket-square"
-                class="w-6 h-6"
-                :class="sectionSettings.projects.icon"
-              />
-              {{ labels.projects }}
-            </h2>
+              :title="labels.projects"
+              icon="i-heroicons-code-bracket-square"
+              :icon-class="sectionSettings.projects.icon"
+              :theme-color="
+                resolveHexColor(resumeView.colors?.projects || 'primary')
+              "
+            />
 
             <div
               class="group relative bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:shadow-lg transition-all duration-300 overflow-hidden"
@@ -1057,7 +1024,7 @@ const chunkedGames = computed(() => {
                     class="list-disc list-outside ml-4 space-y-1 text-gray-600 dark:text-gray-300 marker:text-gray-400"
                   >
                     <li v-for="desc in item.description" :key="desc">
-                      <ResumeMarkdown
+                      <Markdown
                         :source="desc"
                         tag="span"
                         unwrap="p"
@@ -1087,7 +1054,7 @@ const chunkedGames = computed(() => {
                         class="list-disc list-outside ml-4 space-y-1 text-gray-600 dark:text-gray-300 marker:text-gray-400"
                       >
                         <li v-for="resp in item.responsibilities" :key="resp">
-                          <ResumeMarkdown
+                          <Markdown
                             :source="resp"
                             tag="span"
                             unwrap="p"
@@ -1108,22 +1075,13 @@ const chunkedGames = computed(() => {
             :key="index"
             class="waterfall-item break-inside-avoid"
           >
-            <h2
+            <SectionHeader
               v-if="index === 0"
-              class="flex items-center gap-2 text-xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-2 print:border-b-0 print:border-l-4 print:border-(--theme-color) print:pl-2 print:bg-gray-50 print:py-1 print:mb-2 print:text-2xl"
-              :style="{
-                '--theme-color': resolveHexColor(
-                  resumeView.colors?.games || 'purple'
-                ),
-              }"
-            >
-              <UIcon
-                name="i-heroicons-puzzle-piece"
-                class="w-6 h-6"
-                :class="sectionSettings.games.icon"
-              />
-              {{ labels.games }}
-            </h2>
+              :title="labels.games"
+              icon="i-heroicons-puzzle-piece"
+              :icon-class="sectionSettings.games.icon"
+              :theme-color="resolveHexColor(resumeView.colors?.games || 'purple')"
+            />
 
             <div class="grid grid-cols-1 gap-(--masonry-gap) print:gap-4">
               <div
@@ -1150,7 +1108,7 @@ const chunkedGames = computed(() => {
                     >
                   </div>
                   <div class="text-xs text-gray-500 mb-2">
-                    <ResumeMarkdown
+                    <Markdown
                       :source="game.detail"
                       tag="span"
                       unwrap="p"
@@ -1160,7 +1118,7 @@ const chunkedGames = computed(() => {
                     v-if="game.notes"
                     class="text-xs text-gray-600 dark:text-gray-300 italic"
                   >
-                    "<ResumeMarkdown
+                    "<Markdown
                       :source="game.notes"
                       tag="span"
                       unwrap="p"
@@ -1175,21 +1133,14 @@ const chunkedGames = computed(() => {
           <section
             class="break-inside-avoid waterfall-item col-span-1 print:col-span-6"
           >
-            <h2
-              class="flex items-center gap-2 text-xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-2 print:border-b-0 print:border-l-4 print:border-(--theme-color) print:pl-2 print:bg-gray-50 print:py-1 print:mb-2 print:text-2xl"
-              :style="{
-                '--theme-color': resolveHexColor(
-                  resumeView.colors?.languages || 'emerald'
-                ),
-              }"
-            >
-              <UIcon
-                name="i-heroicons-language"
-                class="w-6 h-6"
-                :class="sectionSettings.languages.icon"
-              />
-              {{ labels.languages }}
-            </h2>
+            <SectionHeader
+              :title="labels.languages"
+              icon="i-heroicons-language"
+              :icon-class="sectionSettings.languages.icon"
+              :theme-color="
+                resolveHexColor(resumeView.colors?.languages || 'emerald')
+              "
+            />
             <div class="grid grid-cols-1 gap-3">
               <div
                 v-for="lang in resumeView.languages"
@@ -1250,7 +1201,7 @@ const chunkedGames = computed(() => {
         <!-- Copyright & Powered By -->
         <div class="flex flex-col items-center gap-1">
           <div class="text-center">
-            <ResumeMarkdown
+            <Markdown
               :source="resumeView.footer.copyright"
               tag="span"
               unwrap="p"

@@ -48,7 +48,7 @@ const { data: ast } = await useAsyncData(
 </template>
 
 <style>
-@reference "../assets/css/main.css";
+@reference "../../assets/css/main.css";
 
 .resume-markdown strong,
 .resume-markdown b {
