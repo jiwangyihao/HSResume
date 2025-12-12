@@ -57,7 +57,11 @@
 
 - `pnpm content:sync`
 
-它会把 `main` 工作区的私密文件复制到 `content` worktree，并打印 `content` 的 git 状态。
+它默认会先在 `content` worktree 中合并 `main` 的公共改动（避免“复制提交”导致历史分叉），然后再把 `main` 工作区的私密文件复制到 `content` worktree，并打印 `content` 的 git 状态。
+
+如需跳过合并（不推荐）：
+
+- `pnpm content:sync -- --no-merge`
 
 ### 在 content worktree 里提交
 
