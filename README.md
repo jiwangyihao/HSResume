@@ -51,6 +51,13 @@ pnpm generate
 
 ## 部署指引（GitHub Pages 示例）
 
+推荐方式（GitHub Actions 自动部署）：
+
+1. 在仓库设置中将 Pages 的 Source 选择为 **GitHub Actions**。
+2. 推送到 `content` 分支后，会自动执行 `pnpm generate` 并发布到 Pages。
+
+手动方式（发布到 `gh-pages` 分支）：
+
 1. `pnpm install && pnpm generate`
 2. 将 `.output/public` 发布到 `gh-pages` 分支。
 3. 在仓库设置里启用 Pages，指向 `gh-pages`。
