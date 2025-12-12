@@ -3,6 +3,7 @@ import { useWaterfallLayout } from "../composables/useWaterfallLayout";
 import Markdown from "../components/content/Markdown.vue";
 import SectionHeader from "../components/shared/SectionHeader.vue";
 import BadgePills from "../components/shared/BadgePills.vue";
+import ResumeSkeleton from "../components/shared/ResumeSkeleton.vue";
 import type { ResumeAward } from "../types/resume";
 import { useAwards } from "../composables/useAwards";
 import { useProjects } from "../composables/useProjects";
@@ -114,77 +115,7 @@ const chunkedGames = computed(() => {
       v-else-if="pending || !resume"
       class="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-8 border border-gray-200 dark:border-gray-800"
     >
-      <!-- Header Skeleton -->
-      <div
-        class="border-b border-gray-200 dark:border-gray-700 pb-8 mb-8 grid grid-cols-1 md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] gap-6 items-stretch"
-      >
-        <!-- Avatar Skeleton -->
-        <div class="flex justify-center md:justify-start order-1">
-          <USkeleton
-            class="w-32 h-32 rounded-full"
-            :ui="{ rounded: 'rounded-full' }"
-          />
-        </div>
-
-        <!-- Main Info Skeleton -->
-        <div
-          class="space-y-4 text-center self-start md:text-left order-2 w-full"
-        >
-          <USkeleton class="h-10 w-48 mx-auto md:mx-0" />
-          <USkeleton class="h-6 w-64 mx-auto md:mx-0" />
-          <div class="flex flex-wrap gap-2 justify-center md:justify-start">
-            <USkeleton class="h-5 w-16" />
-            <USkeleton class="h-5 w-20" />
-            <USkeleton class="h-5 w-14" />
-          </div>
-        </div>
-
-        <!-- Contact Info Skeleton -->
-        <div
-          class="flex flex-col gap-2 items-center md:items-start lg:items-end order-3 md:col-start-2 md:row-start-2 lg:col-start-3 lg:row-start-1"
-        >
-          <USkeleton class="h-5 w-32" />
-          <USkeleton class="h-5 w-40" />
-          <div class="flex gap-2 mt-2">
-            <USkeleton class="h-8 w-20" />
-            <USkeleton class="h-8 w-20" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Body Skeleton -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Column 1 Skeletons -->
-        <div class="space-y-6">
-          <div class="space-y-4">
-            <USkeleton class="h-8 w-32" />
-            <USkeleton class="h-24 w-full" />
-          </div>
-          <div class="space-y-4">
-            <USkeleton class="h-8 w-32" />
-            <div class="space-y-4">
-              <USkeleton class="h-20 w-full" />
-              <USkeleton class="h-20 w-full" />
-              <USkeleton class="h-20 w-full" />
-            </div>
-          </div>
-        </div>
-        <!-- Column 2 Skeletons -->
-        <div class="space-y-6">
-          <div class="space-y-4">
-            <USkeleton class="h-8 w-32" />
-            <div class="space-y-2">
-              <USkeleton class="h-16 w-full" />
-              <USkeleton class="h-16 w-full" />
-              <USkeleton class="h-16 w-full" />
-            </div>
-          </div>
-          <div class="space-y-4">
-            <USkeleton class="h-8 w-32" />
-            <USkeleton class="h-48 w-full" />
-          </div>
-        </div>
-      </div>
+      <ResumeSkeleton />
     </div>
 
     <div
@@ -197,77 +128,7 @@ const chunkedGames = computed(() => {
         v-if="!isLayoutReady"
         class="absolute inset-0 z-20 bg-white dark:bg-gray-900 rounded-xl p-8 print:hidden overflow-hidden"
       >
-        <!-- Header Skeleton -->
-        <div
-          class="border-b border-gray-200 dark:border-gray-700 pb-8 mb-8 grid grid-cols-1 md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] gap-6 items-stretch"
-        >
-          <!-- Avatar Skeleton -->
-          <div class="flex justify-center md:justify-start order-1">
-            <USkeleton
-              class="w-32 h-32 rounded-full"
-              :ui="{ rounded: 'rounded-full' }"
-            />
-          </div>
-
-          <!-- Main Info Skeleton -->
-          <div
-            class="space-y-4 text-center self-start md:text-left order-2 w-full"
-          >
-            <USkeleton class="h-10 w-48 mx-auto md:mx-0" />
-            <USkeleton class="h-6 w-64 mx-auto md:mx-0" />
-            <div class="flex flex-wrap gap-2 justify-center md:justify-start">
-              <USkeleton class="h-5 w-16" />
-              <USkeleton class="h-5 w-20" />
-              <USkeleton class="h-5 w-14" />
-            </div>
-          </div>
-
-          <!-- Contact Info Skeleton -->
-          <div
-            class="flex flex-col gap-2 items-center md:items-start lg:items-end order-3 md:col-start-2 md:row-start-2 lg:col-start-3 lg:row-start-1"
-          >
-            <USkeleton class="h-5 w-32" />
-            <USkeleton class="h-5 w-40" />
-            <div class="flex gap-2 mt-2">
-              <USkeleton class="h-8 w-20" />
-              <USkeleton class="h-8 w-20" />
-            </div>
-          </div>
-        </div>
-
-        <!-- Body Skeleton -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Column 1 Skeletons -->
-          <div class="space-y-6">
-            <div class="space-y-4">
-              <USkeleton class="h-8 w-32" />
-              <USkeleton class="h-24 w-full" />
-            </div>
-            <div class="space-y-4">
-              <USkeleton class="h-8 w-32" />
-              <div class="space-y-4">
-                <USkeleton class="h-20 w-full" />
-                <USkeleton class="h-20 w-full" />
-                <USkeleton class="h-20 w-full" />
-              </div>
-            </div>
-          </div>
-          <!-- Column 2 Skeletons -->
-          <div class="space-y-6">
-            <div class="space-y-4">
-              <USkeleton class="h-8 w-32" />
-              <div class="space-y-2">
-                <USkeleton class="h-16 w-full" />
-                <USkeleton class="h-16 w-full" />
-                <USkeleton class="h-16 w-full" />
-              </div>
-            </div>
-            <div class="space-y-4">
-              <USkeleton class="h-8 w-32" />
-              <USkeleton class="h-48 w-full" />
-            </div>
-          </div>
-        </div>
+        <ResumeSkeleton />
       </div>
 
       <!-- Header -->
@@ -403,36 +264,7 @@ const chunkedGames = computed(() => {
           v-if="!isLayoutReady"
           class="grid grid-cols-1 md:grid-cols-2 gap-6 absolute inset-0 z-10 bg-white dark:bg-gray-900 overflow-hidden"
         >
-          <!-- Column 1 Skeletons -->
-          <div class="space-y-6">
-            <div class="space-y-4">
-              <USkeleton class="h-8 w-32" />
-              <USkeleton class="h-24 w-full" />
-            </div>
-            <div class="space-y-4">
-              <USkeleton class="h-8 w-32" />
-              <div class="space-y-4">
-                <USkeleton class="h-20 w-full" />
-                <USkeleton class="h-20 w-full" />
-                <USkeleton class="h-20 w-full" />
-              </div>
-            </div>
-          </div>
-          <!-- Column 2 Skeletons -->
-          <div class="space-y-6">
-            <div class="space-y-4">
-              <USkeleton class="h-8 w-32" />
-              <div class="space-y-2">
-                <USkeleton class="h-16 w-full" />
-                <USkeleton class="h-16 w-full" />
-                <USkeleton class="h-16 w-full" />
-              </div>
-            </div>
-            <div class="space-y-4">
-              <USkeleton class="h-8 w-32" />
-              <USkeleton class="h-48 w-full" />
-            </div>
-          </div>
+          <ResumeSkeleton mode="body" />
         </div>
         <div
           ref="waterfallContainer"
