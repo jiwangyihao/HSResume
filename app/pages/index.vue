@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useWaterfallLayout } from "../composables/useWaterfallLayout";
 import ResumeMarkdown from "../components/ResumeMarkdown.vue";
-import type { ResumeAward, ResumeProject } from "../types/resume";
+import type { ResumeAward } from "../types/resume";
 import {
   badgeBgClass,
   badgeBorderClass,
@@ -9,6 +9,7 @@ import {
   getBadgeIcon,
 } from "../composables/useBadges";
 import { useAwards } from "../composables/useAwards";
+import { useProjects } from "../composables/useProjects";
 import { usePrint } from "../composables/usePrint";
 import { useGithubStats } from "../composables/useGithubStats";
 import { useResumeContent } from "../composables/useResumeContent";
@@ -104,29 +105,7 @@ const {
   isCardHovered,
 } = useAwards(resumeView);
 
-const processedProjects = computed(() => {
-  const projects = (resumeView.value.projects || []) as ResumeProject[];
-  return projects.map((p) => {
-    const links = p.links || [];
-    const responsibilities = p.responsibilities || [];
-
-    const spanFromWidth =
-      typeof p.printWidth === "number"
-        ? clampInt((p.printWidth / 100) * 12, 3, 12)
-        : undefined;
-    const printColSpan =
-      typeof p.printColSpan === "number"
-        ? clampInt(p.printColSpan, 3, 12)
-        : spanFromWidth ?? 6;
-
-    return {
-      ...p,
-      links,
-      responsibilities,
-      printColSpan,
-    };
-  });
-});
+const { processedProjects } = useProjects(resumeView);
 
 const chunk = <T>(items: T[], size: number): T[][] => {
   const safeSize = Math.max(1, Math.floor(size));
