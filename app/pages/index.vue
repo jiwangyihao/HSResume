@@ -16,6 +16,7 @@ import { useGithubStats } from "../composables/useGithubStats";
 import { useResumeContent } from "../composables/useResumeContent";
 import { useResumeLocale } from "../composables/useResumeLocale";
 import { useThemeColors } from "../composables/useThemeColors";
+import { useEducationRoles } from "../composables/useEducationRoles";
 
 const runtimeConfig = useRuntimeConfig();
 const buildTime = computed(() => runtimeConfig.public.buildTime || "");
@@ -37,51 +38,7 @@ const handleAvatarError = () => {
     avatarSrc.value = "/avatar.sample.svg";
 };
 
-const getRoleIcon = (role: string) => {
-  const text = role.toLowerCase();
-  if (
-    text.includes("leader") ||
-    text.includes("president") ||
-    text.includes("captain") ||
-    role.includes("负责人") ||
-    role.includes("主席") ||
-    role.includes("班长")
-  ) {
-    return "i-heroicons-user-group";
-  }
-  if (
-    text.includes("assistant") ||
-    text.includes("ta") ||
-    role.includes("助教") ||
-    role.includes("助理")
-  ) {
-    return "i-heroicons-academic-cap";
-  }
-  return "i-heroicons-user";
-};
-
-const getRoleColor = (role: string) => {
-  const text = role.toLowerCase();
-  if (
-    text.includes("leader") ||
-    text.includes("president") ||
-    text.includes("captain") ||
-    role.includes("负责人") ||
-    role.includes("主席") ||
-    role.includes("班长")
-  ) {
-    return "text-primary-600 dark:text-primary-400";
-  }
-  if (
-    text.includes("assistant") ||
-    text.includes("ta") ||
-    role.includes("助教") ||
-    role.includes("助理")
-  ) {
-    return "text-emerald-600 dark:text-emerald-400";
-  }
-  return "text-gray-500 dark:text-gray-400";
-};
+const { getRoleIcon, getRoleColor } = useEducationRoles();
 
 const {
   waterfallContainer,
@@ -656,11 +613,7 @@ const chunkedGames = computed(() => {
                       name="i-heroicons-currency-yen"
                       class="w-4 h-4 mt-0.5 shrink-0 text-yellow-600 dark:text-yellow-400"
                     />
-                    <Markdown
-                      :source="scholarship"
-                      tag="span"
-                      unwrap="p"
-                    />
+                    <Markdown :source="scholarship" tag="span" unwrap="p" />
                   </li>
                 </ul>
               </div>
@@ -1080,7 +1033,9 @@ const chunkedGames = computed(() => {
               :title="labels.games"
               icon="i-heroicons-puzzle-piece"
               :icon-class="sectionSettings.games.icon"
-              :theme-color="resolveHexColor(resumeView.colors?.games || 'purple')"
+              :theme-color="
+                resolveHexColor(resumeView.colors?.games || 'purple')
+              "
             />
 
             <div class="grid grid-cols-1 gap-(--masonry-gap) print:gap-4">
@@ -1108,21 +1063,13 @@ const chunkedGames = computed(() => {
                     >
                   </div>
                   <div class="text-xs text-gray-500 mb-2">
-                    <Markdown
-                      :source="game.detail"
-                      tag="span"
-                      unwrap="p"
-                    />
+                    <Markdown :source="game.detail" tag="span" unwrap="p" />
                   </div>
                   <div
                     v-if="game.notes"
                     class="text-xs text-gray-600 dark:text-gray-300 italic"
                   >
-                    "<Markdown
-                      :source="game.notes"
-                      tag="span"
-                      unwrap="p"
-                    />"
+                    "<Markdown :source="game.notes" tag="span" unwrap="p" />"
                   </div>
                 </div>
               </div>
