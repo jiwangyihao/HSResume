@@ -2,13 +2,8 @@
 import { useWaterfallLayout } from "../composables/useWaterfallLayout";
 import Markdown from "../components/content/Markdown.vue";
 import SectionHeader from "../components/shared/SectionHeader.vue";
+import BadgePills from "../components/shared/BadgePills.vue";
 import type { ResumeAward } from "../types/resume";
-import {
-  badgeBgClass,
-  badgeBorderClass,
-  badgeText,
-  getBadgeIcon,
-} from "../composables/useBadges";
 import { useAwards } from "../composables/useAwards";
 import { useProjects } from "../composables/useProjects";
 import { usePrint } from "../composables/usePrint";
@@ -315,49 +310,7 @@ const chunkedGames = computed(() => {
             v-if="resumeView.highlights.length"
             class="hidden sm:flex print:flex flex-wrap gap-2 justify-start print:justify-start"
           >
-            <template
-              v-for="tag in resumeView.highlights"
-              :key="badgeText(tag) + (tag.kind === 'svg' ? tag.url : '')"
-            >
-              <span v-if="tag.kind === 'svg'" class="inline-flex items-center">
-                <img :src="tag.url" :alt="tag.alt ?? 'badge'" class="h-5" />
-              </span>
-              <div
-                v-else-if="tag.kind === 'split'"
-                :class="[
-                  'inline-flex items-center h-5 text-[11px] font-sans rounded-[3px] overflow-hidden border-[1.5px]',
-                  badgeBorderClass(tag),
-                ]"
-              >
-                <span
-                  :class="[
-                    'text-white px-1.5 h-full flex items-center font-bold gap-1',
-                    badgeBgClass(tag),
-                  ]"
-                >
-                  <template v-if="getBadgeIcon(tag)">
-                    <UIcon :name="getBadgeIcon(tag)!" class="w-3 h-3" />
-                  </template>
-                  {{ tag.domain }}</span
-                >
-                <span
-                  class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-1.5 h-full flex items-center font-bold"
-                  >{{ tag.value }}</span
-                >
-              </div>
-              <span
-                v-else
-                :class="[
-                  'inline-flex items-center h-5 text-[11px] font-sans text-white px-1.5 rounded-[3px] overflow-hidden gap-1',
-                  badgeBgClass(tag),
-                ]"
-              >
-                <template v-if="getBadgeIcon(tag)">
-                  <UIcon :name="getBadgeIcon(tag)!" class="w-3 h-3" />
-                </template>
-                {{ tag.label }}
-              </span>
-            </template>
+            <BadgePills :tags="resumeView.highlights" />
           </div>
         </div>
 
@@ -366,51 +319,7 @@ const chunkedGames = computed(() => {
           v-if="resumeView.highlights.length"
           class="col-span-2 flex sm:hidden! print:hidden flex-wrap gap-2 justify-start order-3"
         >
-          <template
-            v-for="tag in resumeView.highlights"
-            :key="
-              'mobile-' + badgeText(tag) + (tag.kind === 'svg' ? tag.url : '')
-            "
-          >
-            <span v-if="tag.kind === 'svg'" class="inline-flex items-center">
-              <img :src="tag.url" :alt="tag.alt ?? 'badge'" class="h-5" />
-            </span>
-            <div
-              v-else-if="tag.kind === 'split'"
-              :class="[
-                'inline-flex items-center h-5 text-[11px] font-sans rounded-[3px] overflow-hidden border-[1.5px]',
-                badgeBorderClass(tag),
-              ]"
-            >
-              <span
-                :class="[
-                  'text-white px-1.5 h-full flex items-center font-bold gap-1',
-                  badgeBgClass(tag),
-                ]"
-              >
-                <template v-if="getBadgeIcon(tag)">
-                  <UIcon :name="getBadgeIcon(tag)!" class="w-3 h-3" />
-                </template>
-                {{ tag.domain }}</span
-              >
-              <span
-                class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-1.5 h-full flex items-center font-bold"
-                >{{ tag.value }}</span
-              >
-            </div>
-            <span
-              v-else
-              :class="[
-                'inline-flex items-center h-5 text-[11px] font-sans text-white px-1.5 rounded-[3px] overflow-hidden gap-1',
-                badgeBgClass(tag),
-              ]"
-            >
-              <template v-if="getBadgeIcon(tag)">
-                <UIcon :name="getBadgeIcon(tag)!" class="w-3 h-3" />
-              </template>
-              {{ tag.label }}
-            </span>
-          </template>
+          <BadgePills :tags="resumeView.highlights" key-prefix="mobile-" />
         </div>
 
         <!-- Contact Info -->
@@ -893,61 +802,7 @@ const chunkedGames = computed(() => {
                         v-if="item.highlights?.length"
                         class="flex flex-wrap gap-1.5"
                       >
-                        <template
-                          v-for="tag in item.highlights"
-                          :key="
-                            badgeText(tag) + (tag.kind === 'svg' ? tag.url : '')
-                          "
-                        >
-                          <span v-if="tag.kind === 'svg'" class="inline-flex">
-                            <img
-                              :src="tag.url"
-                              :alt="tag.alt ?? 'badge'"
-                              class="h-5"
-                            />
-                          </span>
-                          <div
-                            v-else-if="tag.kind === 'split'"
-                            :class="[
-                              'inline-flex items-center h-5 text-[11px] font-sans rounded-[3px] overflow-hidden border-[1.5px]',
-                              badgeBorderClass(tag),
-                            ]"
-                          >
-                            <span
-                              :class="[
-                                'text-white px-1.5 h-full flex items-center font-bold gap-1',
-                                badgeBgClass(tag),
-                              ]"
-                            >
-                              <template v-if="getBadgeIcon(tag)">
-                                <UIcon
-                                  :name="getBadgeIcon(tag)!"
-                                  class="w-3 h-3"
-                                />
-                              </template>
-                              {{ tag.domain }}</span
-                            >
-                            <span
-                              class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-1.5 h-full flex items-center font-bold"
-                              >{{ tag.value }}</span
-                            >
-                          </div>
-                          <span
-                            v-else
-                            :class="[
-                              'inline-flex items-center h-5 text-[11px] font-sans text-white px-1.5 rounded-[3px] overflow-hidden gap-1',
-                              badgeBgClass(tag),
-                            ]"
-                          >
-                            <template v-if="getBadgeIcon(tag)">
-                              <UIcon
-                                :name="getBadgeIcon(tag)!"
-                                class="w-3 h-3"
-                              />
-                            </template>
-                            {{ tag.label }}
-                          </span>
-                        </template>
+                        <BadgePills :tags="item.highlights" />
                       </div>
                     </h3>
                   </div>
