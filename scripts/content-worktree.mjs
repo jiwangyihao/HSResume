@@ -43,6 +43,10 @@ function parseArgs(argv) {
     branch: 'content',
     message: null,
     dryRun: false,
+    merge: true,
+    mergeRef: 'main',
+    fetch: false,
+    cleanUntracked: false,
   }
 
   for (let i = 0; i < argv.length; i++) {
@@ -50,6 +54,10 @@ function parseArgs(argv) {
     if (a === '--dir') out.dir = argv[++i]
     else if (a === '--branch') out.branch = argv[++i]
     else if (a === '--dry-run') out.dryRun = true
+    else if (a === '--no-merge') out.merge = false
+    else if (a === '--merge-ref') out.mergeRef = argv[++i]
+    else if (a === '--fetch') out.fetch = true
+    else if (a === '--clean-untracked') out.cleanUntracked = true
     else if (a === '-m' || a === '--message') out.message = argv[++i]
     else out._.push(a)
   }
@@ -141,6 +149,85 @@ const PRIVATE_FILES = [
   'public/avatar.png',
 ]
 
+function getPorcelainStatus(dir) {
+  const res = runGitIn(dir, ['status', '--porcelain=v1'])
+  if (res.status !== 0) {
+    die(`读取 git 状态失败：${res.stderr || res.stdout || 'unknown error'}`)
+  }
+  return res.stdout.trim()
+}
+
+function ensureWorktreeCleanForMerge(dir, opts) {
+  const status = getPorcelainStatus(dir)
+  if (!status) return
+
+  if (opts.cleanUntracked) {
+    if (opts.dryRun) {
+      // eslint-disable-next-line no-console
+      console.log('[dry-run] git clean -fd (in content worktree)')
+    } else {
+      const clean = runGitIn(dir, ['clean', '-fd'], { stdio: 'inherit' })
+      if (clean.status !== 0) {
+        die('git clean 失败：请手动清理 content worktree 的未跟踪文件。')
+      }
+    }
+
+    const after = getPorcelainStatus(dir)
+    if (!after) return
+  }
+
+  die(
+    `content worktree 当前不是干净状态，无法安全执行 merge。\n` +
+      `请在 content worktree 中先提交/暂存/还原这些变更，然后再运行。\n\n` +
+      `提示：若只是未跟踪文件阻碍合并，可加 --clean-untracked（会删除未跟踪文件）。\n\n` +
+      `当前状态：\n${status}`,
+  )
+}
+
+function refExists(ref) {
+  const res = runGit(['rev-parse', '--verify', ref])
+  return res.status === 0
+}
+
+function maybeMergeMainIntoContent(worktreeDir, opts) {
+  if (!opts.merge) return
+
+  if (!refExists(opts.mergeRef)) {
+    die(
+      `找不到要合并的分支/引用：${opts.mergeRef}\n` +
+        `可用 --merge-ref 指定，例如 --merge-ref origin/main。`,
+    )
+  }
+
+  if (opts.fetch) {
+    if (opts.dryRun) {
+      // eslint-disable-next-line no-console
+      console.log('[dry-run] git fetch origin')
+    } else {
+      const fetch = runGit(['fetch', 'origin'], { stdio: 'inherit' })
+      if (fetch.status !== 0) {
+        die('git fetch 失败：请检查网络/权限，或移除 --fetch 仅做本地合并。')
+      }
+    }
+  }
+
+  ensureWorktreeCleanForMerge(worktreeDir, opts)
+
+  if (opts.dryRun) {
+    // eslint-disable-next-line no-console
+    console.log(`[dry-run] git merge --no-edit ${opts.mergeRef} (in content worktree)`)
+    return
+  }
+
+  const merge = runGitIn(worktreeDir, ['merge', '--no-edit', opts.mergeRef], { stdio: 'inherit' })
+  if (merge.status !== 0) {
+    die(
+      `merge 失败（可能有冲突）。\n` +
+        `请进入 content worktree 手动解决后提交，或执行 git merge --abort 取消合并。`,
+    )
+  }
+}
+
 function copyPrivateFilesToWorktree(worktreeDir, dryRun) {
   let copied = 0
   for (const rel of PRIVATE_FILES) {
@@ -182,6 +269,9 @@ function cmdSync(opts) {
   const dirAbs = opts.dir ? path.resolve(repoRoot, opts.dir) : defaultWorktreeDir()
   const wt = ensureWorktree(opts.branch, dirAbs, opts.dryRun)
 
+  // 推荐流程：先把 main 的公共改动合并到 content，再同步私密文件。
+  maybeMergeMainIntoContent(wt, opts)
+
   const copied = copyPrivateFilesToWorktree(wt, opts.dryRun)
   // eslint-disable-next-line no-console
   console.log(`[content-worktree] 同步完成：${copied} 个文件`) 
@@ -195,6 +285,9 @@ function cmdCommit(opts) {
   assertGitRepoRoot()
   const dirAbs = opts.dir ? path.resolve(repoRoot, opts.dir) : defaultWorktreeDir()
   const wt = ensureWorktree(opts.branch, dirAbs, opts.dryRun)
+
+  // 先合并 main，再同步并提交私密文件，避免“复制提交”导致历史分叉。
+  maybeMergeMainIntoContent(wt, opts)
 
   copyPrivateFilesToWorktree(wt, opts.dryRun)
 
@@ -261,7 +354,7 @@ function cmdStatus(opts) {
 
 function cmdHelp() {
   // eslint-disable-next-line no-console
-  console.log(`\nHSResume content worktree helper\n\n用法：\n  node scripts/content-worktree.mjs <command> [options]\n\nCommands:\n  init     初始化/确保 content worktree 存在\n  sync     将 main 工作区的私密文件同步到 content worktree\n  commit   sync 后在 content worktree 内 add + commit\n  status   查看 worktree 与 content 状态\n\nOptions:\n  --dir <path>       worktree 目录（相对路径或绝对路径；建议相对）\n  --branch <name>    分支名（默认 content）\n  -m, --message <m>  commit message（仅 commit）\n  --dry-run          只打印将要执行的动作\n\n示例：\n  node scripts/content-worktree.mjs init\n  node scripts/content-worktree.mjs sync\n  node scripts/content-worktree.mjs commit -m "chore(content): update resume"\n  node scripts/content-worktree.mjs status\n`)
+  console.log(`\nHSResume content worktree helper\n\n用法：\n  node scripts/content-worktree.mjs <command> [options]\n\nCommands:\n  init     初始化/确保 content worktree 存在\n  sync     （默认会先合并 main）将 main 工作区的私密文件同步到 content worktree\n  commit   （默认会先合并 main）sync 后在 content worktree 内 add + commit\n  status   查看 worktree 与 content 状态\n\nOptions:\n  --dir <path>         worktree 目录（相对路径或绝对路径；建议相对）\n  --branch <name>      分支名（默认 content）\n  --no-merge           sync/commit 时不先合并 main（不推荐）\n  --merge-ref <ref>    要合并的分支/引用（默认 main；可用 origin/main）\n  --fetch              合并前先 git fetch origin（可选）\n  --clean-untracked    合并前清理 content worktree 未跟踪文件（危险：会删除未跟踪文件）\n  -m, --message <m>    commit message（仅 commit）\n  --dry-run            只打印将要执行的动作\n\n示例：\n  node scripts/content-worktree.mjs init\n  node scripts/content-worktree.mjs sync\n  node scripts/content-worktree.mjs commit -m "chore(content): update resume"\n  node scripts/content-worktree.mjs status\n`)
 }
 
 const opts = parseArgs(process.argv.slice(2))
