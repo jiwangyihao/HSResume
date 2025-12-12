@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 12 12" width="16" height="16">
+    <!-- 白色背景 -->
+    <!-- <rect width="16" height="16" fill="#FFFFFF" /> -->
+
+    <!-- 黄色边框 (1px 宽) -->
+    <!-- 使用 stroke 实现，stroke-width=1，位置在 0.5 处居中覆盖 0-1 像素 -->
+    <rect x="0.5" y="0.5" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1" />
+
+    <!-- 蓝色像素内容 (#003399) -->
+    <g fill="currentColor">
+        <!-- 左侧 "D" 形状 -->
+        <rect x="3" y="2" width="1" height="12" /> <!-- 竖线 -->
+        <rect x="4" y="2" width="1" height="1" />  <!-- 上拐角点 -->
+        <rect x="4" y="13" width="1" height="1" /> <!-- 下拐角点 -->
+        <rect x="5" y="3" width="1" height="1" />  <!-- 上斜角 -->
+        <rect x="5" y="12" width="1" height="1" /> <!-- 下斜角 -->
+        <rect x="6" y="4" width="1" height="8" />  <!-- 右竖线 -->
+
+        <!-- 右侧 "W" / 叉子形状 -->
+        <!-- 上半部分的三条竖线 -->
+        <rect x="8" y="2" width="1" height="7" />
+        <rect x="10" y="2" width="1" height="7" />
+        <rect x="12" y="2" width="1" height="7" />
+
+        <!-- 下半部分的两条竖线 (交错) -->
+        <rect x="9" y="9" width="1" height="5" />
+        <rect x="11" y="9" width="1" height="5" />
+    </g>
+</svg>
