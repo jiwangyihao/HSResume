@@ -1916,7 +1916,7 @@ watch(
               {{ labels.games }}
             </h2>
 
-            <div class="space-y-4">
+            <div class="grid grid-cols-1 gap-(--masonry-gap) print:gap-4">
               <div
                 v-for="game in group"
                 :key="game.name"
