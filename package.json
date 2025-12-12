@@ -5,6 +5,10 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "content:init": "node scripts/content-worktree.mjs init",
+    "content:sync": "node scripts/content-worktree.mjs sync",
+    "content:commit": "node scripts/content-worktree.mjs commit",
+    "content:status": "node scripts/content-worktree.mjs status",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
