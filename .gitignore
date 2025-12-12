@@ -22,3 +22,7 @@ logs
 .env
 .env.*
 !.env.example
+
+# Private content (keep local on main, commit on content branch)
+content/resume/*.md
+public/avatar.png

@@ -9,8 +9,6 @@
 - **Human‑centric**：强调以候选人的真实故事和特点为中心，而不是只堆技术关键词。模板支持用 Markdown 自由组织内容，让你的经历更贴近「人」而不是「机器生成的列表」。
 - **Structured**：通过模块化配置和响应式布局，把信息组织成清晰的层级与版块，在网页和打印视图中都保持一致、专业的展示效果。
 
-因此，HSResume 这个名字既保留了简洁的缩写形式，又体现了项目的设计初衷：帮助开发者快速生成一份既「有人味」又「有结构」的开源简历。
-
 ## 快速开始
 
 ```bash
@@ -43,6 +41,8 @@ pnpm generate
 
 修改内容后无需改动页面逻辑，重新运行 `pnpm dev` 或 `pnpm generate` 即可。
 
+> 维护者协作（可选）：见 `CONTRIBUTING.md`。
+
 ## 界面与打印
 
 - 右上角语言切换（中文 / English），打印/导出 PDF 按钮一键调用浏览器打印。
@@ -50,6 +50,13 @@ pnpm generate
 - 自定义样式位于 `app/assets/css/main.css`，可根据配色/间距需求微调。
 
 ## 部署指引（GitHub Pages 示例）
+
+推荐方式（GitHub Actions 自动部署）：
+
+1. 在仓库设置中将 Pages 的 Source 选择为 **GitHub Actions**。
+2. 推送到 `content` 分支后，会自动执行 `pnpm generate` 并发布到 Pages。
+
+手动方式（发布到 `gh-pages` 分支）：
 
 1. `pnpm install && pnpm generate`
 2. 将 `.output/public` 发布到 `gh-pages` 分支。
