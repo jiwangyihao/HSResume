@@ -349,6 +349,11 @@ const handleAvatarError = () => {
     avatarSrc.value = "/avatar.sample.svg";
 };
 
+const { public: publicRuntime } = useRuntimeConfig();
+const strictGithubStats =
+  (publicRuntime as any).strictGithubStats === "1" ||
+  (publicRuntime as any).strictGithubStats === true;
+
 const { data: githubStats } = await useAsyncData(
   "github-stats",
   async () => {
@@ -379,6 +384,22 @@ const { data: githubStats } = await useAsyncData(
       const prResult = results[results.length - 3] as any;
       const issueResult = results[results.length - 2] as any;
       const contribResult = results[results.length - 1] as any;
+
+      // If any upstream returned an unexpected shape (often rate limit / error payload),
+      // fail the build in strict mode so we don't publish wrong numbers.
+      if (strictGithubStats) {
+        const contribOk = Array.isArray(contribResult?.contributions);
+        const prOk = typeof prResult?.total_count === "number";
+        const issueOk = typeof issueResult?.total_count === "number";
+        const reposOk = repoResults.every(Array.isArray);
+        if (!reposOk || !prOk || !issueOk || !contribOk) {
+          throw createError({
+            statusCode: 502,
+            statusMessage:
+              "GitHub stats payload invalid (possibly rate-limited)",
+          });
+        }
+      }
 
       const allRepos = repoResults.flat();
 
@@ -427,6 +448,21 @@ const { data: githubStats } = await useAsyncData(
         totalContributions,
       };
     } catch (e) {
+      // In CI strict mode, abort the prerender to avoid publishing incorrect stats.
+      if (import.meta.server && strictGithubStats) {
+        const msg =
+          e instanceof Error
+            ? e.message
+            : typeof e === "string"
+            ? e
+            : undefined;
+        throw createError({
+          statusCode: 502,
+          statusMessage: "Failed to fetch GitHub stats (strict mode)",
+          message: msg,
+        });
+      }
+
       console.error("Failed to fetch GitHub stats", e);
       return {
         stars: 0,

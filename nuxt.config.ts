@@ -11,6 +11,7 @@ export default defineNuxtConfig({
       // We keep placeholders here so `useRuntimeConfig().public` always has these keys.
       buildTime: "",
       gitSha: "",
+      strictGithubStats: "",
     },
   },
 

@@ -43,6 +43,7 @@ jobs:
         run: |
           echo "NUXT_PUBLIC_BUILD_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
           echo "NUXT_PUBLIC_GIT_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
+          echo "NUXT_PUBLIC_STRICT_GITHUB_STATS=1" >> $GITHUB_ENV
 
       - name: Generate static site
         run: pnpm generate
