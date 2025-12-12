@@ -171,6 +171,10 @@ projects:
       - kind: text
         label: 国家级大创项目
         category: award
+      - kind: split
+        domain: CCF SAC
+        value: 国三
+        category: award
     description:
       - 面向农业知识领域的类 MoE 架构智能体，围绕“感知-认知-行动”闭环，融合卫星遥感/物联网/气象等多源异构数据，支撑农业数字孪生与全周期决策。
       - 基于自主检索增强思维链（RACoT）与核心-细胞知识库结构，实现高置信度问答、风险预警与按图承保/定损。
@@ -196,6 +200,13 @@ projects:
         alt: GitHub Stars (LordlyRead)
         category: metric
       - kind: svg
+        url: https://atomgit.com/Lordly-Tech/source-j-legado/star/badge.svg
+        alt: AtomGit G-Star Stars (source-j-legado)
+      - kind: svg
+        url: https://atomgit.com/Lordly-Tech/LordlyRead/star/badge.svg
+        alt: AtomGit G-Star Stars (LordlyRead)
+        category: metric
+      - kind: svg
         url: https://img.shields.io/github/downloads/Lordly-Tech/LordlyRead/total
         alt: Downloads (LordlyRead)
         category: traffic
@@ -212,6 +223,7 @@ projects:
       - 规则获取型手环阅读器，支持“开源阅读”规则。
       - 主项目及关联规则项目在 GitHub 共计 **600+ Star**。
       - 相关技术视频在哔哩哔哩播放量超 **3.7 万**，规则项目年访问量 **6 万+**。
+      - 主项目与关联规则项目均入选 **AtomGit G-Star 开源摘星计划**。
     responsibilities:
       - 发起并独立开发核心功能。
     links:

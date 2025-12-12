@@ -27,6 +27,19 @@ homepages:
   - label: Coolapk
     url: http://www.coolapk.com/u/1399429
     icon: i-custom-coolapk
+github:
+  user: jiwangyihao
+  orgs:
+    - HIT-Fireworks
+    - Lordly-Tech
+colors:
+  profile: sky
+  education: sky
+  projects: sky
+  games: purple
+  awards: amber
+  languages: emerald
+  github: sky
 summary: |
   Software Engineering undergraduate at Harbin Institute of Technology (Class of 2023). Personal open-source projects have accumulated **800+ stars** on GitHub.
 
@@ -162,6 +175,10 @@ projects:
       - kind: text
         label: National College Student Innovation & Entrepreneurship Program
         category: award
+      - kind: split
+        domain: CCF SAC
+        value: National 3rd Prize
+        category: award
     responsibilities:
       - Designed overall architecture and multi-source cell knowledge base; integrated RAG.
       - Led multimodal data pipelines and digital-twin implementation, unifying remote sensing, IoT, weather, and agronomic logs.
@@ -177,6 +194,7 @@ projects:
       - Rule-driven wristband reader supporting "Open Reading" rules.
       - Over **600 stars** across main and rule repos.
       - Bilibili tutorials over **37k** views; rule repo over **60k** annual visits.
+      - Both the main project and rule repos were selected for the **AtomGit G-Star** program.
     highlights:
       - kind: svg
         url: https://img.shields.io/github/stars/jiwangyihao/source-j-legado
@@ -185,6 +203,13 @@ projects:
       - kind: svg
         url: https://img.shields.io/github/stars/Lordly-Tech/LordlyRead
         alt: GitHub Stars (LordlyRead)
+        category: metric
+      - kind: svg
+        url: https://atomgit.com/Lordly-Tech/source-j-legado/star/badge.svg
+        alt: AtomGit G-Star Stars (source-j-legado)
+      - kind: svg
+        url: https://atomgit.com/Lordly-Tech/LordlyRead/star/badge.svg
+        alt: AtomGit G-Star Stars (LordlyRead)
         category: metric
       - kind: svg
         url: https://img.shields.io/github/downloads/Lordly-Tech/LordlyRead/total
@@ -318,17 +343,4 @@ footer:
     link: https://beian.mps.gov.cn/#/query/webSearch?code=46010002000164
     icon: /gongan_beian.png
   copyright: Copyright © 2025 - Present [Jiwangyihao](https://resume.jwyihao.top). All Rights Reserved.
-colors:
-  profile: sky
-  education: sky
-  projects: sky
-  games: purple
-  awards: amber
-  languages: emerald
-  github: sky
-github:
-  user: jiwangyihao
-  orgs:
-    - HIT-Fireworks
-    - Lordly-Tech
 ---
