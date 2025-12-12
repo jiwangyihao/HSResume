@@ -5,6 +5,15 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
+  runtimeConfig: {
+    public: {
+      // Provided by CI (GitHub Pages workflow) via NUXT_PUBLIC_*.
+      // We keep placeholders here so `useRuntimeConfig().public` always has these keys.
+      buildTime: "",
+      gitSha: "",
+    },
+  },
+
   modules: [
     "@nuxt/content",
     "@nuxt/eslint",
