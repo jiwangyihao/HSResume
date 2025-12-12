@@ -778,15 +778,18 @@ const updateWaterfall = () => {
   if (!waterfallContainer.value) return;
 
   const container = waterfallContainer.value;
-  const items = Array.from(container.children) as HTMLElement[];
+  const items = Array.from(
+    container.querySelectorAll(":scope > .waterfall-item")
+  ) as HTMLElement[];
   const awardsSection = container.querySelector(
     "#awards-section"
   ) as HTMLElement;
 
   // Read current CSS-driven masonry parameters (we'll restore after measuring)
   const computed = window.getComputedStyle(container);
-  const rowGap = Number.parseFloat(computed.rowGap || "0") || 0;
   const rowHeight = Number.parseFloat(computed.gridAutoRows || "1") || 1;
+  const masonryGap =
+    Number.parseFloat(computed.getPropertyValue("--masonry-gap") || "0") || 0;
 
   // 1. Relax container to allow natural height measurement
   container.style.gridAutoRows = "auto";
@@ -806,11 +809,11 @@ const updateWaterfall = () => {
   const spans = items.map((el) => {
     const height = el.getBoundingClientRect().height;
 
-    // Standard CSS-grid masonry trick:
-    // span = ceil((itemHeight + rowGap) / (rowHeight + rowGap))
-    // Guard against division by zero.
-    const denom = Math.max(1, rowHeight + rowGap);
-    const span = Math.ceil((height + rowGap) / denom);
+    // Masonry trick:
+    // We keep row-gap=0 to avoid extra quantization artifacts, and instead bake
+    // a consistent vertical spacing into the span itself.
+    const denom = Math.max(1, rowHeight);
+    const span = Math.ceil((height + masonryGap) / denom);
     return Math.max(1, span);
   });
 
@@ -952,11 +955,37 @@ watch(
       </div>
 
       <!-- Body Skeleton -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <USkeleton class="h-64 w-full rounded-xl" />
-        <USkeleton class="h-48 w-full rounded-xl" />
-        <USkeleton class="h-56 w-full rounded-xl" />
-        <USkeleton class="h-72 w-full rounded-xl" />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Column 1 Skeletons -->
+        <div class="space-y-6">
+          <div class="space-y-4">
+            <USkeleton class="h-8 w-32" />
+            <USkeleton class="h-24 w-full" />
+          </div>
+          <div class="space-y-4">
+            <USkeleton class="h-8 w-32" />
+            <div class="space-y-4">
+              <USkeleton class="h-20 w-full" />
+              <USkeleton class="h-20 w-full" />
+              <USkeleton class="h-20 w-full" />
+            </div>
+          </div>
+        </div>
+        <!-- Column 2 Skeletons -->
+        <div class="space-y-6">
+          <div class="space-y-4">
+            <USkeleton class="h-8 w-32" />
+            <div class="space-y-2">
+              <USkeleton class="h-16 w-full" />
+              <USkeleton class="h-16 w-full" />
+              <USkeleton class="h-16 w-full" />
+            </div>
+          </div>
+          <div class="space-y-4">
+            <USkeleton class="h-8 w-32" />
+            <USkeleton class="h-48 w-full" />
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1009,11 +1038,37 @@ watch(
         </div>
 
         <!-- Body Skeleton -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <USkeleton class="h-64 w-full rounded-xl" />
-          <USkeleton class="h-48 w-full rounded-xl" />
-          <USkeleton class="h-56 w-full rounded-xl" />
-          <USkeleton class="h-72 w-full rounded-xl" />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Column 1 Skeletons -->
+          <div class="space-y-6">
+            <div class="space-y-4">
+              <USkeleton class="h-8 w-32" />
+              <USkeleton class="h-24 w-full" />
+            </div>
+            <div class="space-y-4">
+              <USkeleton class="h-8 w-32" />
+              <div class="space-y-4">
+                <USkeleton class="h-20 w-full" />
+                <USkeleton class="h-20 w-full" />
+                <USkeleton class="h-20 w-full" />
+              </div>
+            </div>
+          </div>
+          <!-- Column 2 Skeletons -->
+          <div class="space-y-6">
+            <div class="space-y-4">
+              <USkeleton class="h-8 w-32" />
+              <div class="space-y-2">
+                <USkeleton class="h-16 w-full" />
+                <USkeleton class="h-16 w-full" />
+                <USkeleton class="h-16 w-full" />
+              </div>
+            </div>
+            <div class="space-y-4">
+              <USkeleton class="h-8 w-32" />
+              <USkeleton class="h-48 w-full" />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2008,10 +2063,13 @@ watch(
 .waterfall-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  /* Masonry trick: small row unit + real row-gap, then JS sets grid-row-end span */
-  grid-auto-rows: 8px;
+  /* Masonry trick: 1px rows for precision; JS controls spans */
+  grid-auto-rows: 1px;
   grid-auto-flow: row dense; /* Help fill gaps */
-  row-gap: 24px;
+  /* Keep row-gap at 0 and bake a consistent vertical spacing into spans to avoid
+     quantization artifacts when row-gap participates in span math. */
+  --masonry-gap: 24px;
+  row-gap: 0;
 }
 
 .waterfall-item {
