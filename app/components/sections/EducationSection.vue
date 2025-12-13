@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { ResumeEntry } from "~/types/resume";
+import type {
+  EducationItem,
+  EducationItemCategory,
+  ResumeEntry,
+} from "~/types/resume";
 
 type Props = {
   resume: ResumeEntry;
@@ -11,6 +15,19 @@ type Props = {
 };
 
 defineProps<Props>();
+
+const DEFAULT_EDUCATION_ITEM_ICON_BY_CATEGORY: Record<
+  EducationItemCategory,
+  string
+> = {
+  party: "i-heroicons-flag",
+  representation: "i-heroicons-megaphone",
+  leadership: "i-heroicons-briefcase",
+  tech: "i-heroicons-command-line",
+  award: "i-heroicons-star",
+  scholarship: "i-heroicons-currency-yen",
+  default: "i-heroicons-user",
+};
 
 // Inline helpers: only used by EducationSection, keep the concern local.
 const getRoleIcon = (role: string) => {
@@ -33,6 +50,42 @@ const getRoleIcon = (role: string) => {
 
 const getRoleColor = (_role: string) => {
   return "text-sky-500 dark:text-sky-400";
+};
+
+const educationItemText = (item: EducationItem) =>
+  typeof item === "string" ? item : item.text;
+
+const educationItemKey = (item: EducationItem, index: number) =>
+  `${educationItemText(item)}-${index}`;
+
+const resolveEducationItemIcon = (
+  item: EducationItem,
+  kind: "role" | "honor" | "scholarship"
+) => {
+  if (typeof item !== "string") {
+    if (item.icon) return item.icon;
+    if (item.category)
+      return DEFAULT_EDUCATION_ITEM_ICON_BY_CATEGORY[item.category];
+  }
+
+  const text = educationItemText(item);
+
+  // Backward-compatible defaults per list type.
+  if (kind === "role") return getRoleIcon(text);
+  if (kind === "honor") return "i-heroicons-star";
+  return "i-heroicons-currency-yen";
+};
+
+const resolveEducationItemIconClass = (
+  item: EducationItem,
+  kind: "role" | "honor" | "scholarship"
+) => {
+  // Keep existing color behavior for roles (based on role content).
+  if (kind === "role") return getRoleColor(educationItemText(item));
+
+  // Slightly different accents for honors/scholarships.
+  if (kind === "honor") return "text-primary-600 dark:text-primary-400";
+  return "text-yellow-600 dark:text-yellow-400";
 };
 </script>
 
@@ -69,39 +122,56 @@ const getRoleColor = (_role: string) => {
           class="space-y-1 text-sm font-medium text-gray-900 dark:text-gray-100"
         >
           <li
-            v-for="role in edu.roles"
-            :key="role"
+            v-for="(role, index) in edu.roles ?? []"
+            :key="educationItemKey(role, index)"
             class="flex items-start gap-2"
           >
             <UIcon
-              :name="getRoleIcon(role)"
-              :class="['w-4 h-4 mt-0.5 shrink-0', getRoleColor(role)]"
+              :name="resolveEducationItemIcon(role, 'role')"
+              :class="[
+                'w-4 h-4 mt-0.5 shrink-0',
+                resolveEducationItemIconClass(role, 'role'),
+              ]"
             />
-            <Markdown :source="role" tag="span" unwrap="p" />
+            <Markdown :source="educationItemText(role)" tag="span" unwrap="p" />
           </li>
 
           <li
-            v-for="honor in edu.honors"
-            :key="honor"
+            v-for="(honor, index) in edu.honors ?? []"
+            :key="educationItemKey(honor, index)"
             class="flex items-start gap-2"
           >
             <UIcon
-              name="i-heroicons-star"
-              class="w-4 h-4 mt-0.5 shrink-0 text-primary-600 dark:text-primary-400"
+              :name="resolveEducationItemIcon(honor, 'honor')"
+              :class="[
+                'w-4 h-4 mt-0.5 shrink-0',
+                resolveEducationItemIconClass(honor, 'honor'),
+              ]"
             />
-            <Markdown :source="honor" tag="span" unwrap="p" />
+            <Markdown
+              :source="educationItemText(honor)"
+              tag="span"
+              unwrap="p"
+            />
           </li>
 
           <li
-            v-for="scholarship in edu.scholarships"
-            :key="scholarship"
+            v-for="(scholarship, index) in edu.scholarships ?? []"
+            :key="educationItemKey(scholarship, index)"
             class="flex items-start gap-2"
           >
             <UIcon
-              name="i-heroicons-currency-yen"
-              class="w-4 h-4 mt-0.5 shrink-0 text-yellow-600 dark:text-yellow-400"
+              :name="resolveEducationItemIcon(scholarship, 'scholarship')"
+              :class="[
+                'w-4 h-4 mt-0.5 shrink-0',
+                resolveEducationItemIconClass(scholarship, 'scholarship'),
+              ]"
             />
-            <Markdown :source="scholarship" tag="span" unwrap="p" />
+            <Markdown
+              :source="educationItemText(scholarship)"
+              tag="span"
+              unwrap="p"
+            />
           </li>
         </ul>
       </div>

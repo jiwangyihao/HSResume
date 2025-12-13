@@ -16,7 +16,37 @@ summary: |
   This is a **HSResume** sample content file for the public main branch.
 
   For local development, you can create and edit `content/resume/zh.md` / `content/resume/en.md` (ignored on main) to preview with your real content.
-education: []
+education:
+  - period: "2023-08 to 2027-07"
+    school: Sample University
+    city: Sample City, Sample Country
+    degree: Bachelor
+    major: Software Engineering
+    form: Full-time
+    # roles / honors / scholarships support 2 formats:
+    # 1) plain string (legacy)
+    # 2) object: { text, icon?, category? } to configure icons from markdown
+    #
+    # category is used to pick a default icon (overridable by icon):
+    # party | representation | leadership | tech | award | scholarship | default
+    roles:
+      - text: Youth League Branch Secretary • Probationary Member of the CPC
+        category: party
+      - text: Faculty Student Representative (2024/2025)
+        category: representation
+      - text: Tech Support Dept. Lead, Spark Notes Club
+        category: leadership
+      - text: Officer, HITLUG open-source student club
+        category: tech
+        icon: i-heroicons-command-line
+      - "Teaching Assistant: Data Structures"
+    honors:
+      - text: "Outstanding Student" (2024)
+        category: award
+      - "Dean's List (2023)"
+    scholarships:
+      - text: Single-item People's Scholarship (2025)
+        category: scholarship
 internships: []
 work: []
 projects: []

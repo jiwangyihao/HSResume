@@ -29,6 +29,30 @@ export type Badge =
 
 export type ResumeLink = { label: string; url: string; icon?: string };
 
+export type EducationItemCategory =
+  | "party"
+  | "representation"
+  | "leadership"
+  | "tech"
+  | "award"
+  | "scholarship"
+  | "default";
+
+/**
+ * Education list items can be either a plain string or a structured object.
+ * This allows configuring per-item icons (and optional category-based defaults)
+ * from markdown frontmatter.
+ */
+export type EducationItem =
+  | string
+  | {
+      text: string;
+      /** Optional icon name for UIcon (e.g. i-heroicons-flag). */
+      icon?: string;
+      /** Optional category used to pick a default icon in UI. */
+      category?: EducationItemCategory;
+    };
+
 export type ResumeEducation = {
   period: string;
   school: string;
@@ -36,9 +60,9 @@ export type ResumeEducation = {
   degree: string;
   major: string;
   form: string;
-  roles: string[];
-  honors: string[];
-  scholarships: string[];
+  roles: EducationItem[];
+  honors: EducationItem[];
+  scholarships: EducationItem[];
 };
 
 export type ResumeProject = {
