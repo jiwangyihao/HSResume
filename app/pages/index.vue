@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useWaterfallLayout } from "../composables/useWaterfallLayout";
+import { useResumePageModel } from "../composables/useResumePageModel";
 import ResumeHeader from "../components/sections/ResumeHeader.vue";
 import EducationSection from "../components/sections/EducationSection.vue";
 import ProfileSection from "../components/sections/ProfileSection.vue";
@@ -11,22 +12,22 @@ import LanguagesSection from "../components/sections/LanguagesSection.vue";
 import ResumeFooter from "../components/sections/ResumeFooter.vue";
 import ResumeSkeleton from "../components/shared/ResumeSkeleton.vue";
 import ResumeActionBar from "../components/shared/ResumeActionBar.vue";
-import { usePrint } from "../composables/usePrint";
-import { useResumeContent } from "../composables/useResumeContent";
-import { useResumeLocale } from "../composables/useResumeLocale";
-import { useThemeColors } from "../composables/useThemeColors";
 import type { ComponentPublicInstance } from "vue";
 
-const runtimeConfig = useRuntimeConfig();
-const buildTime = computed(() => runtimeConfig.public.buildTime || "");
-const buildSha = computed(() => runtimeConfig.public.gitSha || "");
-
-const { locale, localeItems, labels } = useResumeLocale();
-const { resume, pending, error, refresh, resumeView } = await useResumeContent(
-  locale
-);
-const { sectionSettings, resolveHexColor } = useThemeColors(resumeView);
-const { printPage } = usePrint();
+const {
+  buildTime,
+  buildSha,
+  locale,
+  localeItems,
+  labels,
+  resume,
+  pending,
+  error,
+  resumeView,
+  sectionSettings,
+  themeColorFor,
+  printPage,
+} = await useResumePageModel();
 
 const avatarSrc = ref("/avatar.png");
 const handleAvatarError = () => {
@@ -126,9 +127,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :resume="resumeView"
             :title="labels.profile"
             :icon-class="sectionSettings.profile.icon"
-            :theme-color="
-              resolveHexColor(resumeView.colors?.profile || 'primary')
-            "
+            :theme-color="themeColorFor('profile', 'primary')"
           />
 
           <!-- Education (Fixed Left) -->
@@ -137,9 +136,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :title="labels.education"
             :icon-class="sectionSettings.education.icon"
             :marker-bg-class="sectionSettings.education.bg"
-            :theme-color="
-              resolveHexColor(resumeView.colors?.education || 'primary')
-            "
+            :theme-color="themeColorFor('education', 'primary')"
           />
 
           <!-- GitHub Activity Stats (Fixed Left) -->
@@ -149,7 +146,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :icon-class="sectionSettings.github.icon"
             :dot-bg-class="sectionSettings.github.bg"
             :text-class="sectionSettings.github.text"
-            :theme-color="resolveHexColor(resumeView.colors?.github || 'sky')"
+            :theme-color="themeColorFor('github', 'sky')"
             :stars-label="labels.stars"
             :contributions-label="labels.contributions"
             :prs-label="labels.prs"
@@ -164,9 +161,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :expand-label="labels.expand"
             :icon-class="sectionSettings.awards.icon"
             :accent-bg-class="sectionSettings.awards.bg"
-            :theme-color="
-              resolveHexColor(resumeView.colors?.awards || 'yellow')
-            "
+            :theme-color="themeColorFor('awards', 'yellow')"
           />
 
           <!-- Projects -->
@@ -175,9 +170,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :title="labels.projects"
             :icon-class="sectionSettings.projects.icon"
             :accent-bg-class="sectionSettings.projects.bg"
-            :theme-color="
-              resolveHexColor(resumeView.colors?.projects || 'primary')
-            "
+            :theme-color="themeColorFor('projects', 'primary')"
           />
 
           <!-- Games -->
@@ -186,7 +179,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :title="labels.games"
             :icon-class="sectionSettings.games.icon"
             :accent-bg-class="sectionSettings.games.bg"
-            :theme-color="resolveHexColor(resumeView.colors?.games || 'purple')"
+            :theme-color="themeColorFor('games', 'purple')"
           />
 
           <!-- Languages -->
@@ -195,9 +188,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :title="labels.languages"
             :icon-class="sectionSettings.languages.icon"
             :accent-bg-class="sectionSettings.languages.bg"
-            :theme-color="
-              resolveHexColor(resumeView.colors?.languages || 'emerald')
-            "
+            :theme-color="themeColorFor('languages', 'emerald')"
           />
         </div>
       </div>
