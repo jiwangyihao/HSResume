@@ -2,6 +2,7 @@
 import { useWaterfallLayout } from "../composables/useWaterfallLayout";
 import Markdown from "../components/content/Markdown.vue";
 import ResumeHeader from "../components/sections/ResumeHeader.vue";
+import EducationSection from "../components/sections/EducationSection.vue";
 import SectionHeader from "../components/shared/SectionHeader.vue";
 import BadgePills from "../components/shared/BadgePills.vue";
 import ResumeSkeleton from "../components/shared/ResumeSkeleton.vue";
@@ -14,7 +15,6 @@ import { useGithubStats } from "../composables/useGithubStats";
 import { useResumeContent } from "../composables/useResumeContent";
 import { useResumeLocale } from "../composables/useResumeLocale";
 import { useThemeColors } from "../composables/useThemeColors";
-import { useEducationRoles } from "../composables/useEducationRoles";
 import type { ComponentPublicInstance } from "vue";
 
 const runtimeConfig = useRuntimeConfig();
@@ -36,8 +36,6 @@ const handleAvatarError = () => {
   if (avatarSrc.value !== "/avatar.sample.svg")
     avatarSrc.value = "/avatar.sample.svg";
 };
-
-const { getRoleIcon, getRoleColor } = useEducationRoles();
 
 const {
   waterfallContainer,
@@ -172,73 +170,15 @@ const chunkedGames = computed(() => {
           </section>
 
           <!-- Education (Fixed Left) -->
-          <section
-            class="break-inside-avoid waterfall-item col-span-1 md:col-start-1 print:col-span-6 print:col-start-auto"
-          >
-            <SectionHeader
-              :title="labels.education"
-              icon="i-heroicons-academic-cap"
-              :icon-class="sectionSettings.education.icon"
-              :theme-color="
-                resolveHexColor(resumeView.colors?.education || 'primary')
-              "
-            />
-            <div class="space-y-6 print:space-y-4">
-              <div
-                v-for="edu in resumeView.education"
-                :key="edu.school"
-                class="relative pl-4 border-l-2 border-gray-200 dark:border-gray-700"
-              >
-                <div
-                  class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full ring-4 ring-white dark:ring-gray-900"
-                  :class="sectionSettings.education.bg"
-                ></div>
-                <h3 class="font-bold text-gray-900 dark:text-white">
-                  {{ edu.school }}
-                </h3>
-                <div class="text-sm text-gray-500 mb-2">
-                  {{ edu.major }} · {{ edu.degree }} · {{ edu.period }}
-                </div>
-                <ul
-                  class="space-y-1 text-sm font-medium text-gray-900 dark:text-gray-100"
-                >
-                  <li
-                    v-for="role in edu.roles"
-                    :key="role"
-                    class="flex items-start gap-2"
-                  >
-                    <UIcon
-                      :name="getRoleIcon(role)"
-                      :class="['w-4 h-4 mt-0.5 shrink-0', getRoleColor(role)]"
-                    />
-                    <Markdown :source="role" tag="span" unwrap="p" />
-                  </li>
-                  <li
-                    v-for="honor in edu.honors"
-                    :key="honor"
-                    class="flex items-start gap-2"
-                  >
-                    <UIcon
-                      name="i-heroicons-star"
-                      class="w-4 h-4 mt-0.5 shrink-0 text-primary-600 dark:text-primary-400"
-                    />
-                    <Markdown :source="honor" tag="span" unwrap="p" />
-                  </li>
-                  <li
-                    v-for="scholarship in edu.scholarships"
-                    :key="scholarship"
-                    class="flex items-start gap-2"
-                  >
-                    <UIcon
-                      name="i-heroicons-currency-yen"
-                      class="w-4 h-4 mt-0.5 shrink-0 text-yellow-600 dark:text-yellow-400"
-                    />
-                    <Markdown :source="scholarship" tag="span" unwrap="p" />
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
+          <EducationSection
+            :resume="resumeView"
+            :title="labels.education"
+            :icon-class="sectionSettings.education.icon"
+            :marker-bg-class="sectionSettings.education.bg"
+            :theme-color="
+              resolveHexColor(resumeView.colors?.education || 'primary')
+            "
+          />
 
           <!-- GitHub Activity Stats (Fixed Left) -->
           <section
