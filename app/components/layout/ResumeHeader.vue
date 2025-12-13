@@ -84,7 +84,7 @@ defineProps<Props>();
             class="flex items-center justify-start lg:justify-end print:justify-start gap-2 text-gray-600 dark:text-gray-300"
           >
             <UIcon name="i-heroicons-envelope" class="w-5 h-5 text-gray-400" />
-            <a :href="`mailto:${resume.email}`" class="hover:text-primary">
+            <a :href="`mailto:${resume.email}`" class="resume-link">
               {{ resume.email }}
             </a>
           </div>
@@ -101,6 +101,7 @@ defineProps<Props>();
             size="xs"
             color="neutral"
             variant="soft"
+            class="resume-link"
           >
             <template #leading>
               <UIcon :name="link.icon || 'i-heroicons-link'" class="w-4 h-4" />
@@ -121,6 +122,7 @@ defineProps<Props>();
           size="xs"
           color="neutral"
           variant="soft"
+          class="resume-link"
         >
           <template #leading>
             <UIcon :name="link.icon || 'i-heroicons-link'" class="w-4 h-4" />

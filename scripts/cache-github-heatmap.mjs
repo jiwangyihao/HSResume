@@ -25,7 +25,7 @@ function extractFrontmatter(markdown) {
 }
 
 function resolveHexColor600(colorName) {
-  const fallback = colors.sky?.[600] ?? "#0284c7";
+  const fallback = colors.sky[600];
   const palette = colors[colorName];
 
   let value = fallback;
@@ -36,7 +36,7 @@ function resolveHexColor600(colorName) {
     value = palette;
   }
 
-  if (typeof value !== "string") return "#0284c7";
+  if (typeof value !== "string") return fallback;
 
   // Tailwind v4 exports many colors as OKLCH strings (e.g. "oklch(58.8% 0.158 241.966)").
   // ghchart requires a hex color string.
@@ -44,7 +44,7 @@ function resolveHexColor600(colorName) {
 
   const parsed = parse(value);
   const hex = parsed ? formatHex(parsed) : null;
-  return hex || "#0284c7";
+  return hex || fallback;
 }
 
 async function fetchText(url, timeoutMs = 15000) {

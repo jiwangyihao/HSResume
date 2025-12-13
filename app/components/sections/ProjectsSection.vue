@@ -65,6 +65,7 @@ const items = computed<ProcessedProject[]>(() => {
       :item="item"
       :accent-bg-class="accentBgClass"
       :role-text-class="roleTextClass"
+      :theme-color="themeColor"
     />
   </div>
 </template>

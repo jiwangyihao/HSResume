@@ -37,7 +37,7 @@ defineProps<Props>();
           <a
             href="https://github.com/jiwangyihao/HSResume"
             target="_blank"
-            class="hover:text-primary hover:underline"
+            class="resume-link"
             >HSResume</a
           >
         </p>

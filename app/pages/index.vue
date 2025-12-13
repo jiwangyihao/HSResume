@@ -99,7 +99,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
     <div
       v-else
       ref="pageRootRef"
-      class="bg-white dark:bg-gray-900 rounded-xl shadow-xl print:shadow-none print:rounded-none px-4 py-8 sm:p-8 print:p-0 print:py-4 border border-gray-200 dark:border-gray-800 print:border-none relative"
+      class="resume-page bg-white dark:bg-gray-900 rounded-xl shadow-xl print:shadow-none print:rounded-none px-4 py-8 sm:p-8 print:p-0 print:py-4 border border-gray-200 dark:border-gray-800 print:border-none relative"
     >
       <div
         v-if="!isSubtreeReady || !isLayoutReady"
