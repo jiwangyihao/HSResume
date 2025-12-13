@@ -148,6 +148,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :title="labels.projects"
             :icon-class="sectionSettings.projects.icon"
             :accent-bg-class="sectionSettings.projects.bg"
+            :role-text-class="sectionSettings.projects.text"
             :theme-color="themeColorFor('projects', 'primary')"
           />
 
