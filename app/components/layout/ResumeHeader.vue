@@ -2,7 +2,7 @@
 import type { ComponentPublicInstance } from "vue";
 import type { ResumeEntry } from "../../types/resume";
 
-import BadgePills from "../shared/BadgePills.vue";
+import BadgePills from "../ui/BadgePills.vue";
 
 type Props = {
   resume: ResumeEntry;

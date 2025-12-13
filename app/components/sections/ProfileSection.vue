@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Markdown from "../content/Markdown.vue";
-import SectionHeader from "../shared/SectionHeader.vue";
+import SectionHeader from "../ui/SectionHeader.vue";
 import type { ResumeEntry } from "../../types/resume";
 
 type Props = {

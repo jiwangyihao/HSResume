@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SectionHeader from "../shared/SectionHeader.vue";
+import SectionHeader from "../ui/SectionHeader.vue";
 import ProjectCard from "../cards/ProjectCard.vue";
 
 import type {
