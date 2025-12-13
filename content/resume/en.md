@@ -98,12 +98,17 @@ projects:
         alt: GitCode Star
         category: metric
       - kind: split
-        domain: CSCC OS Design
+        domain: CSCC
         value: National 2nd Prize
         category: award
+      - kind: split
+        domain: CSCC
+        value: Technical Training Talk
+        category: event
     responsibilities:
       - Core developer responsible for system build and maintenance.
       - Represented the project to win National 2nd Prize in the OS Design (Function Challenge) track of the 5th CSCC.
+      - Invited to present the project at the 2025 CSCC technical training session.
     links:
       - label: Website
         url: https://www.gxde.top

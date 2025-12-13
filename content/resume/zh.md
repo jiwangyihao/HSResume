@@ -93,9 +93,13 @@ projects:
         alt: GitCode Star
         category: metric
       - kind: split
-        domain: 系统能力大赛
+        domain: CSCC
         value: 国二
         category: award
+      - kind: split
+        domain: CSCC
+        value: 培训分享
+        category: event
     description:
       - 基于 Debian Testing 构建的 Linux 发行版，旨在复刻并现代化经典的 Deepin 15 桌面体验。
       - 获评 **Gitee 最有价值开源项目**，8 个操作系统类 GVP 项目中**唯一一个完全由社区主导的**项目。
@@ -104,6 +108,7 @@ projects:
     responsibilities:
       - 项目核心开发者，负责系统的核心构建与维护。
       - 代表项目带队参加第五届全国大学生计算机系统能力大赛，荣获操作系统设计赛（功能挑战赛道）**全国二等奖**。
+      - 受邀在**2025全国大学生计算机系统能力大赛技术培训会**上进行项目分享。
     links:
       - label: 官网
         url: https://www.gxde.top
