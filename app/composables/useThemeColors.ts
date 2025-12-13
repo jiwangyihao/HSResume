@@ -104,8 +104,9 @@ export const resolveHexColor = (colorName: string) => {
     colorValue = palette;
   }
 
-  const parsed = parse(colorValue);
-  return parsed ? formatHex(parsed) : "#0284c7";
+  const parsed = parse(colorValue) ?? parse(defaultColor);
+  // `defaultColor` is guaranteed to be a Tailwind palette value; parsing should succeed.
+  return formatHex(parsed!);
 };
 
 export const useThemeColors = (resumeView: ComputedRef<ResumeEntry>) => {

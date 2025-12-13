@@ -5,6 +5,8 @@ type Props = {
   item: ProcessedProject;
   accentBgClass: string;
   roleTextClass?: string;
+  /** Resolved section theme color (hex), used for the top-right link button */
+  themeColor: string;
 };
 
 defineProps<Props>();
@@ -35,7 +37,10 @@ defineProps<Props>();
             </div>
           </h3>
         </div>
-        <div class="flex gap-1 shrink-0 print:hidden">
+        <div
+          class="flex gap-1 shrink-0 print:hidden"
+          :style="{ '--project-accent': themeColor }"
+        >
           <UButton
             v-for="link in item.links"
             :key="link.url"
@@ -45,6 +50,7 @@ defineProps<Props>();
             color="neutral"
             variant="ghost"
             icon="i-heroicons-arrow-top-right-on-square"
+            class="text-(--project-accent)! hover:text-(--project-accent)!"
           />
         </div>
       </div>
