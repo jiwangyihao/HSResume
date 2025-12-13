@@ -186,7 +186,17 @@ const { data: githubStats } = await useAsyncData<GithubStats | null>(
         });
       }
 
-      console.error("Failed to fetch GitHub stats", e);
+      // In dev, Nuxt forwards server logs to the client/devtools and stringifies them.
+      // Some fetch/network errors (e.g. undici) are not plain objects and can cause
+      // DevalueError: Cannot stringify arbitrary non-POJOs.
+      // So we only log a safe string here.
+      const errMsg =
+        e instanceof Error
+          ? `${e.name}: ${e.message}`
+          : typeof e === "string"
+          ? e
+          : "Unknown error";
+      console.error(`Failed to fetch GitHub stats: ${errMsg}`);
       return { ...DEFAULT_STATS };
     }
   },
