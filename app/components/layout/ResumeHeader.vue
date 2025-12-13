@@ -69,7 +69,7 @@ defineProps<Props>();
 
     <div class="contents">
       <div
-        class="flex flex-col gap-2 text-sm text-left lg:text-right order-4 md:order-3 col-span-2 md:col-span-1 md:col-start-2 md:row-start-2 md:flex-row md:items-center md:justify-between lg:flex-col lg:col-start-3 lg:row-start-1 lg:items-end lg:justify-start lg:gap-2 print:flex print:flex-col print:col-start-1 print:col-span-1 print:row-start-2 print:text-left print:gap-2"
+        class="flex flex-col gap-2 text-sm text-left lg:text-right order-4 md:order-3 col-span-2 lg:col-span-1 md:row-start-2 md:flex-row md:items-center md:justify-between lg:flex-col lg:col-start-3 lg:row-start-1 lg:items-end lg:justify-start lg:gap-2 print:flex print:flex-col print:col-start-1 print:col-span-1 print:row-start-2 print:text-left print:gap-2"
       >
         <div
           class="flex flex-wrap justify-start gap-4 md:justify-start lg:flex-col lg:gap-2 lg:items-end print:flex-row print:gap-x-6 print:items-center print:justify-start"
