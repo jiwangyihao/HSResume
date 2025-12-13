@@ -302,6 +302,13 @@ games:
   - name: Rizline
     detail: 20-50 h; ~30 h.
     notes: Rhythm chart design, timing windows, and mobile latency optimization.
+awardsFoldingRules:
+  # If an award title matches this regex, it is treated as explicitly unimportant
+  # and will be folded under the previous important award.
+  unimportantTitlePattern: (school|provincial|regional|creative group)
+  # If an award title matches this regex, it is treated as important
+  # and will start a new visible group.
+  importantTitlePattern: (national|global|international)
 awardsPrintWidth: 70
 awards:
   - date: 2025-12
