@@ -1,0 +1,314 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hsresume.local/schemas/resume-frontmatter.schema.json",
+  "title": "HSResume Resume Frontmatter",
+  "description": "Schema for YAML frontmatter in content/resume/*.md",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional per-file schema reference (VS Code YAML supports this)."
+    },
+    "locale": {
+      "type": "string",
+      "enum": ["zh", "en"],
+      "description": "Resume locale"
+    },
+    "name": { "type": "string" },
+    "subtitle": { "type": "string" },
+    "highlights": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Badge" }
+    },
+    "nationality": { "type": "string" },
+    "email": { "type": "string", "format": "email" },
+    "homepages": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ResumeLink" }
+    },
+    "summary": { "type": "string" },
+    "education": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ResumeEducation" }
+    },
+    "internships": {
+      "type": "array",
+      "description": "Internship entries (kept permissive because TS type is unknown[])"
+    },
+    "work": {
+      "type": "array",
+      "description": "Work entries (kept permissive because TS type is unknown[])"
+    },
+    "projects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ResumeProject" }
+    },
+    "games": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ResumeGame" }
+    },
+    "awards": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ResumeAward" }
+    },
+    "awardsPrintWidth": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "0-100 percentage for print view width"
+    },
+    "awardsFoldingRules": { "$ref": "#/$defs/AwardsFoldingRules" },
+    "languages": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ResumeLanguage" }
+    },
+    "footer": { "$ref": "#/$defs/ResumeFooter" },
+    "colors": { "$ref": "#/$defs/ResumeColors" },
+    "github": { "$ref": "#/$defs/GithubConfig" }
+  },
+  "required": [
+    "locale",
+    "name",
+    "highlights",
+    "nationality",
+    "email",
+    "homepages",
+    "summary",
+    "education",
+    "internships",
+    "work",
+    "projects",
+    "games",
+    "awards",
+    "languages"
+  ],
+  "$defs": {
+    "BadgeCategory": {
+      "type": "string",
+      "enum": [
+        "award",
+        "metric",
+        "traffic",
+        "event",
+        "tech",
+        "business",
+        "platform",
+        "default"
+      ]
+    },
+    "Badge": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "svg" },
+            "url": { "type": "string" },
+            "alt": { "type": "string" },
+            "category": { "$ref": "#/$defs/BadgeCategory" },
+            "icon": { "type": "string" }
+          },
+          "required": ["kind", "url"]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "split" },
+            "domain": { "type": "string" },
+            "value": { "type": "string" },
+            "category": { "$ref": "#/$defs/BadgeCategory" },
+            "icon": { "type": "string" }
+          },
+          "required": ["kind", "domain", "value"]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "text" },
+            "label": { "type": "string" },
+            "category": { "$ref": "#/$defs/BadgeCategory" },
+            "icon": { "type": "string" }
+          },
+          "required": ["kind", "label"]
+        }
+      ]
+    },
+    "ResumeLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string" },
+        "url": { "type": "string" },
+        "icon": { "type": "string" }
+      },
+      "required": ["label", "url"]
+    },
+    "EducationItemCategory": {
+      "type": "string",
+      "enum": [
+        "party",
+        "representation",
+        "leadership",
+        "tech",
+        "award",
+        "scholarship",
+        "default"
+      ]
+    },
+    "EducationItem": {
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "text": { "type": "string" },
+            "icon": { "type": "string" },
+            "category": { "$ref": "#/$defs/EducationItemCategory" }
+          },
+          "required": ["text"]
+        }
+      ]
+    },
+    "ResumeEducation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "period": { "type": "string" },
+        "school": { "type": "string" },
+        "city": { "type": "string" },
+        "degree": { "type": "string" },
+        "major": { "type": "string" },
+        "form": { "type": "string" },
+        "roles": { "type": "array", "items": { "$ref": "#/$defs/EducationItem" } },
+        "honors": { "type": "array", "items": { "$ref": "#/$defs/EducationItem" } },
+        "scholarships": { "type": "array", "items": { "$ref": "#/$defs/EducationItem" } }
+      },
+      "required": [
+        "period",
+        "school",
+        "city",
+        "degree",
+        "major",
+        "form",
+        "roles",
+        "honors",
+        "scholarships"
+      ]
+    },
+    "ResumeProject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "period": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "description": { "type": "array", "items": { "type": "string" } },
+        "responsibilities": { "type": "array", "items": { "type": "string" } },
+        "highlights": { "type": "array", "items": { "$ref": "#/$defs/Badge" } },
+        "links": { "type": "array", "items": { "$ref": "#/$defs/ResumeLink" } },
+        "printWidth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "0-100 percentage for print view width"
+        },
+        "printColSpan": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Calculated span for print view (usually not authored manually)"
+        }
+      },
+      "required": ["period", "name", "role", "description", "responsibilities"]
+    },
+    "ResumeGame": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "detail": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["name", "detail"]
+    },
+    "ResumeAward": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "date": { "type": "string" },
+        "title": { "type": "string" }
+      },
+      "required": ["date", "title"]
+    },
+    "AwardsFoldingRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "unimportantTitlePattern": { "type": "string" },
+        "importantTitlePattern": { "type": "string" }
+      }
+    },
+    "ResumeLanguage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "certificate": { "type": "string" }
+      },
+      "required": ["name"]
+    },
+    "ResumeFooter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "onlineUrl": { "type": "string" },
+        "copyright": { "type": "string" },
+        "icp": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "text": { "type": "string" },
+            "link": { "type": "string" }
+          },
+          "required": ["text", "link"]
+        },
+        "psb": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "text": { "type": "string" },
+            "link": { "type": "string" },
+            "icon": { "type": "string" }
+          },
+          "required": ["text", "link", "icon"]
+        }
+      },
+      "required": ["onlineUrl", "copyright"]
+    },
+    "ResumeColors": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "profile": { "type": "string" },
+        "education": { "type": "string" },
+        "projects": { "type": "string" },
+        "games": { "type": "string" },
+        "awards": { "type": "string" },
+        "languages": { "type": "string" },
+        "github": { "type": "string" }
+      }
+    },
+    "GithubConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "user": { "type": "string" },
+        "orgs": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["user", "orgs"]
+    }
+  }
+}
