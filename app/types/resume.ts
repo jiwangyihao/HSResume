@@ -55,6 +55,13 @@ export type ResumeProject = {
   printColSpan?: number;
 };
 
+// Derived type used by UI rendering: ensure optional fields are normalized.
+export type ProcessedProject = ResumeProject & {
+  links: NonNullable<ResumeProject["links"]>;
+  responsibilities: ResumeProject["responsibilities"];
+  printColSpan: number;
+};
+
 export type ResumeGame = { name: string; detail: string; notes?: string };
 
 export type ResumeAward = { date: string; title: string };

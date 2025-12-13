@@ -3,13 +3,12 @@ import { useWaterfallLayout } from "../composables/useWaterfallLayout";
 import Markdown from "../components/content/Markdown.vue";
 import ResumeHeader from "../components/sections/ResumeHeader.vue";
 import EducationSection from "../components/sections/EducationSection.vue";
+import ProjectsSection from "../components/sections/ProjectsSection.vue";
 import SectionHeader from "../components/shared/SectionHeader.vue";
-import BadgePills from "../components/shared/BadgePills.vue";
 import ResumeSkeleton from "../components/shared/ResumeSkeleton.vue";
 import ResumeActionBar from "../components/shared/ResumeActionBar.vue";
 import type { ResumeAward } from "../types/resume";
 import { useAwards } from "../composables/useAwards";
-import { useProjects } from "../composables/useProjects";
 import { usePrint } from "../composables/usePrint";
 import { useGithubStats } from "../composables/useGithubStats";
 import { useResumeContent } from "../composables/useResumeContent";
@@ -57,9 +56,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
   headerInfoRef.value = el instanceof HTMLElement ? el : null;
 };
 
-const clampInt = (value: number, min: number, max: number) =>
-  Math.min(max, Math.max(min, Math.round(value)));
-
 const {
   awardsPrintSpan,
   groupedAwards,
@@ -67,8 +63,6 @@ const {
   hoveredCardTitle,
   isCardHovered,
 } = useAwards(resumeView);
-
-const { processedProjects } = useProjects(resumeView);
 
 const chunk = <T>(items: T[], size: number): T[][] => {
   const safeSize = Math.max(1, Math.floor(size));
@@ -412,121 +406,15 @@ const chunkedGames = computed(() => {
           </section>
 
           <!-- Projects -->
-          <div
-            v-for="(item, index) in processedProjects"
-            :key="item.name"
-            class="waterfall-item break-inside-avoid"
-            :style="{ '--print-col-span': item.printColSpan }"
-          >
-            <SectionHeader
-              v-if="index === 0"
-              :title="labels.projects"
-              icon="i-heroicons-code-bracket-square"
-              :icon-class="sectionSettings.projects.icon"
-              :theme-color="
-                resolveHexColor(resumeView.colors?.projects || 'primary')
-              "
-            />
-
-            <div
-              class="group relative bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:shadow-lg transition-all duration-300 overflow-hidden"
-            >
-              <!-- Decoration -->
-              <div
-                class="absolute -right-6 -top-6 opacity-[0.03] dark:opacity-[0.05] transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"
-              >
-                <UIcon name="i-heroicons-command-line" class="w-40 h-40" />
-              </div>
-              <div
-                class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl"
-                :class="sectionSettings.projects.bg"
-              ></div>
-
-              <div class="relative z-10 flex flex-col gap-3">
-                <div class="flex justify-between items-start gap-2">
-                  <div class="flex flex-col gap-1">
-                    <h3
-                      class="font-bold text-lg text-gray-900 dark:text-white flex flex-col gap-1"
-                    >
-                      <span>{{ item.name }}</span>
-                      <div
-                        v-if="item.highlights?.length"
-                        class="flex flex-wrap gap-1.5"
-                      >
-                        <BadgePills :tags="item.highlights" />
-                      </div>
-                    </h3>
-                  </div>
-                  <div class="flex gap-1 shrink-0 print:hidden">
-                    <UButton
-                      v-for="link in item.links"
-                      :key="link.url"
-                      :to="link.url"
-                      target="_blank"
-                      size="xs"
-                      color="neutral"
-                      variant="ghost"
-                      icon="i-heroicons-arrow-top-right-on-square"
-                    />
-                  </div>
-                </div>
-                <div
-                  v-if="item.links?.length"
-                  class="hidden print:block text-xs text-gray-500 mb-1"
-                >
-                  <div v-for="link in item.links" :key="link.url">
-                    {{ link.url }}
-                  </div>
-                </div>
-                <div class="space-y-3 text-sm mt-1">
-                  <ul
-                    class="list-disc list-outside ml-4 space-y-1 text-gray-600 dark:text-gray-300 marker:text-gray-400"
-                  >
-                    <li v-for="desc in item.description" :key="desc">
-                      <Markdown
-                        :source="desc"
-                        tag="span"
-                        unwrap="p"
-                        class="inline-content"
-                      />
-                    </li>
-                  </ul>
-                  <div
-                    class="pt-2 border-t border-gray-200 dark:border-gray-700/50"
-                  >
-                    <div
-                      class="text-sm text-gray-500 flex flex-wrap gap-x-3 mb-2"
-                    >
-                      <span class="font-medium text-primary">{{
-                        item.role
-                      }}</span>
-                      <span>·</span>
-                      <span>{{ item.period }}</span>
-                    </div>
-                    <div v-if="item.responsibilities?.length">
-                      <p
-                        class="text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider"
-                      >
-                        Responsibilities
-                      </p>
-                      <ul
-                        class="list-disc list-outside ml-4 space-y-1 text-gray-600 dark:text-gray-300 marker:text-gray-400"
-                      >
-                        <li v-for="resp in item.responsibilities" :key="resp">
-                          <Markdown
-                            :source="resp"
-                            tag="span"
-                            unwrap="p"
-                            class="inline-content"
-                          />
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ProjectsSection
+            :resume="resumeView"
+            :title="labels.projects"
+            :icon-class="sectionSettings.projects.icon"
+            :accent-bg-class="sectionSettings.projects.bg"
+            :theme-color="
+              resolveHexColor(resumeView.colors?.projects || 'primary')
+            "
+          />
 
           <!-- Games -->
           <div
@@ -721,7 +609,8 @@ const chunkedGames = computed(() => {
   row-gap: 0;
 }
 
-.waterfall-item {
+/* NOTE: Must be global so items rendered inside section components still match. */
+:global(.waterfall-item) {
   /* Creates a block formatting context to ensure margins are included in offsetHeight */
   display: flow-root;
 }
@@ -745,7 +634,8 @@ const chunkedGames = computed(() => {
     grid-auto-rows: auto; /* Reset to auto to prevent 1px rows if masonry is not supported */
   }
 
-  .waterfall-item {
+  /* NOTE: Must be global so section components participate in print grid spans. */
+  :global(.waterfall-item) {
     break-inside: avoid;
     margin-bottom: 0;
     grid-row-end: auto !important;
@@ -753,19 +643,19 @@ const chunkedGames = computed(() => {
     padding: 0.5rem;
   }
 
-  .print\:hidden {
+  :global(.print\:hidden) {
     display: none !important;
   }
-  .print\:p-0 {
+  :global(.print\:p-0) {
     padding: 0 !important;
   }
-  .print\:shadow-none {
+  :global(.print\:shadow-none) {
     box-shadow: none !important;
   }
-  .print\:rounded-none {
+  :global(.print\:rounded-none) {
     border-radius: 0 !important;
   }
-  .print\:border-none {
+  :global(.print\:border-none) {
     border: none !important;
   }
 
