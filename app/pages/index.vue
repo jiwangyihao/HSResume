@@ -16,6 +16,32 @@ const {
   printPage,
 } = await useResumePageModel();
 
+// Provide a page-level load barrier for child components that do async work
+// (e.g. Markdown parsing) so we can keep the loading overlay until the DOM
+// is truly ready.
+const loadBarrier = useLoadBarrier({ provide: true });
+watch(
+  locale,
+  () => {
+    // Locale changes invalidate all in-flight child tasks.
+    loadBarrier.reset();
+  },
+  { flush: "sync" }
+);
+
+// A locale switch may keep the previous payload while refreshing.
+// We only consider content ready when the loaded resume matches the active locale.
+const isResumeReady = computed(() => {
+  if (pending.value) return false;
+  if (!resume.value) return false;
+  return resume.value.locale === locale.value;
+});
+
+const isSubtreeReady = computed(() => loadBarrier.pendingCount.value === 0);
+const isReadyForLayout = computed(
+  () => isResumeReady.value && isSubtreeReady.value
+);
+
 const avatarSrc = ref("/avatar.png");
 const handleAvatarError = () => {
   // Fallback for public main branch: use sample SVG when avatar.png is not present.
@@ -31,7 +57,7 @@ const {
   headerInfoRef,
 } = useWaterfallLayout({
   locale,
-  pending,
+  ready: isReadyForLayout,
   resume,
 });
 
@@ -64,7 +90,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
     />
 
     <div
-      v-else-if="pending || !resume"
+      v-else-if="!isResumeReady"
       class="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-8 border border-gray-200 dark:border-gray-800"
     >
       <ResumeSkeleton />
@@ -76,7 +102,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
       class="bg-white dark:bg-gray-900 rounded-xl shadow-xl print:shadow-none print:rounded-none px-4 py-8 sm:p-8 print:p-0 print:py-4 border border-gray-200 dark:border-gray-800 print:border-none relative"
     >
       <div
-        v-if="!isLayoutReady"
+        v-if="!isSubtreeReady || !isLayoutReady"
         class="absolute inset-0 z-20 bg-white dark:bg-gray-900 rounded-xl p-8 print:hidden overflow-hidden"
       >
         <ResumeSkeleton />
@@ -93,7 +119,7 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
 
       <div class="relative min-h-[500px]">
         <div
-          v-if="!isLayoutReady"
+          v-if="!isSubtreeReady || !isLayoutReady"
           class="grid grid-cols-1 md:grid-cols-2 gap-6 absolute inset-0 z-10 bg-white dark:bg-gray-900 overflow-hidden"
         >
           <ResumeSkeleton mode="body" />
@@ -102,7 +128,8 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
           ref="waterfallContainer"
           class="waterfall-grid gap-x-6"
           :class="{
-            'opacity-0 absolute top-0 left-0 w-full -z-10': !isLayoutReady,
+            'opacity-0 absolute top-0 left-0 w-full -z-10':
+              !isSubtreeReady || !isLayoutReady,
           }"
         >
           <ProfileSection

@@ -2,7 +2,8 @@ import type { Ref } from "vue";
 
 type UseWaterfallLayoutOptions = {
   locale: Ref<unknown>;
-  pending: Ref<boolean>;
+  /** Content is ready for the current locale (e.g. resume matches active locale) */
+  ready: Ref<boolean>;
   /** useAsyncData 的 data ref（truthy 表示内容已就绪） */
   resume: Ref<unknown | null | undefined>;
 };
@@ -151,9 +152,9 @@ export const useWaterfallLayout = (options: UseWaterfallLayoutOptions) => {
     await nextTick();
 
     // Wait for fonts + a couple of paints (avoids measuring before text metrics settle)
-    if ("fonts" in document && (document as any).fonts?.ready) {
+    if (document.fonts?.ready) {
       try {
-        await (document as any).fonts.ready;
+        await document.fonts.ready;
       } catch {
         // ignore
       }
@@ -196,6 +197,17 @@ export const useWaterfallLayout = (options: UseWaterfallLayoutOptions) => {
     isLayoutReady.value = true;
   };
 
+  // Locale switching can temporarily show stale content while new payload is loading.
+  // Reset immediately so the loading overlay stays until we measure the new DOM.
+  watch(
+    () => options.locale.value,
+    () => {
+      layoutJobId++;
+      isLayoutReady.value = false;
+    },
+    { flush: "sync" }
+  );
+
   onMounted(() => {
     if (typeof window === "undefined") return;
 
@@ -218,7 +230,7 @@ export const useWaterfallLayout = (options: UseWaterfallLayoutOptions) => {
     window.addEventListener("resize", updateAvatarSize);
 
     // First load: if resume payload is already hydrated, the watcher may not fire.
-    if (options.resume.value) {
+    if (options.ready.value && options.resume.value) {
       recalcLayout();
     }
   });
@@ -234,10 +246,10 @@ export const useWaterfallLayout = (options: UseWaterfallLayoutOptions) => {
 
   // Watch for data/locale changes and measure AFTER the DOM updates.
   watch(
-    [() => options.locale.value, options.pending, options.resume],
+    [() => options.locale.value, options.ready, options.resume],
     () => {
       // Only measure once the new locale content is actually ready.
-      if (options.pending.value || !options.resume.value) return;
+      if (!options.ready.value || !options.resume.value) return;
       recalcLayout();
     },
     { flush: "post", immediate: true }
