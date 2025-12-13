@@ -29,25 +29,6 @@ const DEFAULT_EDUCATION_ITEM_ICON_BY_CATEGORY: Record<
   default: "i-heroicons-user",
 };
 
-// Inline helpers: only used by EducationSection, keep the concern local.
-const getRoleIcon = (role: string) => {
-  const r = role.toLowerCase();
-  if (r.includes("团支书") || r.includes("secretary"))
-    return "i-heroicons-flag";
-  if (r.includes("代表") || r.includes("representative"))
-    return "i-heroicons-megaphone";
-  if (r.includes("部长") || r.includes("head") || r.includes("lead"))
-    return "i-heroicons-briefcase";
-  if (
-    r.includes("技术") ||
-    r.includes("开源") ||
-    r.includes("lug") ||
-    r.includes("tech")
-  )
-    return "i-heroicons-command-line";
-  return "i-heroicons-user";
-};
-
 const getRoleColor = (_role: string) => {
   return "text-sky-500 dark:text-sky-400";
 };
@@ -68,12 +49,10 @@ const resolveEducationItemIcon = (
       return DEFAULT_EDUCATION_ITEM_ICON_BY_CATEGORY[item.category];
   }
 
-  const text = educationItemText(item);
-
-  // Backward-compatible defaults per list type.
-  if (kind === "role") return getRoleIcon(text);
-  if (kind === "honor") return "i-heroicons-star";
-  return "i-heroicons-currency-yen";
+  // Default icons per list type (no string matching).
+  if (kind === "role") return DEFAULT_EDUCATION_ITEM_ICON_BY_CATEGORY.default;
+  if (kind === "honor") return DEFAULT_EDUCATION_ITEM_ICON_BY_CATEGORY.award;
+  return DEFAULT_EDUCATION_ITEM_ICON_BY_CATEGORY.scholarship;
 };
 
 const resolveEducationItemIconClass = (
