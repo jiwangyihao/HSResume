@@ -11,6 +11,20 @@ type GithubStats = {
   totalContributions: number;
 };
 
+type GithubRepo = {
+  id: number;
+  stargazers_count?: number;
+  forks_count?: number;
+};
+
+type GitHubSearchResult = {
+  total_count?: number;
+};
+
+type ContributionsAPI = {
+  contributions?: Array<{ date: string; count: number }>;
+};
+
 const DEFAULT_STATS: GithubStats = {
   stars: 0,
   forks: 0,
@@ -42,7 +56,7 @@ const resumeView = computed(() => props.resume) as ComputedRef<ResumeEntry>;
 
 const { public: publicRuntime } = useRuntimeConfig();
 const strictGithubStats = isStrictEnabled(
-  (publicRuntime as any).strictGithubStats
+  (publicRuntime as { strictGithubStats?: unknown }).strictGithubStats
 );
 
 // Client-side cache to avoid re-fetching when switching locale (or any other UI-only state)
@@ -64,7 +78,7 @@ const asyncKey = computed(() =>
   cacheKey.value ? `github-stats:${cacheKey.value}` : "github-stats:none"
 );
 
-const { data: githubStats } = await useAsyncData<GithubStats | null>(
+const { data: githubStats } = useAsyncData<GithubStats | null>(
   () => asyncKey.value,
   async () => {
     if (!resumeView.value.github) return null;
@@ -79,28 +93,30 @@ const { data: githubStats } = await useAsyncData<GithubStats | null>(
 
     try {
       const requests = [
-        $fetch<any[]>(
+        $fetch<GithubRepo[]>(
           `https://api.github.com/users/${user}/repos?per_page=100&type=owner`
         ),
         ...orgs.map((org: string) =>
-          $fetch<any[]>(
+          $fetch<GithubRepo[]>(
             `https://api.github.com/orgs/${org}/repos?per_page=100&type=public`
           )
         ),
-        $fetch<any>(
+        $fetch<GitHubSearchResult>(
           `https://api.github.com/search/issues?q=author:${user}+type:pr`
         ),
-        $fetch<any>(
+        $fetch<GitHubSearchResult>(
           `https://api.github.com/search/issues?q=author:${user}+type:issue`
         ),
-        $fetch<any>(`https://github-contributions-api.jogruber.de/v4/${user}`),
+        $fetch<ContributionsAPI>(
+          `https://github-contributions-api.jogruber.de/v4/${user}`
+        ),
       ];
 
       const results = await Promise.all(requests);
-      const repoResults = results.slice(0, 1 + orgs.length) as any[][];
-      const prResult = results[results.length - 3] as any;
-      const issueResult = results[results.length - 2] as any;
-      const contribResult = results[results.length - 1] as any;
+      const repoResults = results.slice(0, 1 + orgs.length) as GithubRepo[][];
+      const prResult = results[results.length - 3] as GitHubSearchResult;
+      const issueResult = results[results.length - 2] as GitHubSearchResult;
+      const contribResult = results[results.length - 1] as ContributionsAPI;
 
       // If any upstream returned an unexpected shape (often rate limit / error payload),
       // fail the build in strict mode so we don't publish wrong numbers.
@@ -145,7 +161,7 @@ const { data: githubStats } = await useAsyncData<GithubStats | null>(
 
       if (contribResult?.contributions) {
         totalContributions = contribResult.contributions.reduce(
-          (acc: number, day: any) => {
+          (acc: number, day) => {
             const date = new Date(day.date);
             if (date >= oneYearAgo && date <= today) {
               return acc + day.count;
