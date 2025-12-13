@@ -23,12 +23,13 @@ projects: []
 games: []
 awards: []
 awardsFoldingRules:
+  # Remove the entire `awardsFoldingRules` field if you don't want folding.
   # If an award title matches this regex, it is treated as explicitly unimportant
   # and will be folded under the previous important award.
-  unimportantTitlePattern: (school|provincial|regional|university|creative group)
+  unimportantTitlePattern: (school|provincial|regional|creative group)
   # If an award title matches this regex, it is treated as important
   # and will start a new visible group.
-  importantTitlePattern: (national|global|international|mcm)
+  importantTitlePattern: (national|global|international)
 languages: []
 footer:
   onlineUrl: https://example.com

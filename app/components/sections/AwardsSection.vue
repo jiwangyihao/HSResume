@@ -6,38 +6,35 @@ type AwardGroup = { main: ResumeAward; subs: ResumeAward[] };
 const clampInt = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, Math.round(value)));
 
-const DEFAULT_UNIMPORTANT_TITLE_PATTERN =
-  "(校级|省级|区域|创意组|regional|university|creative group)";
-
-const DEFAULT_IMPORTANT_TITLE_PATTERN =
-  "(全国|全球|international|mcm|national|global)";
-
-const toSafeRegex = (pattern: string | undefined, fallbackPattern: string) => {
+const toOptionalRegex = (pattern: string | undefined) => {
   const source = (pattern ?? "").trim();
-  const finalPattern = source.length > 0 ? source : fallbackPattern;
+  if (!source) return null;
 
   try {
-    // We keep it simple: patterns are plain regex sources, case-insensitive by default.
-    return new RegExp(finalPattern, "i");
+    // Patterns are plain regex sources; we default to case-insensitive matching.
+    return new RegExp(source, "i");
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     console.warn(`Invalid awards folding regex: ${msg}`);
-    return new RegExp(fallbackPattern, "i");
+    return null;
   }
 };
 
 // Awards folding rule (configurable from markdown frontmatter):
-// 1) If title matches "unimportant" pattern => fold it.
-// 2) Else if title matches "important" pattern => start a new group.
-// 3) Else => fold it.
+// - When NOT configured: do not fold (every award starts a new group).
+// - When configured:
+//   1) If title matches "unimportant" pattern => fold it.
+//   2) Else if title matches "important" pattern => start a new group.
+//   3) Else => fold it.
 const shouldStartNewAwardGroup = (
   title: string,
   rules: {
-    unimportantTitleRegex: RegExp;
+    unimportantTitleRegex: RegExp | null;
     importantTitleRegex: RegExp;
-  }
+  } | null
 ) => {
-  if (rules.unimportantTitleRegex.test(title)) return false;
+  if (!rules) return true;
+  if (rules.unimportantTitleRegex?.test(title)) return false;
   return rules.importantTitleRegex.test(title);
 };
 
@@ -54,15 +51,17 @@ const props = defineProps<Props>();
 
 const awardsFoldingRegex = computed(() => {
   const cfg = props.resume.awardsFoldingRules;
+
+  // No config => user doesn't want folding.
+  if (!cfg) return null;
+
+  // We only enable folding when there is a valid "important" regex.
+  const importantTitleRegex = toOptionalRegex(cfg.importantTitlePattern);
+  if (!importantTitleRegex) return null;
+
   return {
-    unimportantTitleRegex: toSafeRegex(
-      cfg?.unimportantTitlePattern,
-      DEFAULT_UNIMPORTANT_TITLE_PATTERN
-    ),
-    importantTitleRegex: toSafeRegex(
-      cfg?.importantTitlePattern,
-      DEFAULT_IMPORTANT_TITLE_PATTERN
-    ),
+    importantTitleRegex,
+    unimportantTitleRegex: toOptionalRegex(cfg.unimportantTitlePattern),
   };
 });
 
