@@ -41,21 +41,19 @@ const chunkedGames = computed(() => {
     />
 
     <div class="grid grid-cols-1 gap-(--masonry-gap) print:gap-4">
-      <div
+      <SectionCard
         v-for="game in group"
         :key="game.name"
-        class="group relative bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-all duration-300 overflow-hidden"
+        :accent-bg-class="accentBgClass"
+        class="p-4 hover:shadow-md transition-all duration-300"
       >
-        <!-- Decoration -->
-        <div
-          class="absolute -right-4 -top-4 opacity-[0.03] dark:opacity-[0.05] transform -rotate-12 group-hover:rotate-0 transition-transform duration-500 pointer-events-none"
-        >
-          <UIcon name="i-heroicons-puzzle-piece" class="w-24 h-24" />
-        </div>
-        <div
-          class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl"
-          :class="accentBgClass"
-        ></div>
+        <template #decoration>
+          <div
+            class="absolute -right-4 -top-4 opacity-[0.03] dark:opacity-[0.05] transform -rotate-12 group-hover:rotate-0 transition-transform duration-500 pointer-events-none"
+          >
+            <UIcon name="i-heroicons-puzzle-piece" class="w-24 h-24" />
+          </div>
+        </template>
 
         <div class="relative z-10">
           <div class="flex justify-between items-start mb-1">
@@ -73,7 +71,7 @@ const chunkedGames = computed(() => {
             "<Markdown :source="game.notes" tag="span" unwrap="p" />"
           </div>
         </div>
-      </div>
+      </SectionCard>
     </div>
   </div>
 </template>

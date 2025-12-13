@@ -10,19 +10,17 @@ defineProps<Props>();
 </script>
 
 <template>
-  <div
-    class="group relative bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:shadow-lg transition-all duration-300 overflow-hidden"
+  <SectionCard
+    :accent-bg-class="accentBgClass"
+    class="p-5 hover:shadow-lg transition-all duration-300"
   >
-    <!-- Decoration -->
-    <div
-      class="absolute -right-6 -top-6 opacity-[0.03] dark:opacity-[0.05] transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"
-    >
-      <UIcon name="i-heroicons-command-line" class="w-40 h-40" />
-    </div>
-    <div
-      class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl"
-      :class="accentBgClass"
-    ></div>
+    <template #decoration>
+      <div
+        class="absolute -right-6 -top-6 opacity-[0.03] dark:opacity-[0.05] transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"
+      >
+        <UIcon name="i-heroicons-command-line" class="w-40 h-40" />
+      </div>
+    </template>
 
     <div class="relative z-10 flex flex-col gap-3">
       <div class="flex justify-between items-start gap-2">
@@ -100,5 +98,5 @@ defineProps<Props>();
         </div>
       </div>
     </div>
-  </div>
+  </SectionCard>
 </template>

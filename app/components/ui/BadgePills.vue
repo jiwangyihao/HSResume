@@ -89,7 +89,6 @@ const tagKey = (tag: Badge) =>
 </script>
 
 <template>
-  <!-- display: contents so layout is controlled by the parent wrapper -->
   <div class="contents">
     <template v-for="tag in props.tags" :key="tagKey(tag)">
       <span v-if="tag.kind === 'svg'" class="inline-flex items-center">

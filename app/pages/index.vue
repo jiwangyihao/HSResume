@@ -46,7 +46,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
 
 <template>
   <UContainer class="py-8 print:p-0 max-w-7xl">
-    <!-- Action Bar -->
     <ResumeActionBar
       v-model="locale"
       :locale-items="localeItems"
@@ -76,7 +75,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
       ref="pageRootRef"
       class="bg-white dark:bg-gray-900 rounded-xl shadow-xl print:shadow-none print:rounded-none px-4 py-8 sm:p-8 print:p-0 print:py-4 border border-gray-200 dark:border-gray-800 print:border-none relative"
     >
-      <!-- Loading Overlay -->
       <div
         v-if="!isLayoutReady"
         class="absolute inset-0 z-20 bg-white dark:bg-gray-900 rounded-xl p-8 print:hidden overflow-hidden"
@@ -84,7 +82,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
         <ResumeSkeleton />
       </div>
 
-      <!-- Header -->
       <ResumeHeader
         :resume="resumeView"
         :subtitle-fallback="labels.subtitle"
@@ -94,7 +91,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
         :set-header-info-el="setHeaderInfoEl"
       />
 
-      <!-- Main Content -->
       <div class="relative min-h-[500px]">
         <div
           v-if="!isLayoutReady"
@@ -109,7 +105,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             'opacity-0 absolute top-0 left-0 w-full -z-10': !isLayoutReady,
           }"
         >
-          <!-- Profile (Fixed Left) -->
           <ProfileSection
             :resume="resumeView"
             :title="labels.profile"
@@ -117,7 +112,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :theme-color="themeColorFor('profile', 'primary')"
           />
 
-          <!-- Education (Fixed Left) -->
           <EducationSection
             :resume="resumeView"
             :title="labels.education"
@@ -126,7 +120,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :theme-color="themeColorFor('education', 'primary')"
           />
 
-          <!-- GitHub Activity Stats (Fixed Left) -->
           <GithubSection
             :resume="resumeView"
             :title="labels.github"
@@ -141,7 +134,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :repositories-label="labels.repositories"
           />
 
-          <!-- Awards (Fixed Right) -->
           <AwardsSection
             :resume="resumeView"
             :title="labels.awards"
@@ -151,7 +143,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :theme-color="themeColorFor('awards', 'yellow')"
           />
 
-          <!-- Projects -->
           <ProjectsSection
             :resume="resumeView"
             :title="labels.projects"
@@ -160,7 +151,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :theme-color="themeColorFor('projects', 'primary')"
           />
 
-          <!-- Games -->
           <GamesSection
             :resume="resumeView"
             :title="labels.games"
@@ -169,7 +159,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
             :theme-color="themeColorFor('games', 'purple')"
           />
 
-          <!-- Languages -->
           <LanguagesSection
             :resume="resumeView"
             :title="labels.languages"

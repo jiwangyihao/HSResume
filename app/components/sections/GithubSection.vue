@@ -210,7 +210,6 @@ const heatmapSrc = computed(() => {
 
 <template>
   <template v-if="resume.github">
-    <!-- GitHub Activity Stats (Fixed Left) -->
     <section
       class="break-inside-avoid waterfall-item col-span-1 md:col-start-1 print:col-span-6 print:col-start-auto"
     >
@@ -281,21 +280,18 @@ const heatmapSrc = computed(() => {
       </div>
     </section>
 
-    <!-- GitHub Activity Heatmap (Fixed Left, Full Width in Print) -->
     <section
       class="break-inside-avoid waterfall-item col-span-1 md:col-start-1 print:col-span-12 print:col-start-1 print:-mt-4"
       style="--print-col-span: 12"
     >
-      <div
-        class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-2 border border-gray-200 dark:border-gray-700 overflow-hidden"
-      >
+      <SectionCard class="p-2">
         <img
           v-if="heatmapSrc"
           :src="heatmapSrc"
           alt="GitHub Contribution Graph"
           class="w-full dark:invert dark:hue-rotate-180"
         />
-      </div>
+      </SectionCard>
     </section>
   </template>
 </template>

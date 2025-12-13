@@ -104,20 +104,17 @@ const groupedAwards = computed<AwardGroup[]>(() => {
         :key="gIndex"
         class="relative"
       >
-        <!-- Main Award -->
-        <div
-          class="relative z-10 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 p-4 shadow-sm overflow-hidden group"
+        <SectionCard
+          :accent-bg-class="accentBgClass"
+          class="z-10 p-4 shadow-sm"
         >
-          <!-- Decoration -->
-          <div
-            class="absolute -right-4 -top-4 opacity-[0.03] dark:opacity-[0.05] transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"
-          >
-            <UIcon name="i-heroicons-trophy" class="w-20 h-20" />
-          </div>
-          <div
-            class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl"
-            :class="accentBgClass"
-          ></div>
+          <template #decoration>
+            <div
+              class="absolute -right-4 -top-4 opacity-[0.03] dark:opacity-[0.05] transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"
+            >
+              <UIcon name="i-heroicons-trophy" class="w-20 h-20" />
+            </div>
+          </template>
 
           <div class="relative z-10 flex items-center gap-3">
             <UIcon
@@ -137,9 +134,8 @@ const groupedAwards = computed<AwardGroup[]>(() => {
               </div>
             </div>
           </div>
-        </div>
+        </SectionCard>
 
-        <!-- Sub Awards (Stacked) -->
         <div
           v-for="(sub, sIndex) in group.subs"
           :key="sub.title"

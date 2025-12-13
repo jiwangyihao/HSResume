@@ -21,7 +21,6 @@ defineProps<Props>();
   <header
     class="border-b border-gray-200 dark:border-gray-700 pb-8 mb-8 grid grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] print:grid-cols-[1fr_auto] gap-2 sm:gap-6 items-stretch print:pb-2 print:mb-4 print:gap-y-2"
   >
-    <!-- Avatar -->
     <div
       class="flex justify-start print:justify-end order-1 print:order-2 print:row-span-2 min-h-0"
     >
@@ -38,7 +37,6 @@ defineProps<Props>();
       </div>
     </div>
 
-    <!-- Main Info -->
     <div
       :ref="setHeaderInfoEl"
       class="space-y-4 text-left self-start print:text-left order-2 print:order-1"
@@ -62,7 +60,6 @@ defineProps<Props>();
       </div>
     </div>
 
-    <!-- Mobile Highlights (Separate Row) -->
     <div
       v-if="resume.highlights.length"
       class="col-span-2 flex sm:hidden! print:hidden flex-wrap gap-2 justify-start order-3"
@@ -70,13 +67,10 @@ defineProps<Props>();
       <BadgePills :tags="resume.highlights" key-prefix="mobile-" />
     </div>
 
-    <!-- display: contents so grid positioning is controlled by the parent header grid -->
     <div class="contents">
-      <!-- Contact Info -->
       <div
         class="flex flex-col gap-2 text-sm text-left lg:text-right order-4 md:order-3 col-span-2 md:col-span-1 md:col-start-2 md:row-start-2 md:flex-row md:items-center md:justify-between lg:flex-col lg:col-start-3 lg:row-start-1 lg:items-end lg:justify-start lg:gap-2 print:flex print:flex-col print:col-start-1 print:col-span-1 print:row-start-2 print:text-left print:gap-2"
       >
-        <!-- Basic Info (Nationality + Email) -->
         <div
           class="flex flex-wrap justify-start gap-4 md:justify-start lg:flex-col lg:gap-2 lg:items-end print:flex-row print:gap-x-6 print:items-center print:justify-start"
         >
@@ -96,7 +90,6 @@ defineProps<Props>();
           </div>
         </div>
 
-        <!-- Homepages (Web Only) -->
         <div
           class="flex flex-wrap justify-start md:justify-end print:hidden gap-2 mt-0 lg:mt-1"
         >
@@ -117,7 +110,6 @@ defineProps<Props>();
         </div>
       </div>
 
-      <!-- Homepages (Print Only) -->
       <div
         class="hidden print:flex flex-wrap justify-start gap-2 mt-0 print:col-span-2 print:row-start-3"
       >
