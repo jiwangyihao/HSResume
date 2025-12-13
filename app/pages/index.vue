@@ -6,11 +6,11 @@ import EducationSection from "../components/sections/EducationSection.vue";
 import ProjectsSection from "../components/sections/ProjectsSection.vue";
 import GamesSection from "../components/sections/GamesSection.vue";
 import AwardsSection from "../components/sections/AwardsSection.vue";
+import GithubSection from "../components/sections/GithubSection.vue";
 import SectionHeader from "../components/shared/SectionHeader.vue";
 import ResumeSkeleton from "../components/shared/ResumeSkeleton.vue";
 import ResumeActionBar from "../components/shared/ResumeActionBar.vue";
 import { usePrint } from "../composables/usePrint";
-import { useGithubStats } from "../composables/useGithubStats";
 import { useResumeContent } from "../composables/useResumeContent";
 import { useResumeLocale } from "../composables/useResumeLocale";
 import { useThemeColors } from "../composables/useThemeColors";
@@ -26,8 +26,6 @@ const { resume, pending, error, refresh, resumeView } = await useResumeContent(
 );
 const { sectionSettings, resolveHexColor } = useThemeColors(resumeView);
 const { printPage } = usePrint();
-
-const { githubStats } = await useGithubStats(resumeView);
 
 const avatarSrc = ref("/avatar.png");
 const handleAvatarError = () => {
@@ -153,97 +151,19 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
           />
 
           <!-- GitHub Activity Stats (Fixed Left) -->
-          <section
-            v-if="resumeView.github"
-            class="break-inside-avoid waterfall-item col-span-1 md:col-start-1 print:col-span-6 print:col-start-auto"
-          >
-            <SectionHeader
-              :title="labels.github"
-              icon="i-iconoir-github"
-              :icon-class="sectionSettings.github.icon"
-              :theme-color="resolveHexColor(resumeView.colors?.github || 'sky')"
-            />
-            <div class="space-y-6 print:space-y-4">
-              <div
-                class="relative pl-4 border-l-2 border-gray-200 dark:border-gray-700"
-              >
-                <div
-                  class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full ring-4 ring-white dark:ring-gray-900"
-                  :class="sectionSettings.github.bg"
-                ></div>
-                <h3 class="font-bold text-gray-900 dark:text-white">
-                  GitHub Stats
-                </h3>
-                <div class="text-sm text-gray-500 mb-2">
-                  @{{ resumeView.github.user }}
-                </div>
-                <ul
-                  class="space-y-1 text-sm font-medium text-gray-900 dark:text-gray-100"
-                >
-                  <li class="flex items-start gap-2">
-                    <UIcon
-                      name="i-heroicons-star"
-                      class="w-4 h-4 mt-0.5 shrink-0"
-                      :class="sectionSettings.github.text"
-                    />
-                    {{ labels.stars }}: {{ githubStats?.stars || 0 }}
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <UIcon
-                      name="i-octicon-git-commit-16"
-                      class="w-4 h-4 mt-0.5 shrink-0"
-                      :class="sectionSettings.github.text"
-                    />
-                    {{ labels.contributions }}:
-                    {{ githubStats?.totalContributions || 0 }}
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <UIcon
-                      name="i-octicon-git-pull-request-16"
-                      class="w-4 h-4 mt-0.5 shrink-0"
-                      :class="sectionSettings.github.text"
-                    />
-                    {{ labels.prs }}: {{ githubStats?.prs || 0 }}
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <UIcon
-                      name="i-octicon-issue-opened-16"
-                      class="w-4 h-4 mt-0.5 shrink-0"
-                      :class="sectionSettings.github.text"
-                    />
-                    {{ labels.issues }}: {{ githubStats?.issues || 0 }}
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <UIcon
-                      name="i-octicon-repo-16"
-                      class="w-4 h-4 mt-0.5 shrink-0"
-                      :class="sectionSettings.github.text"
-                    />
-                    {{ labels.repositories }}: {{ githubStats?.repoCount || 0 }}
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <!-- GitHub Activity Heatmap (Fixed Left, Full Width in Print) -->
-          <section
-            v-if="resumeView.github"
-            class="break-inside-avoid waterfall-item col-span-1 md:col-start-1 print:col-span-12 print:col-start-1 print:-mt-4"
-            style="--print-col-span: 12"
-          >
-            <div
-              class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-2 border border-gray-200 dark:border-gray-700 overflow-hidden"
-            >
-              <img
-                :src="`https://ghchart.rshah.org/${resolveHexColor(
-                  resumeView.colors?.github || 'sky'
-                ).replace('#', '')}/${resumeView.github.user}`"
-                alt="GitHub Contribution Graph"
-                class="w-full dark:invert dark:hue-rotate-180"
-              />
-            </div>
-          </section>
+          <GithubSection
+            :resume="resumeView"
+            :title="labels.github"
+            :icon-class="sectionSettings.github.icon"
+            :dot-bg-class="sectionSettings.github.bg"
+            :text-class="sectionSettings.github.text"
+            :theme-color="resolveHexColor(resumeView.colors?.github || 'sky')"
+            :stars-label="labels.stars"
+            :contributions-label="labels.contributions"
+            :prs-label="labels.prs"
+            :issues-label="labels.issues"
+            :repositories-label="labels.repositories"
+          />
 
           <!-- Awards (Fixed Right) -->
           <AwardsSection
