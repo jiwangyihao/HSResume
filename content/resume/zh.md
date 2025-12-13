@@ -54,15 +54,22 @@ education:
     major: 软件工程
     form: 全日制
     roles:
-      - 班级团支书 • 预备党员
-      - 学部学生代表 (2024/2025)
-      - 校学生代表 (2025)
-      - 薪火笔记社技术支持部部长
-      - HITLUG 开源学生俱乐部干事
+      - text: 班级团支书 • 预备党员
+        category: party
+      - text: 学部学生代表 (2024/2025)
+        category: representation
+      - text: 校学生代表 (2025)
+        category: representation
+      - text: 薪火笔记社技术支持部部长
+        category: leadership
+      - text: HITLUG 开源学生俱乐部干事
+        category: tech
     honors:
-      - 哈尔滨工业大学“优秀学兵” (2024)
+      - text: 哈尔滨工业大学“优秀学兵” (2024)
+        category: award
     scholarships:
-      - 单项人民奖学金 (2025)
+      - text: 单项人民奖学金 (2025)
+        category: scholarship
 internships: []
 work: []
 projects:

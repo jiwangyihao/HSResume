@@ -54,15 +54,22 @@ education:
     major: Software Engineering
     form: Full-time
     roles:
-      - Youth League Branch Secretary • Probationary Member of the CPC
-      - Faculty Student Representative (2024/2025)
-      - University Student Representative (2025)
-      - Tech Support Dept. Lead, Spark Notes Club
-      - Officer, HITLUG open-source student club
+      - text: Youth League Branch Secretary • Probationary Member of the CPC
+        category: party
+      - text: Faculty Student Representative (2024/2025)
+        category: representation
+      - text: University Student Representative (2025)
+        category: representation
+      - text: Tech Support Dept. Lead, Spark Notes Club
+        category: leadership
+      - text: Officer, HITLUG open-source student club
+        category: tech
     honors:
-      - HIT "Excellent Student Soldier" (2024)
+      - text: HIT "Excellent Student Soldier" (2024)
+        category: award
     scholarships:
-      - Single-item People's Scholarship (2025)
+      - text: Single-item People's Scholarship (2025)
+        category: scholarship
 internships: []
 work: []
 projects:
