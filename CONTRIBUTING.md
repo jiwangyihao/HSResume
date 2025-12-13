@@ -114,48 +114,97 @@
 
 脚本会以“仓库根目录”为基准解析相对路径。
 
-## 代码协作约定：前端组件落盘规则（强约定）
+## 代码结构约定（前端 / 单一权威来源）
 
-目标：让 `app/pages/index.vue` 逐步瘦身为**装配层**；组件目录按职责拆分，避免项目演进后目录退化。
+本节是本仓库关于**目录结构、组件职责划分、以及瀑布流/打印硬约束**的唯一权威来源。
 
-### 组件目录职责
+> 目标：让 `app/pages/index.vue` 保持为“装配层（composition/assembly layer）”，并确保 SSR / prerender / 打印行为在重构中不回退。
 
-所有组件统一放在 `app/components/` 下，并遵循：
+### 目录分层（按职责，而非业务域）
 
-- `app/components/content/`
+#### `app/pages/`
 
-  - **渲染器 / 格式化器**：把 Markdown/富文本/代码块等“内容源”渲染为 HTML。
-  - 示例：`Markdown.vue`。
-  - 约束：不依赖具体简历业务字段（尽量只吃 `source`/`tag`/`unwrap` 等通用 props）。
+- 页面路由入口。
+- 约定：页面只做 **数据获取 + 组件装配 + 少量布局测量 ref**，避免堆叠大量业务模板。
 
-- `app/components/shared/`
+#### `app/components/`
 
-  - **跨版块复用的 UI 壳**：与业务无关、可在多个 section 复用。
-  - 示例：`SectionHeader.vue`、`BadgePills.vue`、`ResumeSkeleton.vue`、`ResumeActionBar.vue`。
-  - 约束：不读全局状态，不直接访问简历数据结构（允许接收少量通用 props）。
+组件统一放在这里，并按职责拆分：
+
+- `app/components/layout/`
+
+  - 页面级布局与框架组件（Header / Footer / ActionBar / Skeleton 等）。
+  - 例：`ResumeHeader.vue`, `ResumeFooter.vue`, `ResumeActionBar.vue`, `ResumeSkeleton.vue`。
 
 - `app/components/sections/`
 
-  - **业务版块/区域组件**：对应页面中的一个完整区域（Header/Profile/Education/Projects…）。
-  - 命名建议：`XxxSection.vue`；对于特殊区域（如 Header）允许使用更直观的 `ResumeHeader.vue`。
-  - 约束：可以读取简历的业务字段（`ResumeEntry` 等），但尽量把视觉原子复用给 `shared/` 或 `cards/`。
+  - 页面中的“版块/区域”组件。
+  - 约定：**默认一文件对应一个瀑布流 item**；若需要输出多个瀑布流 item，可使用多根模板（fragment）输出多个 `.waterfall-item`。
+  - 例：`ProjectsSection.vue`, `AwardsSection.vue`, `GithubSection.vue`。
 
-- `app/components/cards/`（后续引入）
+- `app/components/cards/`
 
-  - **条目/卡片组件**：列表里重复出现的单元，如项目卡片、教育条目、奖项条目等。
-  - 命名建议：`XxxCard.vue`、`XxxItem.vue`。
-  - 约束：不负责版块标题/布局，只渲染单条数据。
+  - 列表中重复出现的“条目/卡片”组件，只负责渲染单条数据，不负责版块标题与布局。
+  - 例：`ProjectCard.vue`。
 
-### 命名与约束（默认规则）
+- `app/components/ui/`
 
-- 文件名使用 PascalCase：`ProjectCard.vue`、`EducationSection.vue`。
-- 组件 props 尽量显式类型：优先使用项目内的类型（如 `ResumeEntry`、`ResumeLocale`）。
-- 不把打印样式的“行为差异”藏在多个地方：
-  - `print:hidden/print:flex` 等 Tailwind utilities 必须保持可控层叠
-  - 自定义 utility shims 必须放低优先级 layer，避免覆盖 Tailwind
-- `index.vue` 只做“装配”：
-  - 负责拿数据（composables）+ 传 props + 放置少量与布局测量相关的 ref
-  - 不再堆叠大量重复模板
+  - 与具体业务字段无关的可复用 UI 组件。
+  - 例：`SectionHeader.vue`, `BadgePills.vue`。
+
+- `app/components/content/`
+  - 内容渲染/格式化器（例如 Markdown 渲染）。
+  - 例：`Markdown.vue`。
+
+#### `app/composables/`
+
+- 可复用的组合式函数。
+- 约定：页面数据组装优先放这里（例如 `useResumePageModel`）。
+
+#### `app/types/`
+
+- 项目内共享 TypeScript 类型（例如 `ResumeEntry` 等）。
+
+### Nuxt 自动导入约定
+
+- 本项目启用了组件自动导入，并配置为 **不带路径前缀**（`pathPrefix: false`）。
+
+  - 因此模板中可以直接使用 `<ResumeHeader />`、`<SectionHeader />` 等组件标签。
+  - 组件文件名必须保持唯一、清晰（PascalCase）。
+
+- `app/composables/` 下的组合式默认可自动导入。
+  - 约定：在同项目内调用 `useXxx()` 优先不写显式 import，除非出现命名冲突或需要显式绑定。
+
+### 瀑布流布局硬约束（非常重要）
+
+瀑布流布局逻辑依赖选择器 `:scope > .waterfall-item`，因此：
+
+1. `.waterfall-item` **必须是容器的直系子元素**。
+2. `sections/` 组件不要在外层额外包一层 wrapper 去“凑布局”。
+   - 若一个 section 需要输出多个瀑布 item，请使用多根模板输出多个 `.waterfall-item`。
+3. `AwardsSection` 必须保留 `id="awards-section"`（用于锁高/避免 hover 导致布局抖动）。
+
+### 打印（print）与样式硬约束
+
+- 影响瀑布流/打印行为的关键 CSS 必须放在全局 `app/assets/css/main.css`。
+
+  - 避免将这些规则放进 `scoped` 样式中（会导致选择器命中失败，进而破坏布局/打印）。
+
+- 避免在多个组件内分散实现“打印差异逻辑”。优先用 Tailwind `print:*` utilities，并确保层叠可控。
+
+### 导入（imports）与路径别名
+
+- 统一使用 `~/` 作为绝对导入前缀（例如 `~/types/resume`）。
+- 对于**可由 Nuxt 自动导入的组件/组合式**，尽量移除显式 import，以减少样板代码。
+
+### 修改后必须做的验证
+
+每次重构（尤其涉及模板结构、样式、瀑布流 item）后：
+
+- 必须通过 `pnpm -s build`（确保 SSR/prerender 不回退）。
+- 需要人工快速确认：
+  - 页面瀑布流正常（各 section 均为直系 `.waterfall-item`）。
+  - 打印预览布局/隐藏规则符合预期（`print:*` 生效）。
 
 ## 常见问题
 
