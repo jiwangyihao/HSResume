@@ -1,6 +1,6 @@
 import colors from "tailwindcss/colors";
 import { formatHex, parse } from "culori";
-import type { ResumeEntry } from "../types/resume";
+import type { ResumeEntry } from "~/types/resume";
 
 type ThemeColor = {
   text: string;

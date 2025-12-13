@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import SectionHeader from "../ui/SectionHeader.vue";
-import ProjectCard from "../cards/ProjectCard.vue";
-
 import type {
   ProcessedProject,
   ResumeEntry,
   ResumeProject,
-} from "../../types/resume";
+} from "~/types/resume";
 
 const clampInt = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, Math.round(value)));

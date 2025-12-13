@@ -1,4 +1,4 @@
-import type { ResumeLocale } from "../types/resume";
+import type { ResumeLocale } from "~/types/resume";
 
 export type ResumeLabels = {
   title: string;

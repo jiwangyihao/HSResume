@@ -5,6 +5,15 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
+  components: [
+    {
+      // Use component file name as the global component name (no folder prefix).
+      // This keeps templates readable when relying on Nuxt auto-import.
+      path: "~/components",
+      pathPrefix: false,
+    },
+  ],
+
   runtimeConfig: {
     public: {
       // Provided by CI (GitHub Pages workflow) via NUXT_PUBLIC_*.
@@ -42,4 +51,3 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
 });
-// Trigger restart

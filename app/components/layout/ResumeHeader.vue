@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { ComponentPublicInstance } from "vue";
-import type { ResumeEntry } from "../../types/resume";
-
-import BadgePills from "../ui/BadgePills.vue";
+import type { ResumeEntry } from "~/types/resume";
 
 type Props = {
   resume: ResumeEntry;

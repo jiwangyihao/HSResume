@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Badge } from "../../types/resume";
+import type { Badge } from "~/types/resume";
 
 const badgeBgClass = (badge: Badge) => {
   switch (badge.category) {

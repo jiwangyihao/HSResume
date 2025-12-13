@@ -2,7 +2,7 @@ import { usePrint } from "./usePrint";
 import { useResumeContent } from "./useResumeContent";
 import { useResumeLocale } from "./useResumeLocale";
 import { useThemeColors } from "./useThemeColors";
-import type { ResumeEntry } from "../types/resume";
+import type { ResumeEntry } from "~/types/resume";
 
 type SectionColorKey = keyof NonNullable<ResumeEntry["colors"]>;
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ResumeLocale } from "../../types/resume";
+import type { ResumeLocale } from "~/types/resume";
 
 type LocaleItem = { label: string; value: ResumeLocale };
 

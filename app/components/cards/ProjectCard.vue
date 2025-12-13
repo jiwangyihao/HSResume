@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import Markdown from "../content/Markdown.vue";
-import BadgePills from "../ui/BadgePills.vue";
-
-import type { ProcessedProject } from "../../types/resume";
+import type { ProcessedProject } from "~/types/resume";
 
 type Props = {
   item: ProcessedProject;

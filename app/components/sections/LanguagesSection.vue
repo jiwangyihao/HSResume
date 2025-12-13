@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import SectionHeader from "../ui/SectionHeader.vue";
-import type { ResumeEntry } from "../../types/resume";
+import type { ResumeEntry } from "~/types/resume";
 
 type Props = {
   resume: ResumeEntry;

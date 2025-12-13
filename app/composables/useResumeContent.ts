@@ -1,5 +1,5 @@
 import { queryCollection } from "#imports";
-import type { ResumeEntry, ResumeLocale } from "../types/resume";
+import type { ResumeEntry, ResumeLocale } from "~/types/resume";
 
 export const useResumeContent = async (locale: Ref<ResumeLocale>) => {
   const {

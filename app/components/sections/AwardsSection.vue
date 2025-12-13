@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import Markdown from "../content/Markdown.vue";
-import SectionHeader from "../ui/SectionHeader.vue";
-
-import type { ResumeAward, ResumeEntry } from "../../types/resume";
+import type { ResumeAward, ResumeEntry } from "~/types/resume";
 
 type AwardGroup = { main: ResumeAward; subs: ResumeAward[] };
 

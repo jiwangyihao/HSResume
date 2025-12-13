@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import Markdown from "../content/Markdown.vue";
-import type { ResumeEntry } from "../../types/resume";
+import type { ResumeEntry } from "~/types/resume";
 
 type Props = {
   resume: ResumeEntry;

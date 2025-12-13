@@ -1,17 +1,4 @@
 <script setup lang="ts">
-import { useWaterfallLayout } from "../composables/useWaterfallLayout";
-import { useResumePageModel } from "../composables/useResumePageModel";
-import ResumeHeader from "../components/layout/ResumeHeader.vue";
-import EducationSection from "../components/sections/EducationSection.vue";
-import ProfileSection from "../components/sections/ProfileSection.vue";
-import ProjectsSection from "../components/sections/ProjectsSection.vue";
-import GamesSection from "../components/sections/GamesSection.vue";
-import AwardsSection from "../components/sections/AwardsSection.vue";
-import GithubSection from "../components/sections/GithubSection.vue";
-import LanguagesSection from "../components/sections/LanguagesSection.vue";
-import ResumeFooter from "../components/layout/ResumeFooter.vue";
-import ResumeSkeleton from "../components/layout/ResumeSkeleton.vue";
-import ResumeActionBar from "../components/layout/ResumeActionBar.vue";
 import type { ComponentPublicInstance } from "vue";
 
 const {
