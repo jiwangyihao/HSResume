@@ -66,73 +66,76 @@ a:hover {
   font-size: 14px;
 }
 
-/* Utility shims for layout without Tailwind/Uno */
-.flex {
-  display: flex;
-}
+/* Utility shims for layout without Tailwind/Uno
+   Put in a lower-precedence layer so Tailwind utilities (including print:*) always win. */
+@layer base {
+  .flex {
+    display: flex;
+  }
 
-.flex-wrap {
-  flex-wrap: wrap;
-}
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
 
-.items-start {
-  align-items: flex-start;
-}
+  .items-start {
+    align-items: flex-start;
+  }
 
-.justify-between {
-  justify-content: space-between;
-}
+  .justify-between {
+    justify-content: space-between;
+  }
 
-.gap-3 {
-  gap: 12px;
-}
+  .gap-3 {
+    gap: 12px;
+  }
 
-.gap-2 {
-  gap: 8px;
-}
+  .gap-2 {
+    gap: 8px;
+  }
 
-.space-y-3 > * + * {
-  margin-top: 12px;
-}
+  .space-y-3 > * + * {
+    margin-top: 12px;
+  }
 
-.space-y-2 > * + * {
-  margin-top: 8px;
-}
+  .space-y-2 > * + * {
+    margin-top: 8px;
+  }
 
-.w-1\/2 {
-  width: 50%;
-}
+  .w-1\/2 {
+    width: 50%;
+  }
 
-.w-3\/4 {
-  width: 75%;
-}
+  .w-3\/4 {
+    width: 75%;
+  }
 
-.w-full {
-  width: 100%;
-}
+  .w-full {
+    width: 100%;
+  }
 
-.h-10 {
-  height: 40px;
-}
+  .h-10 {
+    height: 40px;
+  }
 
-.h-5 {
-  height: 20px;
-}
+  .h-5 {
+    height: 20px;
+  }
 
-.mt-2 {
-  margin-top: 8px;
-}
+  .mt-2 {
+    margin-top: 8px;
+  }
 
-.text-sm {
-  font-size: 14px;
-}
+  .text-sm {
+    font-size: 14px;
+  }
 
-.font-semibold {
-  font-weight: 600;
-}
+  .font-semibold {
+    font-weight: 600;
+  }
 
-.text-primary {
-  color: #2563eb;
+  .text-primary {
+    color: #2563eb;
+  }
 }
 
 .info-grid {

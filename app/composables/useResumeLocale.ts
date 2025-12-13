@@ -32,7 +32,7 @@ export type ResumeLabels = {
 export const useResumeLocale = () => {
   const locale = useState<ResumeLocale>("locale", () => "zh");
 
-  const localeItems = [
+  const localeItems: Array<{ label: string; value: ResumeLocale }> = [
     { label: "中文", value: "zh" },
     { label: "EN", value: "en" },
   ];

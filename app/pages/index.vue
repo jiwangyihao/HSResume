@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useWaterfallLayout } from "../composables/useWaterfallLayout";
 import Markdown from "../components/content/Markdown.vue";
+import ResumeHeader from "../components/sections/ResumeHeader.vue";
 import SectionHeader from "../components/shared/SectionHeader.vue";
 import BadgePills from "../components/shared/BadgePills.vue";
 import ResumeSkeleton from "../components/shared/ResumeSkeleton.vue";
+import ResumeActionBar from "../components/shared/ResumeActionBar.vue";
 import type { ResumeAward } from "../types/resume";
 import { useAwards } from "../composables/useAwards";
 import { useProjects } from "../composables/useProjects";
@@ -13,12 +15,13 @@ import { useResumeContent } from "../composables/useResumeContent";
 import { useResumeLocale } from "../composables/useResumeLocale";
 import { useThemeColors } from "../composables/useThemeColors";
 import { useEducationRoles } from "../composables/useEducationRoles";
+import type { ComponentPublicInstance } from "vue";
 
 const runtimeConfig = useRuntimeConfig();
 const buildTime = computed(() => runtimeConfig.public.buildTime || "");
 const buildSha = computed(() => runtimeConfig.public.gitSha || "");
 
-const { locale, localeItems, labels, switchLocale } = useResumeLocale();
+const { locale, localeItems, labels } = useResumeLocale();
 const { resume, pending, error, refresh, resumeView } = await useResumeContent(
   locale
 );
@@ -47,6 +50,14 @@ const {
   pending,
   resume,
 });
+
+const setAvatarEl = (el: Element | ComponentPublicInstance | null) => {
+  avatarRef.value = el instanceof HTMLElement ? el : null;
+};
+
+const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
+  headerInfoRef.value = el instanceof HTMLElement ? el : null;
+};
 
 const clampInt = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, Math.round(value)));
@@ -79,27 +90,12 @@ const chunkedGames = computed(() => {
 <template>
   <UContainer class="py-8 print:p-0 max-w-7xl">
     <!-- Action Bar -->
-    <div class="flex justify-end gap-3 mb-6 print:hidden">
-      <UButton
-        icon="i-heroicons-printer"
-        size="sm"
-        color="neutral"
-        variant="solid"
-        @click="printPage"
-        >{{ labels.print }}</UButton
-      >
-      <UTabs
-        v-model="locale"
-        :items="localeItems"
-        :content="false"
-        size="xs"
-        variant="pill"
-        :ui="{
-          list: 'bg-gray-100 dark:bg-gray-800 p-1 rounded-lg',
-          trigger: 'px-3',
-        }"
-      />
-    </div>
+    <ResumeActionBar
+      v-model="locale"
+      :locale-items="localeItems"
+      :print-label="labels.print"
+      @print="printPage"
+    />
 
     <UAlert
       v-if="error"
@@ -132,131 +128,14 @@ const chunkedGames = computed(() => {
       </div>
 
       <!-- Header -->
-      <header
-        class="border-b border-gray-200 dark:border-gray-700 pb-8 mb-8 grid grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] print:grid-cols-[1fr_auto] gap-2 sm:gap-6 items-stretch print:pb-2 print:mb-4 print:gap-y-2"
-      >
-        <!-- Avatar -->
-        <div
-          class="flex justify-start print:justify-end order-1 print:order-2 print:row-span-2 min-h-0"
-        >
-          <div
-            ref="avatarRef"
-            class="relative bg-gray-50 dark:bg-gray-800/50 rounded-full border border-gray-200 dark:border-gray-700 p-1 shadow-sm shrink-0 w-(--avatar-size) h-(--avatar-size) max-w-32 max-h-32 md:max-w-60 md:max-h-60 print:w-auto! print:h-full! print:max-w-none print:max-h-none aspect-square"
-          >
-            <img
-              :src="avatarSrc"
-              alt="Avatar"
-              @error="handleAvatarError"
-              class="rounded-full object-cover w-0 min-w-full h-full"
-            />
-          </div>
-        </div>
-
-        <!-- Main Info -->
-        <div
-          ref="headerInfoRef"
-          class="space-y-4 text-left self-start print:text-left order-2 print:order-1"
-        >
-          <div class="m-0 sm:mb-2">
-            <h1
-              class="text-4xl font-bold text-gray-900 dark:text-white mb-2 print:mt-4"
-            >
-              {{ resumeView.name }}
-            </h1>
-            <p class="text-lg text-gray-500 dark:text-gray-400">
-              {{ resumeView.subtitle || labels.subtitle }}
-            </p>
-          </div>
-          <div
-            v-if="resumeView.highlights.length"
-            class="hidden sm:flex print:flex flex-wrap gap-2 justify-start print:justify-start"
-          >
-            <BadgePills :tags="resumeView.highlights" />
-          </div>
-        </div>
-
-        <!-- Mobile Highlights (Separate Row) -->
-        <div
-          v-if="resumeView.highlights.length"
-          class="col-span-2 flex sm:hidden! print:hidden flex-wrap gap-2 justify-start order-3"
-        >
-          <BadgePills :tags="resumeView.highlights" key-prefix="mobile-" />
-        </div>
-
-        <!-- Contact Info -->
-        <div
-          class="flex flex-col gap-2 text-sm text-left lg:text-right order-4 md:order-3 col-span-2 md:col-span-1 md:col-start-2 md:row-start-2 md:flex-row md:items-center md:justify-between lg:flex-col lg:col-start-3 lg:row-start-1 lg:items-end lg:justify-start lg:gap-2 print:flex print:flex-col print:col-start-1 print:col-span-1 print:row-start-2 print:text-left print:gap-2"
-        >
-          <!-- Basic Info (Nationality + Email) -->
-          <div
-            class="flex flex-wrap justify-start gap-4 md:justify-start lg:flex-col lg:gap-2 lg:items-end print:flex-row print:gap-x-6 print:items-center print:justify-start"
-          >
-            <div
-              class="flex items-center justify-start lg:justify-end print:justify-start gap-2 text-gray-600 dark:text-gray-300"
-            >
-              <UIcon name="i-heroicons-map-pin" class="w-5 h-5 text-gray-400" />
-              <span>{{ resumeView.nationality }}</span>
-            </div>
-            <div
-              class="flex items-center justify-start lg:justify-end print:justify-start gap-2 text-gray-600 dark:text-gray-300"
-            >
-              <UIcon
-                name="i-heroicons-envelope"
-                class="w-5 h-5 text-gray-400"
-              />
-              <a
-                :href="`mailto:${resumeView.email}`"
-                class="hover:text-primary"
-              >
-                {{ resumeView.email }}
-              </a>
-            </div>
-          </div>
-
-          <!-- Homepages (Web Only) -->
-          <div
-            class="flex flex-wrap justify-start md:justify-end print:hidden gap-2 mt-0 lg:mt-1"
-          >
-            <UButton
-              v-for="link in resumeView.homepages"
-              :key="link.url"
-              :to="link.url"
-              target="_blank"
-              size="xs"
-              color="neutral"
-              variant="soft"
-            >
-              <template #leading>
-                <UIcon
-                  :name="link.icon || 'i-heroicons-link'"
-                  class="w-4 h-4"
-                />
-              </template>
-              {{ link.label }}
-            </UButton>
-          </div>
-        </div>
-
-        <!-- Homepages (Print Only) -->
-        <div
-          class="hidden print:flex flex-wrap justify-start gap-2 mt-0 print:col-span-2 print:row-start-3"
-        >
-          <UButton
-            v-for="link in resumeView.homepages"
-            :key="link.url"
-            :to="link.url"
-            target="_blank"
-            size="xs"
-            color="neutral"
-            variant="soft"
-          >
-            <template #leading>
-              <UIcon :name="link.icon || 'i-heroicons-link'" class="w-4 h-4" />
-            </template>
-            {{ link.label }}
-          </UButton>
-        </div>
-      </header>
+      <ResumeHeader
+        :resume="resumeView"
+        :subtitle-fallback="labels.subtitle"
+        :avatar-src="avatarSrc"
+        :on-avatar-error="handleAvatarError"
+        :set-avatar-el="setAvatarEl"
+        :set-header-info-el="setHeaderInfoEl"
+      />
 
       <!-- Main Content -->
       <div class="relative min-h-[500px]">
