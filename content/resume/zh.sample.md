@@ -22,6 +22,11 @@ work: []
 projects: []
 games: []
 awards: []
+awardsFoldingRules:
+  # 若奖项标题匹配该正则，将被视为“显式不重要”，会折叠到上一条重要奖项下。
+  unimportantTitlePattern: (校级|省级|区域|创意组|regional|university|creative group)
+  # 若奖项标题匹配该正则，将被视为“重要”，会开始一个新的可见分组。
+  importantTitlePattern: (全国|全球|international|mcm|national|global)
 languages: []
 footer:
   onlineUrl: https://example.com

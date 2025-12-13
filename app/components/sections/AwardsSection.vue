@@ -6,32 +6,39 @@ type AwardGroup = { main: ResumeAward; subs: ResumeAward[] };
 const clampInt = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, Math.round(value)));
 
-// Awards folding rule: start a new visible group when the award title looks
-// "important"; otherwise fold it under the last important one.
-const isImportantAward = (title: string) => {
-  const t = title.toLowerCase();
+const DEFAULT_UNIMPORTANT_TITLE_PATTERN =
+  "(校级|省级|区域|创意组|regional|university|creative group)";
 
-  // Explicitly treat these as NOT important (so they get folded).
-  if (
-    t.includes("校级") ||
-    t.includes("省级") ||
-    t.includes("区域") ||
-    t.includes("创意组") ||
-    t.includes("regional") ||
-    t.includes("university") ||
-    t.includes("creative group")
-  ) {
-    return false;
+const DEFAULT_IMPORTANT_TITLE_PATTERN =
+  "(全国|全球|international|mcm|national|global)";
+
+const toSafeRegex = (pattern: string | undefined, fallbackPattern: string) => {
+  const source = (pattern ?? "").trim();
+  const finalPattern = source.length > 0 ? source : fallbackPattern;
+
+  try {
+    // We keep it simple: patterns are plain regex sources, case-insensitive by default.
+    return new RegExp(finalPattern, "i");
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.warn(`Invalid awards folding regex: ${msg}`);
+    return new RegExp(fallbackPattern, "i");
   }
+};
 
-  return (
-    t.includes("全国") ||
-    t.includes("全球") ||
-    t.includes("international") ||
-    t.includes("mcm") ||
-    t.includes("national") ||
-    t.includes("global")
-  );
+// Awards folding rule (configurable from markdown frontmatter):
+// 1) If title matches "unimportant" pattern => fold it.
+// 2) Else if title matches "important" pattern => start a new group.
+// 3) Else => fold it.
+const shouldStartNewAwardGroup = (
+  title: string,
+  rules: {
+    unimportantTitleRegex: RegExp;
+    importantTitleRegex: RegExp;
+  }
+) => {
+  if (rules.unimportantTitleRegex.test(title)) return false;
+  return rules.importantTitleRegex.test(title);
 };
 
 type Props = {
@@ -44,6 +51,20 @@ type Props = {
 };
 
 const props = defineProps<Props>();
+
+const awardsFoldingRegex = computed(() => {
+  const cfg = props.resume.awardsFoldingRules;
+  return {
+    unimportantTitleRegex: toSafeRegex(
+      cfg?.unimportantTitlePattern,
+      DEFAULT_UNIMPORTANT_TITLE_PATTERN
+    ),
+    importantTitleRegex: toSafeRegex(
+      cfg?.importantTitlePattern,
+      DEFAULT_IMPORTANT_TITLE_PATTERN
+    ),
+  };
+});
 
 const isAwardsHovered = ref(false);
 const hoveredCardTitle = ref<string | null>(null);
@@ -61,7 +82,10 @@ const groupedAwards = computed<AwardGroup[]>(() => {
   let currentGroup: AwardGroup | null = null;
 
   awards.forEach((award) => {
-    const important = isImportantAward(award.title);
+    const important = shouldStartNewAwardGroup(
+      award.title,
+      awardsFoldingRegex.value
+    );
     if (important || !currentGroup) {
       currentGroup = { main: award, subs: [] };
       groups.push(currentGroup);

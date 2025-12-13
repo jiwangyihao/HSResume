@@ -75,6 +75,21 @@ export type ResumeFooter = {
   copyright: string;
 };
 
+export type AwardsFoldingRules = {
+  /**
+   * If this pattern matches the award title, it is treated as explicitly unimportant
+   * (so it will be folded under the previous important award).
+   *
+   * This check runs before `importantTitlePattern`.
+   */
+  unimportantTitlePattern?: string;
+  /**
+   * If this pattern matches the award title, it is treated as important
+   * (so it will start a new visible group).
+   */
+  importantTitlePattern?: string;
+};
+
 export type ResumeEntry = {
   locale: ResumeLocale;
   name: string;
@@ -91,6 +106,8 @@ export type ResumeEntry = {
   games: ResumeGame[];
   awards: ResumeAward[];
   awardsPrintWidth?: number;
+  /** Optional folding rules for grouping awards (configurable from markdown frontmatter). */
+  awardsFoldingRules?: AwardsFoldingRules;
   languages: ResumeLanguage[];
   footer?: ResumeFooter;
   colors?: {
