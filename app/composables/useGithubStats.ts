@@ -22,13 +22,41 @@ const isStrictEnabled = (v: unknown) => v === "1" || v === true;
 
 export const useGithubStats = async (resumeView: ComputedRef<ResumeEntry>) => {
   const { public: publicRuntime } = useRuntimeConfig();
-  const strictGithubStats = isStrictEnabled((publicRuntime as any).strictGithubStats);
+  const strictGithubStats = isStrictEnabled(
+    (publicRuntime as any).strictGithubStats
+  );
+
+  // Client-side cache to avoid re-fetching when switching locale (or any other UI-only state)
+  // that causes components to re-render. We scope by (user + orgs) so different resumes/users
+  // don't collide.
+  const statsCache = useState<Record<string, GithubStats>>(
+    "github-stats-cache",
+    () => ({})
+  );
+
+  const cacheKey = computed(() => {
+    const gh = resumeView.value.github;
+    if (!gh) return "";
+    const orgs = Array.isArray(gh.orgs) ? gh.orgs : [];
+    return `${gh.user}|${orgs.join(",")}`;
+  });
+
+  const asyncKey = computed(() =>
+    cacheKey.value ? `github-stats:${cacheKey.value}` : "github-stats:none"
+  );
 
   const { data: githubStats } = await useAsyncData<GithubStats | null>(
-    "github-stats",
+    () => asyncKey.value,
     async () => {
       if (!resumeView.value.github) return null;
       const { user, orgs } = resumeView.value.github;
+
+      // If we already have cached stats on the client, do not hit the network again.
+      // (SSR/prerender can still fetch fresh values as before.)
+      if (import.meta.client && cacheKey.value) {
+        const cached = statsCache.value[cacheKey.value];
+        if (cached) return cached;
+      }
 
       try {
         const requests = [
@@ -46,7 +74,9 @@ export const useGithubStats = async (resumeView: ComputedRef<ResumeEntry>) => {
           $fetch<any>(
             `https://api.github.com/search/issues?q=author:${user}+type:issue`
           ),
-          $fetch<any>(`https://github-contributions-api.jogruber.de/v4/${user}`),
+          $fetch<any>(
+            `https://github-contributions-api.jogruber.de/v4/${user}`
+          ),
         ];
 
         const results = await Promise.all(requests);
@@ -109,7 +139,7 @@ export const useGithubStats = async (resumeView: ComputedRef<ResumeEntry>) => {
           );
         }
 
-        return {
+        const result = {
           stars,
           forks,
           repoCount: uniqueRepos.length,
@@ -117,6 +147,12 @@ export const useGithubStats = async (resumeView: ComputedRef<ResumeEntry>) => {
           issues: issueResult.total_count || 0,
           totalContributions,
         } satisfies GithubStats;
+
+        if (import.meta.client && cacheKey.value) {
+          statsCache.value[cacheKey.value] = result;
+        }
+
+        return result;
       } catch (e) {
         // In CI strict mode, abort the prerender to avoid publishing incorrect stats.
         if (import.meta.server && strictGithubStats) {
@@ -124,8 +160,8 @@ export const useGithubStats = async (resumeView: ComputedRef<ResumeEntry>) => {
             e instanceof Error
               ? e.message
               : typeof e === "string"
-                ? e
-                : undefined;
+              ? e
+              : undefined;
           throw createError({
             statusCode: 502,
             statusMessage: "Failed to fetch GitHub stats (strict mode)",
@@ -138,8 +174,12 @@ export const useGithubStats = async (resumeView: ComputedRef<ResumeEntry>) => {
       }
     },
     {
-      watch: [() => resumeView.value.github?.user],
-      default: () => ({ ...DEFAULT_STATS }),
+      watch: [cacheKey],
+      default: () => {
+        const key = cacheKey.value;
+        if (key && statsCache.value[key]) return statsCache.value[key];
+        return { ...DEFAULT_STATS };
+      },
     }
   );
 
