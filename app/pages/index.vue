@@ -3,6 +3,7 @@ import { useWaterfallLayout } from "../composables/useWaterfallLayout";
 import Markdown from "../components/content/Markdown.vue";
 import ResumeHeader from "../components/sections/ResumeHeader.vue";
 import EducationSection from "../components/sections/EducationSection.vue";
+import ProfileSection from "../components/sections/ProfileSection.vue";
 import ProjectsSection from "../components/sections/ProjectsSection.vue";
 import GamesSection from "../components/sections/GamesSection.vue";
 import AwardsSection from "../components/sections/AwardsSection.vue";
@@ -121,23 +122,14 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
           }"
         >
           <!-- Profile (Fixed Left) -->
-          <section
-            class="break-inside-avoid waterfall-item col-span-1 md:col-start-1 print:col-span-6 print:col-start-1"
-          >
-            <SectionHeader
-              :title="labels.profile"
-              icon="i-heroicons-user"
-              :icon-class="sectionSettings.profile.icon"
-              :theme-color="
-                resolveHexColor(resumeView.colors?.profile || 'primary')
-              "
-            />
-            <Markdown
-              :source="resumeView.summary"
-              tag="div"
-              class="text-gray-600 dark:text-gray-300 leading-relaxed"
-            />
-          </section>
+          <ProfileSection
+            :resume="resumeView"
+            :title="labels.profile"
+            :icon-class="sectionSettings.profile.icon"
+            :theme-color="
+              resolveHexColor(resumeView.colors?.profile || 'primary')
+            "
+          />
 
           <!-- Education (Fixed Left) -->
           <EducationSection
