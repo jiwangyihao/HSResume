@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useWaterfallLayout } from "../composables/useWaterfallLayout";
-import Markdown from "../components/content/Markdown.vue";
 import ResumeHeader from "../components/sections/ResumeHeader.vue";
 import EducationSection from "../components/sections/EducationSection.vue";
 import ProfileSection from "../components/sections/ProfileSection.vue";
@@ -9,7 +8,7 @@ import GamesSection from "../components/sections/GamesSection.vue";
 import AwardsSection from "../components/sections/AwardsSection.vue";
 import GithubSection from "../components/sections/GithubSection.vue";
 import LanguagesSection from "../components/sections/LanguagesSection.vue";
-import SectionHeader from "../components/shared/SectionHeader.vue";
+import ResumeFooter from "../components/sections/ResumeFooter.vue";
 import ResumeSkeleton from "../components/shared/ResumeSkeleton.vue";
 import ResumeActionBar from "../components/shared/ResumeActionBar.vue";
 import { usePrint } from "../composables/usePrint";
@@ -204,80 +203,11 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer
-      v-if="resumeView.footer"
-      class="mt-16 border-t border-gray-200 dark:border-gray-800 pt-8 text-center text-sm text-gray-500 dark:text-gray-400 print:mt-8 print:pt-4 print:border-t-2"
-    >
-      <!-- Print View: Online URL & GitHub -->
-      <div class="hidden print:flex flex-col gap-1 items-center text-xs">
-        <p>
-          {{ locale === "zh" ? "在线查看" : "View Online" }}:
-          <span class="font-mono">{{ resumeView.footer.onlineUrl }}</span>
-        </p>
-        <p>
-          GitHub:
-          <span class="font-mono">
-            https://github.com/jiwangyihao/HSResume
-          </span>
-        </p>
-      </div>
-
-      <!-- Screen View: Copyright, ICP, PSB -->
-      <div class="print:hidden flex flex-col gap-4 items-center">
-        <!-- Copyright & Powered By -->
-        <div class="flex flex-col items-center gap-1">
-          <div class="text-center">
-            <Markdown
-              :source="resumeView.footer.copyright"
-              tag="span"
-              unwrap="p"
-            />
-          </div>
-          <p class="text-xs text-gray-400">
-            Powered by
-            <a
-              href="https://github.com/jiwangyihao/HSResume"
-              target="_blank"
-              class="hover:text-primary hover:underline"
-              >HSResume</a
-            >
-          </p>
-
-          <p
-            v-if="buildTime || buildSha"
-            class="text-[10px] text-gray-400/70 dark:text-gray-500/70 opacity-70 select-none"
-          >
-            <span class="font-mono">
-              Built {{ buildTime
-              }}<template v-if="buildSha">
-                · {{ buildSha.slice(0, 7) }}
-              </template>
-            </span>
-          </p>
-        </div>
-
-        <!-- ICP & PSB -->
-        <div class="flex flex-col items-center gap-2 text-xs">
-          <a
-            v-if="resumeView.footer.icp"
-            :href="resumeView.footer.icp.link"
-            target="_blank"
-            class="text-gray-500! dark:text-gray-400! hover:underline underline-offset-2 hover:text-gray-500! dark:hover:text-gray-400!"
-          >
-            {{ resumeView.footer.icp.text }}
-          </a>
-          <a
-            v-if="resumeView.footer.psb"
-            :href="resumeView.footer.psb.link"
-            target="_blank"
-            class="flex items-center gap-1 text-gray-500! dark:text-gray-400! hover:underline underline-offset-2 hover:text-gray-500! dark:hover:text-gray-400!"
-          >
-            <img :src="resumeView.footer.psb.icon" alt="PSB" class="w-4 h-4" />
-            {{ resumeView.footer.psb.text }}
-          </a>
-        </div>
-      </div>
-    </footer>
+    <ResumeFooter
+      :resume="resumeView"
+      :locale="locale"
+      :build-time="buildTime"
+      :build-sha="buildSha"
+    />
   </UContainer>
 </template>
