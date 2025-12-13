@@ -4,6 +4,7 @@ import type { ProcessedProject } from "~/types/resume";
 type Props = {
   item: ProcessedProject;
   accentBgClass: string;
+  roleTextClass?: string;
 };
 
 defineProps<Props>();
@@ -71,7 +72,9 @@ defineProps<Props>();
 
         <div class="pt-2 border-t border-gray-200 dark:border-gray-700/50">
           <div class="text-sm text-gray-500 flex flex-wrap gap-x-3 mb-2">
-            <span class="font-medium text-primary">{{ item.role }}</span>
+            <span :class="['font-medium', roleTextClass || 'text-primary']">{{
+              item.role
+            }}</span>
             <span>·</span>
             <span>{{ item.period }}</span>
           </div>

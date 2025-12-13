@@ -26,3 +26,7 @@ logs
 # Private content (keep local on main, commit on content branch)
 content/resume/*.md
 public/avatar.png
+
+# Build artifact: GitHub heatmap cached during prebuild/pregenerate
+public/github-heatmap.svg
+public/github-heatmap.meta.json

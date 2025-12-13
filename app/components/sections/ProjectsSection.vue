@@ -13,6 +13,7 @@ type Props = {
   title: string;
   iconClass: string;
   accentBgClass: string;
+  roleTextClass: string;
   themeColor: string;
 };
 
@@ -60,6 +61,10 @@ const items = computed<ProcessedProject[]>(() => {
       :theme-color="themeColor"
     />
 
-    <ProjectCard :item="item" :accent-bg-class="accentBgClass" />
+    <ProjectCard
+      :item="item"
+      :accent-bg-class="accentBgClass"
+      :role-text-class="roleTextClass"
+    />
   </div>
 </template>
