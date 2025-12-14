@@ -269,6 +269,18 @@ function copyPrivateFilesToWorktree(worktreeDir, dryRun) {
   return copied
 }
 
+function printCommitMessageGuidance() {
+  // eslint-disable-next-line no-console
+  console.log(
+    '\n[content-worktree] 下一步建议：提交信息请写“实际改动内容”，避免只写 sync/同步。\n' +
+      '  示例：\n' +
+      '  - chore(content): update resume awards and projects\n' +
+      '  - chore(content): switch badges to AtomGit\n' +
+      '  - fix(content): correct project links\n' +
+      '  提交命令：pnpm content:commit -- --no-merge -m "<your message>"\n',
+  )
+}
+
 function cmdInit(opts) {
   assertGitRepoRoot()
   const dirAbs = opts.dir ? path.resolve(repoRoot, opts.dir) : defaultWorktreeDir()
@@ -292,6 +304,7 @@ function cmdSync(opts) {
 
   if (!opts.dryRun) {
     runGitIn(wt, ['status', '-sb'], { stdio: 'inherit' })
+    printCommitMessageGuidance()
   }
 }
 
