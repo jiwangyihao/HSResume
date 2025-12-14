@@ -264,7 +264,7 @@ const heatmapSrc = computed(() => {
     >
       <SectionHeader
         :title="title"
-        icon="i-iconoir-github"
+        icon="i-lucide-github"
         :icon-class="iconClass"
         :theme-color="themeColor"
       />

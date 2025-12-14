@@ -108,7 +108,7 @@ const groupedAwards = computed<AwardGroup[]>(() => {
   >
     <SectionHeader
       :title="title"
-      icon="i-heroicons-trophy"
+      icon="i-tabler-award"
       :icon-class="iconClass"
       :theme-color="themeColor"
     >

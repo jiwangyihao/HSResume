@@ -15,7 +15,7 @@ const SIZES_FILE = path.join(OUT_DIR, "sizes.json");
 
 // BadgePills renders svg badges at h-5 (20px). Reserve width to avoid layout shifts.
 const BADGE_RENDER_HEIGHT_PX = 20;
-const ATOMGIT_WIDTH_ADJUST_PX = 5;
+const ATOMGIT_WIDTH_ADJUST_PX = 4;
 
 function extractFrontmatter(markdown) {
   // Expect standard frontmatter at file start:
