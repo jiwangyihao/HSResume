@@ -49,6 +49,12 @@ export default defineNuxtConfig({
     "@nuxtjs/mdc",
   ],
 
+  content: {
+    experimental: {
+      nativeSqlite: true,
+    },
+  },
+
   icon: {
     customCollections: [
       {
