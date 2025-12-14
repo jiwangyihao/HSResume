@@ -23,7 +23,6 @@
     "@nuxt/ui": "4.2.1",
     "@nuxtjs/mdc": "0.19.1",
     "@tailwindcss/vite": "^4.1.17",
-    "better-sqlite3": "^12.5.0",
     "culori": "^4.0.2",
     "eslint": "^9.39.1",
     "nuxt": "^4.2.1",
