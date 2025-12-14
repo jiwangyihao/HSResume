@@ -1,4 +1,4 @@
-# HSResume
+# <img src="./public/favicon.svg" width="24" height="24" alt="HSResume" /> HSResume
 
 基于 **Nuxt v4 + Nuxt Content/Image/UI** 打造的双语简历展示与打印页面，可直接静态生成部署（兼容 GitHub Pages）。内容由 Markdown/YAML 驱动，便于版本化管理与二次编辑。
 
