@@ -68,9 +68,8 @@ projects:
       - 设计并实现了 Button、Input 等基础组件。
       - 编写了完善的单元测试与文档。
     links:
-      - label: GitHub
+      - category: github
         url: https://github.com/example/project
-        icon: i-simple-icons-github
 games:
   - name: 示例游戏
     detail: 核心玩家 / 攻略作者
