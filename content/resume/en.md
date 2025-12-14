@@ -344,7 +344,7 @@ awards:
   - date: 2024-11
     title: National 1st Prize (Champion), People's Daily 2024 Intelligent Agent Development Contest
   - date: 2024-09
-    title: 1st Prize, 7th University Student Competition Five Minute Research Presentation (5MRP)
+    title: National 1st Prize, 7th University Student Competition Five Minute Research Presentation (5MRP)
   - date: 2024-07
     title: 1st Prize, Freshman Project Program (university level)
   - date: 2023-12
