@@ -146,6 +146,16 @@
       },
       "required": ["label", "url"]
     },
+    "ResumeProjectLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "category": { "type": "string" },
+        "url": { "type": "string" },
+        "icon": { "type": "string" }
+      },
+      "required": ["url"]
+    },
     "EducationItemCategory": {
       "type": "string",
       "enum": [
@@ -209,7 +219,7 @@
         "description": { "type": "array", "items": { "type": "string" } },
         "responsibilities": { "type": "array", "items": { "type": "string" } },
         "highlights": { "type": "array", "items": { "$ref": "#/$defs/Badge" } },
-        "links": { "type": "array", "items": { "$ref": "#/$defs/ResumeLink" } },
+        "links": { "type": "array", "items": { "$ref": "#/$defs/ResumeProjectLink" } },
         "printWidth": {
           "type": "integer",
           "minimum": 0,

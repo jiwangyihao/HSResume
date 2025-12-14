@@ -29,6 +29,12 @@ export type Badge =
 
 export type ResumeLink = { label: string; url: string; icon?: string };
 
+export type ResumeProjectLink = {
+  category?: string;
+  url: string;
+  icon?: string;
+};
+
 export type EducationItemCategory =
   | "party"
   | "representation"
@@ -72,7 +78,7 @@ export type ResumeProject = {
   description: string[];
   responsibilities: string[];
   highlights?: Badge[];
-  links?: ResumeLink[];
+  links?: ResumeProjectLink[];
   /** 0-100 percentage for print view width */
   printWidth?: number;
   /** Calculated span for print view */
