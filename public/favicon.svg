@@ -1,0 +1,27 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" id="main-icon">
+    <!-- 1. The Body Outline -->
+    <path
+        d="M19 2 H55 L85 32 V94 A 4 4 0 0 0 81 98 H19 A 4 4 0 0 0 15 94 V19 A 4 4 0 0 0 15 11 V6 A 4 4 0 0 0 19 2 Z"
+        fill="none" stroke="#0F172A" stroke-width="2" stroke-linejoin="round" />
+
+    <!-- 2. The Flap Edges (Faded) -->
+    <path d="M55 2 V28 A 4 4 0 0 1 59 32 H66 A 4 4 0 0 1 74 32 H85" fill="none" stroke="#0F172A"
+        stroke-width="2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- 3. Tear Line (Horizontal on Body) -->
+    <line x1="23" y1="15" x2="50" y2="15" stroke="#0F172A" stroke-width="2" stroke-dasharray="4 4"
+        stroke-linecap="round" />
+
+    <!-- 4. Tear Line (Vertical on Flap) -->
+    <!-- Adjusted: y2 changed to 24 (moved up 2px from 26) -->
+    <!-- Adjusted: Removed stroke-dasharray to make it solid -->
+    <line x1="70" y1="18" x2="70" y2="24" stroke="#0F172A" stroke-width="2" stroke-opacity="0.5"
+        stroke-linecap="round" />
+
+    <!-- 5. Inner Structure (H) -->
+    <rect x="30" y="33" width="8" height="44" rx="2" fill="#0F172A" />
+    <rect x="62" y="33" width="8" height="44" rx="2" fill="#0F172A" />
+
+    <!-- 6. Centerpiece: Star -->
+    <path d="M50 39 L54 51 L66 55 L54 59 L50 71 L46 59 L34 55 L46 51 L50 39Z" fill="#0EA5E9" />
+</svg>
