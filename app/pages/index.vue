@@ -42,11 +42,22 @@ const isReadyForLayout = computed(
   () => isResumeReady.value && isSubtreeReady.value
 );
 
-const avatarSrc = ref("/avatar.png");
+const AVATAR_SRC_CANDIDATES = [
+  "/avatar.png",
+  "/avatar.jpg",
+  "/avatar.jpeg",
+  "/avatar.sample.svg",
+] as const;
+
+const avatarSrc = ref<(typeof AVATAR_SRC_CANDIDATES)[number]>(
+  AVATAR_SRC_CANDIDATES[0]
+);
 const handleAvatarError = () => {
-  // Fallback for public main branch: use sample SVG when avatar.png is not present.
-  if (avatarSrc.value !== "/avatar.sample.svg")
-    avatarSrc.value = "/avatar.sample.svg";
+  // Fallback for public main branch:
+  // allow either avatar.png or avatar.jpg/jpeg, then fall back to sample SVG.
+  const currentIndex = AVATAR_SRC_CANDIDATES.indexOf(avatarSrc.value);
+  const next = AVATAR_SRC_CANDIDATES[Math.max(0, currentIndex + 1)];
+  if (next && avatarSrc.value !== next) avatarSrc.value = next;
 };
 
 const {

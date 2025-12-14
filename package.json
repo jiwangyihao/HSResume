@@ -3,15 +3,15 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "prebuild": "node scripts/cache-github-heatmap.mjs --strict",
+    "prebuild": "node scripts/cache-assets.mjs --strict",
     "build": "nuxt build",
-    "predev": "node scripts/cache-github-heatmap.mjs",
+    "predev": "node scripts/cache-assets.mjs",
     "dev": "nuxt dev",
     "content:init": "node scripts/content-worktree.mjs init",
     "content:sync": "node scripts/content-worktree.mjs sync",
     "content:commit": "node scripts/content-worktree.mjs commit",
     "content:status": "node scripts/content-worktree.mjs status",
-    "pregenerate": "node scripts/cache-github-heatmap.mjs --strict",
+    "pregenerate": "node scripts/cache-assets.mjs --strict",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@types/culori": "^4.0.1",
+    "sharp": "^0.34.5",
     "yaml": "^2.8.2"
   },
   "packageManager": "pnpm@10.25.0+sha512.5e82639027af37cf832061bcc6d639c219634488e0f2baebe785028a793de7b525ffcd3f7ff574f5e9860654e098fe852ba8ac5dd5cefe1767d23a020a92f501"

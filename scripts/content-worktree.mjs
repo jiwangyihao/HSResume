@@ -143,11 +143,24 @@ function ensureWorktree(branchName, dirAbs, dryRun) {
   return dirAbs
 }
 
-const PRIVATE_FILES = [
-  'content/resume/zh.md',
-  'content/resume/en.md',
+const PRIVATE_FILES_ALWAYS = ['content/resume/zh.md', 'content/resume/en.md']
+
+// Avatar source can be PNG or JPEG now.
+// Note: optimized variants under public/avatars/* are build artifacts (generated),
+// so we do NOT treat them as private files to sync/commit.
+const AVATAR_SOURCE_CANDIDATES = [
   'public/avatar.png',
+  'public/avatar.jpg',
+  'public/avatar.jpeg',
 ]
+
+function getPrivateFilesToSync() {
+  const out = [...PRIVATE_FILES_ALWAYS]
+  for (const rel of AVATAR_SOURCE_CANDIDATES) {
+    if (fs.existsSync(path.join(repoRoot, rel))) out.push(rel)
+  }
+  return out
+}
 
 function getPorcelainStatus(dir) {
   const res = runGitIn(dir, ['status', '--porcelain=v1'])
@@ -229,8 +242,9 @@ function maybeMergeMainIntoContent(worktreeDir, opts) {
 }
 
 function copyPrivateFilesToWorktree(worktreeDir, dryRun) {
-  let copied = 0
-  for (const rel of PRIVATE_FILES) {
+  /** @type {string[]} */
+  const copied = []
+  for (const rel of getPrivateFilesToSync()) {
     const src = path.join(repoRoot, rel)
     const dst = path.join(worktreeDir, rel)
 
@@ -243,13 +257,13 @@ function copyPrivateFilesToWorktree(worktreeDir, dryRun) {
     if (dryRun) {
       // eslint-disable-next-line no-console
       console.log(`[dry-run] copy ${rel} -> ${path.relative(repoRoot, dst)}`)
-      copied++
+      copied.push(rel)
       continue
     }
 
     fs.mkdirSync(path.dirname(dst), { recursive: true })
     fs.copyFileSync(src, dst)
-    copied++
+    copied.push(rel)
   }
 
   return copied
@@ -274,7 +288,7 @@ function cmdSync(opts) {
 
   const copied = copyPrivateFilesToWorktree(wt, opts.dryRun)
   // eslint-disable-next-line no-console
-  console.log(`[content-worktree] 同步完成：${copied} 个文件`) 
+  console.log(`[content-worktree] 同步完成：${copied.length} 个文件`)
 
   if (!opts.dryRun) {
     runGitIn(wt, ['status', '-sb'], { stdio: 'inherit' })
@@ -289,7 +303,7 @@ function cmdCommit(opts) {
   // 先合并 main，再同步并提交私密文件，避免“复制提交”导致历史分叉。
   maybeMergeMainIntoContent(wt, opts)
 
-  copyPrivateFilesToWorktree(wt, opts.dryRun)
+  const copied = copyPrivateFilesToWorktree(wt, opts.dryRun)
 
   if (opts.dryRun) {
     // eslint-disable-next-line no-console
@@ -308,7 +322,13 @@ function cmdCommit(opts) {
     return
   }
 
-  const add = runGitIn(wt, ['add', ...PRIVATE_FILES], { stdio: 'inherit' })
+  if (!copied.length) {
+    // eslint-disable-next-line no-console
+    console.log('[content-worktree] 未找到可同步的私密文件（可能都不存在），跳过 add/commit。')
+    return
+  }
+
+  const add = runGitIn(wt, ['add', ...copied], { stdio: 'inherit' })
   if (add.status !== 0) {
     die('git add 失败（请检查文件是否存在/权限）。')
   }
@@ -341,7 +361,7 @@ function cmdStatus(opts) {
 
   // eslint-disable-next-line no-console
   console.log('\n[content-worktree] 私密文件清单（同步目标）：')
-  for (const f of PRIVATE_FILES) {
+  for (const f of [...PRIVATE_FILES_ALWAYS, ...AVATAR_SOURCE_CANDIDATES]) {
     // eslint-disable-next-line no-console
     console.log(`- ${f}`)
   }

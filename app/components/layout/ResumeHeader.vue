@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ComponentPublicInstance } from "vue";
 import type { ResumeEntry } from "~/types/resume";
+import { computed } from "vue";
 
 type Props = {
   resume: ResumeEntry;
@@ -14,7 +15,21 @@ type Props = {
   setHeaderInfoEl: (el: Element | ComponentPublicInstance | null) => void;
 };
 
-defineProps<Props>();
+const props = defineProps<Props>();
+
+const optimizedAvatar = computed(() => {
+  const src = props.avatarSrc;
+  if (src !== "/avatar.png" && src !== "/avatar.jpg" && src !== "/avatar.jpeg")
+    return null;
+
+  const sizes = "(min-width: 768px) 240px, 128px";
+  const avif =
+    "/avatars/avatar-128.avif 128w, /avatars/avatar-240.avif 240w, /avatars/avatar-256.avif 256w, /avatars/avatar-480.avif 480w";
+  const webp =
+    "/avatars/avatar-128.webp 128w, /avatars/avatar-240.webp 240w, /avatars/avatar-256.webp 256w, /avatars/avatar-480.webp 480w";
+
+  return { sizes, avif, webp };
+});
 </script>
 
 <template>
@@ -28,7 +43,30 @@ defineProps<Props>();
         :ref="setAvatarEl"
         class="relative bg-gray-50 dark:bg-gray-800/50 rounded-full border border-gray-200 dark:border-gray-700 p-1 shadow-sm shrink-0 w-(--avatar-size) h-(--avatar-size) max-w-32 max-h-32 md:max-w-60 md:max-h-60 print:w-auto! print:h-full! print:max-w-none print:max-h-none aspect-square"
       >
+        <picture
+          v-if="optimizedAvatar"
+          class="block rounded-full w-full h-full"
+        >
+          <source
+            type="image/avif"
+            :srcset="optimizedAvatar.avif"
+            :sizes="optimizedAvatar.sizes"
+          />
+          <source
+            type="image/webp"
+            :srcset="optimizedAvatar.webp"
+            :sizes="optimizedAvatar.sizes"
+          />
+          <img
+            :src="avatarSrc"
+            alt="Avatar"
+            @error="onAvatarError"
+            class="rounded-full object-cover w-0 min-w-full h-full"
+          />
+        </picture>
+
         <img
+          v-else
           :src="avatarSrc"
           alt="Avatar"
           @error="onAvatarError"
