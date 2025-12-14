@@ -10,6 +10,30 @@ type Props = {
 };
 
 defineProps<Props>();
+
+function getIconForLink(link: { category?: string; icon?: string }) {
+  if (link.icon) return link.icon;
+
+  switch (link.category?.toLowerCase()) {
+    case "github":
+      return "i-simple-icons-github";
+    case "gitee":
+      return "i-simple-icons-gitee";
+    case "bilibili":
+      return "i-simple-icons-bilibili";
+    case "coolapk":
+    case "酷安":
+      return "i-custom-coolapk";
+    case "doc":
+    case "docs":
+    case "文档":
+      return "i-heroicons-document-text";
+    case "website":
+    case "官网":
+    default:
+      return "i-heroicons-arrow-top-right-on-square";
+  }
+}
 </script>
 
 <template>
@@ -49,7 +73,7 @@ defineProps<Props>();
             size="xs"
             color="neutral"
             variant="ghost"
-            icon="i-heroicons-arrow-top-right-on-square"
+            :icon="getIconForLink(link)"
             class="text-(--project-accent)! hover:text-(--project-accent)!"
           />
         </div>
@@ -59,7 +83,17 @@ defineProps<Props>();
         v-if="item.links?.length"
         class="hidden print:block text-xs text-gray-500 mb-1"
       >
-        <div v-for="link in item.links" :key="link.url">{{ link.url }}</div>
+        <div
+          v-for="link in item.links"
+          :key="link.url"
+          class="flex items-start gap-1"
+        >
+          <UIcon
+            :name="getIconForLink(link)"
+            class="w-3 h-3 mt-[2px] shrink-0"
+          />
+          <span class="break-all">{{ link.url }}</span>
+        </div>
       </div>
 
       <div class="space-y-3 text-sm mt-1">

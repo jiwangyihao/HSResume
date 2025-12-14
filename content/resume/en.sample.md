@@ -68,9 +68,8 @@ projects:
       - Designed and implemented basic components like Button and Input.
       - Wrote comprehensive unit tests and documentation.
     links:
-      - label: GitHub
+      - category: github
         url: https://github.com/example/project
-        icon: i-simple-icons-github
 games:
   - name: Sample Game
     detail: Hardcore Player / Guide Author
