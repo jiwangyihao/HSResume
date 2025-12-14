@@ -44,6 +44,11 @@ jobs:
           echo "NUXT_PUBLIC_GIT_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
           echo "NUXT_PUBLIC_STRICT_GITHUB_STATS=1" >> $GITHUB_ENV
 
+      # Authenticate GitHub API requests during prerender to avoid 403 rate limit exceeded.
+      - name: Set GitHub API token
+        run: |
+          echo "NUXT_GITHUB_TOKEN=${{ github.token }}" >> $GITHUB_ENV
+
       - name: Generate static site
         run: pnpm generate
 
