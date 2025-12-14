@@ -9,27 +9,24 @@ export const useResumeContent = async (locale: Ref<ResumeLocale>) => {
     pending,
     error,
     refresh,
-  } = await useAsyncData(
-    "resume-data-all",
-    async () => {
-      const [zh, zhSample, en, enSample] = await Promise.all([
-        queryCollection("content").path("/resume/zh").first(),
-        queryCollection("content").path("/resume/zh.sample").first(),
-        queryCollection("content").path("/resume/en").first(),
-        queryCollection("content").path("/resume/en.sample").first(),
-      ]);
+  } = await useAsyncData("resume-data-all", async () => {
+    const [zh, zhSample, en, enSample] = await Promise.all([
+      queryCollection("content").path("/resume/zh").first(),
+      queryCollection("content").path("/resume/zh.sample").first(),
+      queryCollection("content").path("/resume/en").first(),
+      queryCollection("content").path("/resume/en.sample").first(),
+    ]);
 
-      const resolveEntry = (entry: any, sample: any) => {
-        const final = entry ?? sample;
-        return (final?.meta as ResumeEntry) || null;
-      };
+    const resolveEntry = (entry: any, sample: any) => {
+      const final = entry ?? sample;
+      return (final?.meta as ResumeEntry) || null;
+    };
 
-      return {
-        zh: resolveEntry(zh, zhSample),
-        en: resolveEntry(en, enSample),
-      };
-    }
-  );
+    return {
+      zh: resolveEntry(zh, zhSample),
+      en: resolveEntry(en, enSample),
+    };
+  });
 
   const resume = computed(() => allResumes.value?.[locale.value] ?? null);
 
