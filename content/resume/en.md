@@ -94,8 +94,8 @@ projects:
         category: metric
         icon: i-custom-distrowatch
       - kind: svg
-        url: https://gitcode.com/GXDE-OS/GXDE/star/badge.svg
-        alt: GitCode Star
+        url: https://atomgit.com/GXDE-OS/GXDE/star/badge.svg
+        alt: AtomGit G-Star Star
         category: metric
       - kind: split
         domain: CSCC
@@ -130,8 +130,8 @@ projects:
         alt: Gitee Fork
         category: metric
       - kind: svg
-        url: https://gitcode.com/spark-store-project/spark-store/star/badge.svg
-        alt: GitCode Star
+        url: https://atomgit.com/spark-store-project/spark-store/star/badge.svg
+        alt: AtomGit G-Star Star
         category: metric
       - kind: text
         label: COSCon'25
