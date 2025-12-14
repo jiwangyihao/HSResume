@@ -162,9 +162,12 @@ const groupedAwards = computed<AwardGroup[]>(() => {
         <div
           v-for="(sub, sIndex) in group.subs"
           :key="sub.title"
-          class="relative bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 p-3 rounded-xl shadow-sm transition-all duration-500 ease-out origin-top group/card hover:mt-2! hover:shadow-md overflow-hidden"
+          tabindex="0"
+          class="relative bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 p-3 rounded-xl shadow-sm transition-all duration-500 ease-out origin-top group/card hover:mt-2! focus:mt-2! hover:shadow-md focus:shadow-md outline-none overflow-hidden"
           @mouseenter="hoveredCardTitle = sub.title"
           @mouseleave="hoveredCardTitle = null"
+          @focus="hoveredCardTitle = sub.title"
+          @blur="hoveredCardTitle = null"
           :style="{
             marginTop: isAwardsHovered ? '-8px' : '-48px',
             zIndex: 5 - sIndex,
@@ -184,7 +187,7 @@ const groupedAwards = computed<AwardGroup[]>(() => {
           <div class="relative z-10 flex items-center gap-3 pl-2">
             <UIcon
               name="i-heroicons-star"
-              class="text-gray-300 w-4 h-4 shrink-0 group-hover/card:text-yellow-500 transition-colors"
+              class="text-gray-300 w-4 h-4 shrink-0 group-hover/card:text-yellow-500 group-focus/card:text-yellow-500 transition-colors"
             />
             <div class="min-w-0 flex-1">
               <div
@@ -195,7 +198,7 @@ const groupedAwards = computed<AwardGroup[]>(() => {
                   :source="sub.title"
                   tag="div"
                   unwrap="p"
-                  class="font-bold text-gray-700 dark:text-gray-200 text-sm group-hover/card:text-gray-900 dark:group-hover/card:text-white pr-2 wrap-break-word"
+                  class="font-bold text-gray-700 dark:text-gray-200 text-sm group-hover/card:text-gray-900 group-focus/card:text-gray-900 dark:group-hover/card:text-white dark:group-focus/card:text-white pr-2 wrap-break-word"
                   :class="{
                     'line-clamp-1': !isAwardsHovered,
                   }"
