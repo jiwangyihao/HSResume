@@ -16,6 +16,13 @@ const {
   printPage,
 } = await useResumePageModel();
 
+useHead({
+  title: computed(() => {
+    const name = resumeView.value.name;
+    return name ? `${name} | ${labels.value.title}` : labels.value.title;
+  }),
+});
+
 // Provide a page-level load barrier for child components that do async work
 // (e.g. Markdown parsing) so we can keep the loading overlay until the DOM
 // is truly ready.
