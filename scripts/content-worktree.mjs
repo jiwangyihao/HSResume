@@ -272,7 +272,9 @@ function copyPrivateFilesToWorktree(worktreeDir, dryRun) {
 function printCommitMessageGuidance() {
   // eslint-disable-next-line no-console
   console.log(
-    '\n[content-worktree] 下一步建议：提交信息请写“实际改动内容”，避免只写 sync/同步。\n' +
+    '\n[content-worktree] 下一步建议：\n' +
+      '  1. 检查变更：建议先运行 git diff 查看具体改动，确保中英文简历内容一致。\n' +
+      '  2. 提交信息：请写“实际改动内容”，避免只写 sync/同步。\n' +
       '  示例：\n' +
       '  - chore(content): update resume awards and projects\n' +
       '  - chore(content): switch badges to AtomGit\n' +
