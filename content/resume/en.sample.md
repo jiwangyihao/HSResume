@@ -47,11 +47,40 @@ education:
     scholarships:
       - text: Single-item People's Scholarship (2025)
         category: scholarship
-internships: []
+internships:
+  - period: "2024-06 to 2024-09"
+    name: Sample Tech Corp
+    role: Frontend Intern
+    description:
+      - Participated in the frontend refactoring of core products.
+    responsibilities:
+      - Developed and maintained the basic component library.
+      - Optimized page loading performance, reducing FCP by 30%.
+    links: []
 work: []
-projects: []
-games: []
-awards: []
+projects:
+  - period: "2023-10 to 2024-01"
+    name: Sample Open Source Project
+    role: Core Contributor
+    description:
+      - A component library based on Vue 3.
+    responsibilities:
+      - Designed and implemented basic components like Button and Input.
+      - Wrote comprehensive unit tests and documentation.
+    links:
+      - label: GitHub
+        url: https://github.com/example/project
+        icon: i-simple-icons-github
+games:
+  - name: Sample Game
+    detail: Hardcore Player / Guide Author
+    notes: Wrote multiple in-depth guides with 100k+ views.
+awards:
+  - date: "2024-05"
+    title: National Software Innovation Contest - First Prize
+  - date: "2023-11"
+    title: Regional Programming Contest - Gold Medal
+awardsPrintWidth: 65
 awardsFoldingRules:
   # Remove the entire `awardsFoldingRules` field if you don't want folding.
   # If an award title matches this regex, it is treated as explicitly unimportant
@@ -60,7 +89,22 @@ awardsFoldingRules:
   # If an award title matches this regex, it is treated as important
   # and will start a new visible group.
   importantTitlePattern: (national|global|international)
-languages: []
+languages:
+  - name: English
+    certificate: Native / Bilingual
+  - name: Chinese
+    certificate: Native
+colors:
+  profile: primary
+  education: primary
+  projects: primary
+  games: primary
+  awards: primary
+  languages: primary
+  github: primary
+github:
+  user: example
+  orgs: []
 footer:
   onlineUrl: https://example.com
   copyright: Copyright © 2025 - Present Example. All Rights Reserved.
