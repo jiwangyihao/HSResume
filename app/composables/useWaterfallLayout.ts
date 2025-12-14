@@ -35,9 +35,20 @@ export const useWaterfallLayout = (options: UseWaterfallLayoutOptions) => {
 
   const waitForImages = async (root: HTMLElement, timeoutMs = 2500) => {
     if (typeof window === "undefined") return;
-    const images = Array.from(
-      root.querySelectorAll("img")
-    ) as HTMLImageElement[];
+    const images = (
+      Array.from(root.querySelectorAll("img")) as HTMLImageElement[]
+    ).filter((img) => {
+      // If an image is layout-stable (reserved intrinsic size), it won't affect measurement.
+      // Skipping them avoids waiting for lazy/low-priority images and reduces first-paint delays.
+      const stableAttr = img.getAttribute("data-layout-stable");
+      if (stableAttr === "1" || stableAttr === "true") return false;
+
+      const w = img.getAttribute("width");
+      const h = img.getAttribute("height");
+      if (w && h && Number(w) > 0 && Number(h) > 0) return false;
+
+      return true;
+    });
     if (!images.length) return;
 
     const waitOne = (img: HTMLImageElement) => {

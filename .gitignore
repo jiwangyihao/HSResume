@@ -13,6 +13,9 @@ node_modules
 logs
 *.log
 
+# Performance traces
+*.har
+
 # Misc
 .DS_Store
 .fleet
@@ -35,3 +38,6 @@ public/avatars/
 # Build artifact: GitHub heatmap cached during prebuild/pregenerate
 public/github-heatmap.svg
 public/github-heatmap.meta.json
+
+# Build artifact: cached remote badges
+public/badges/

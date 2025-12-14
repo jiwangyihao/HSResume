@@ -41,7 +41,7 @@ education:
         icon: i-heroicons-command-line
       - "Teaching Assistant: Data Structures"
     honors:
-      - text: "Outstanding Student" (2024)
+      - text: "Outstanding Student (2024)"
         category: award
       - "Dean's List (2023)"
     scholarships:
