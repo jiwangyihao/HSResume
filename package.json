@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@iconify-json/heroicons": "^1.2.3",
+    "@iconify-json/mingcute": "^1.2.6",
     "@iconify-json/simple-icons": "^1.2.63",
     "@types/culori": "^4.0.1",
     "@types/node": "^25.0.2",

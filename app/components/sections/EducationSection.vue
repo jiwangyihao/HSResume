@@ -29,10 +29,6 @@ const DEFAULT_EDUCATION_ITEM_ICON_BY_CATEGORY: Record<
   default: "i-heroicons-user",
 };
 
-const getRoleColor = (_role: string) => {
-  return "text-sky-500 dark:text-sky-400";
-};
-
 const educationItemText = (item: EducationItem) =>
   typeof item === "string" ? item : item.text;
 
@@ -59,11 +55,8 @@ const resolveEducationItemIconClass = (
   item: EducationItem,
   kind: "role" | "honor" | "scholarship"
 ) => {
-  // Keep existing color behavior for roles (based on role content).
-  if (kind === "role") return getRoleColor(educationItemText(item));
-
-  // Slightly different accents for honors/scholarships.
-  if (kind === "honor") return "text-primary-600 dark:text-primary-400";
+  if (kind === "role") return "text-sky-600 dark:text-sky-400";
+  if (kind === "honor") return "text-green-600 dark:text-green-400";
   return "text-yellow-600 dark:text-yellow-400";
 };
 </script>

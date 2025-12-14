@@ -47,18 +47,62 @@ education:
     scholarships:
       - text: 单项人民奖学金 (2025)
         category: scholarship
-internships: []
+internships:
+  - period: "2024-06 至 2024-09"
+    name: 示例科技公司
+    role: 前端开发实习生
+    description:
+      - 参与公司核心产品的前端重构工作。
+    responsibilities:
+      - 负责基础组件库的开发与维护。
+      - 优化页面加载性能，首屏时间降低 30%。
+    links: []
 work: []
-projects: []
-games: []
-awards: []
+projects:
+  - period: "2023-10 至 2024-01"
+    name: 示例开源项目
+    role: 核心贡献者
+    description:
+      - 一个基于 Vue 3 的组件库。
+    responsibilities:
+      - 设计并实现了 Button、Input 等基础组件。
+      - 编写了完善的单元测试与文档。
+    links:
+      - label: GitHub
+        url: https://github.com/example/project
+        icon: i-simple-icons-github
+games:
+  - name: 示例游戏
+    detail: 核心玩家 / 攻略作者
+    notes: 撰写了多篇深度攻略，累计阅读量 10w+。
+awards:
+  - date: "2024-05"
+    title: 全国大学生软件创新大赛一等奖
+  - date: "2023-11"
+    title: 区域级编程竞赛金奖
+awardsPrintWidth: 65
 awardsFoldingRules:
   # 不需要折叠的话，删掉整个 awardsFoldingRules 字段即可。
   # 若奖项标题匹配该正则，将被视为“显式不重要”，会折叠到上一条重要奖项下。
   unimportantTitlePattern: (校级|省级|区域|创意组|regional|university|creative group)
   # 若奖项标题匹配该正则，将被视为“重要”，会开始一个新的可见分组。
   importantTitlePattern: (全国|全球|international|national|global)
-languages: []
+languages:
+  - name: 英语
+    certificate: CET-6 (600+)
+  - name: 日语
+    certificate: N2
+colors:
+  profile: primary
+  education: primary
+  projects: primary
+  games: primary
+  awards: primary
+  languages: primary
+  github: primary
+github:
+  user: example
+  orgs: []
 footer:
   onlineUrl: https://example.com
   copyright: Copyright © 2025 - Present Example. All Rights Reserved.
