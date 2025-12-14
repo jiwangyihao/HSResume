@@ -8,22 +8,22 @@ highlights:
     icon: i-simple-icons-typescript
   - kind: text
     label: LLM 开发者
-    icon: i-mingcute-ai-line
+    icon: i-mingcute-ai-fill
   - kind: text
     label: 开源社区贡献者
     icon: i-raphael-opensource
   - kind: text
     label: 软件工程本科生
-    icon: i-heroicons-academic-cap
+    icon: i-heroicons-academic-cap-16-solid
 nationality: 中国
 email: jwyh@jwyihao.top
 homepages:
   - label: GitHub
     url: https://github.com/jiwangyihao
-    icon: i-simple-icons-github
+    icon: i-ri-github-fill
   - label: Bilibili
     url: https://space.bilibili.com/449671034
-    icon: i-simple-icons-bilibili
+    icon: i-mingcute-bilibili-fill
   - label: Coolapk
     url: http://www.coolapk.com/u/1399429
     icon: i-custom-coolapk
@@ -158,7 +158,7 @@ projects:
       - kind: text
         label: CanvasKit
         category: tech
-        icon: i-simple-icons-google
+        icon: i-ri-google-fill
       - kind: text
         label: COSCon'24
         category: event
@@ -230,7 +230,7 @@ projects:
         domain: 哔哩哔哩
         value: 3.7 万播放
         category: traffic
-        icon: i-simple-icons-bilibili
+        icon: i-mingcute-bilibili-fill
     description:
       - 规则获取型手环阅读器，支持“开源阅读”规则。
       - 主项目及关联规则项目在 GitHub 共计 **600+ Star**。
@@ -261,7 +261,7 @@ projects:
         domain: 哔哩哔哩
         value: 1 万+ 播放
         category: traffic
-        icon: i-simple-icons-bilibili
+        icon: i-mingcute-bilibili-fill
       - kind: text
         label: Xposed
         category: tech
@@ -280,7 +280,7 @@ projects:
       - 获校级“大一年度项目计划”**一等奖**。
     highlights:
       - kind: split
-        domain: 科研英语演讲
+        domain: 5MRP
         value: 国一
         category: award
       - kind: split

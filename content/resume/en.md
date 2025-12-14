@@ -8,22 +8,22 @@ highlights:
     icon: i-simple-icons-typescript
   - kind: text
     label: LLM Developer
-    icon: i-mingcute-ai-line
+    icon: i-mingcute-ai-fill
   - kind: text
     label: Open-Source Contributor
     icon: i-raphael-opensource
   - kind: text
     label: Software Engineering Undergraduate
-    icon: i-heroicons-academic-cap
+    icon: i-heroicons-academic-cap-16-solid
 nationality: China
 email: jwyh@jwyihao.top
 homepages:
   - label: GitHub
     url: https://github.com/jiwangyihao
-    icon: i-simple-icons-github
+    icon: i-ri-github-fill
   - label: Bilibili
     url: https://space.bilibili.com/449671034
-    icon: i-simple-icons-bilibili
+    icon: i-mingcute-bilibili-fill
   - label: Coolapk
     url: http://www.coolapk.com/u/1399429
     icon: i-custom-coolapk
@@ -77,11 +77,6 @@ projects:
     period: "2024-09 to Present"
     name: GXDE OS (Gorgeous eXtended Deepin Environment)
     role: Core Developer
-    description:
-      - Linux distribution built on Debian Testing, aiming to recreate and modernize the classic Deepin 15 desktop (DDE v15).
-      - Awarded Gitee GVP; the only fully community-led project among the 8 OS GVPs.
-      - Selected for the AtomGit G-Star graduation program.
-      - Listed on DistroWatch with global popularity rank 92.
     highlights:
       - kind: split
         domain: Gitee
@@ -105,6 +100,11 @@ projects:
         domain: CSCC
         value: Technical Training Talk
         category: event
+    description:
+      - Linux distribution built on Debian Testing, aiming to recreate and modernize the classic Deepin 15 desktop (DDE v15).
+      - Awarded Gitee GVP; the only fully community-led project among the 8 OS GVPs.
+      - Selected for the AtomGit G-Star graduation program.
+      - Listed on DistroWatch with global popularity rank 92.
     responsibilities:
       - Core developer responsible for system build and maintenance.
       - Represented the project to win National 2nd Prize in the OS Design (Function Challenge) track of the 5th CSCC.
@@ -116,10 +116,6 @@ projects:
     period: "2020-08 to Present"
     name: Spark Store
     role: Co-founder / Core Developer
-    description:
-      - Community-driven app store dedicated to improving the domestic Linux application ecosystem.
-      - Over **600 stars** and **100 forks** on Gitee.
-      - Awarded Gitee GVP and AtomGit G-Star graduation project.
     highlights:
       - kind: svg
         url: https://gitee.com/spark-store-project/spark-store/badge/star.svg?theme=gvp
@@ -136,6 +132,10 @@ projects:
       - kind: text
         label: COSCon'25
         category: event
+    description:
+      - Community-driven app store dedicated to improving the domestic Linux application ecosystem.
+      - Over **600 stars** and **100 forks** on Gitee.
+      - Awarded Gitee GVP and AtomGit G-Star graduation project.
     responsibilities:
       - Co-founder and core developer for multiple key components.
       - Presented "APM—Next-gen software distribution for Spark" at COSCon'25 (Open Source OS & Supply Chain forum).
@@ -146,9 +146,6 @@ projects:
     period: "2024-04 to 2025-06"
     name: Newcar (Modern animation engine for the JS ecosystem)
     role: Core Developer
-    description:
-      - High-performance Web animation engine built with CanvasKit-WASM.
-      - Over **700 stars** on GitHub; later donated to the Dromara Foundation.
     highlights:
       - kind: svg
         url: https://img.shields.io/github/stars/dromara/newcar
@@ -161,10 +158,13 @@ projects:
       - kind: text
         label: CanvasKit
         category: tech
-        icon: i-simple-icons-google
+        icon: i-ri-google-fill
       - kind: text
         label: COSCon'24
         category: event
+    description:
+      - High-performance Web animation engine built with CanvasKit-WASM.
+      - Over **700 stars** on GitHub; later donated to the Dromara Foundation.
     responsibilities:
       - Built the charting library and deeply contributed to the 2.0.0 core refactor and follow-up project VueMotion.
       - Presented at COSCon'24 (main lightning talk and breakout sessions).
@@ -175,10 +175,6 @@ projects:
     period: "2024-07 to Present"
     name: Saturn AI (MoE-like agricultural agent)
     role: Tech Lead
-    description:
-      - MoE-inspired agricultural agent built around a perception–cognition–action loop, fusing satellite/IoT/weather and farm records to power digital twins and end-to-end decisions.
-      - Uses in-house RACoT (Retrieval-Augmented Chain of Thought) and a core–cell knowledge base for high-confidence QA, risk alerts, and map-based underwriting/claim assessment.
-      - Recognized as a **National College Student Innovation and Entrepreneurship Program** project.
     highlights:
       - kind: split
         domain: iCAN
@@ -191,6 +187,10 @@ projects:
         domain: CCF SAC
         value: National 3rd Prize
         category: award
+    description:
+      - MoE-inspired agricultural agent built around a perception–cognition–action loop, fusing satellite/IoT/weather and farm records to power digital twins and end-to-end decisions.
+      - Uses in-house RACoT (Retrieval-Augmented Chain of Thought) and a core–cell knowledge base for high-confidence QA, risk alerts, and map-based underwriting/claim assessment.
+      - Recognized as a **National College Student Innovation and Entrepreneurship Program** project.
     responsibilities:
       - Designed overall architecture and multi-source cell knowledge base; integrated RAG.
       - Led multimodal data pipelines and digital-twin implementation, unifying remote sensing, IoT, weather, and agronomic logs.
@@ -202,11 +202,6 @@ projects:
   - period: "2024-08 to Present"
     name: Lordly·Reading (wearable online reader)
     role: Founder / Lead Developer
-    description:
-      - Rule-driven wristband reader supporting "Open Reading" rules.
-      - Over **600 stars** across main and rule repos.
-      - Bilibili tutorials over **37k** views; rule repo over **60k** annual visits.
-      - Both the main project and rule repos were selected for the **AtomGit G-Star** program.
     highlights:
       - kind: svg
         url: https://img.shields.io/github/stars/jiwangyihao/source-j-legado
@@ -235,7 +230,12 @@ projects:
         domain: Bilibili
         value: 37k+ views
         category: traffic
-        icon: i-simple-icons-bilibili
+        icon: i-mingcute-bilibili-fill
+    description:
+      - Rule-driven wristband reader supporting "Open Reading" rules.
+      - Over **600 stars** across main and rule repos.
+      - Bilibili tutorials over **37k** views; rule repo over **60k** annual visits.
+      - Both the main project and rule repos were selected for the **AtomGit G-Star** program.
     responsibilities:
       - Founded and built core features.
     links:
@@ -261,7 +261,7 @@ projects:
         domain: Bilibili
         value: 10k+ views
         category: traffic
-        icon: i-simple-icons-bilibili
+        icon: i-mingcute-bilibili-fill
       - kind: text
         label: Xposed
         category: tech
