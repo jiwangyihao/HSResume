@@ -17,7 +17,7 @@ defineProps<Props>();
   >
     <SectionHeader
       :title="title"
-      icon="i-heroicons-user"
+      icon="i-akar-icons-info"
       :icon-class="iconClass"
       :theme-color="themeColor"
     />

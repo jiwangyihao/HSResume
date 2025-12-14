@@ -35,7 +35,7 @@ const chunkedGames = computed(() => {
     <SectionHeader
       v-if="index === 0"
       :title="title"
-      icon="i-heroicons-puzzle-piece"
+      icon="i-hugeicons-ai-game"
       :icon-class="iconClass"
       :theme-color="themeColor"
     />

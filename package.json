@@ -33,9 +33,17 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
+    "@iconify-json/akar-icons": "^1.2.7",
+    "@iconify-json/ant-design": "^1.2.5",
     "@iconify-json/heroicons": "^1.2.3",
+    "@iconify-json/hugeicons": "^1.2.20",
+    "@iconify-json/icon-park-outline": "^1.2.4",
+    "@iconify-json/icon-park-solid": "^1.2.4",
     "@iconify-json/mingcute": "^1.2.6",
+    "@iconify-json/raphael": "^1.2.1",
+    "@iconify-json/ri": "^1.2.6",
     "@iconify-json/simple-icons": "^1.2.63",
+    "@iconify-json/streamline": "^1.2.5",
     "@types/culori": "^4.0.1",
     "@types/node": "^25.0.2",
     "sharp": "^0.34.5",
