@@ -43,7 +43,7 @@ colors:
 summary: |
   Software Engineering undergraduate at Harbin Institute of Technology (Class of 2023). Personal open-source projects have accumulated **800+ stars** on GitHub.
 
-  Awarded **National 2nd Prize** in the OS Design track of the 5th Computer System Development Capability Competition (**CSCC**), **National 1st Prizes** in the 6th and 7th Global Campus AI Algorithm Elite Competitions, **National 1st Prize** in the 7th National 5-minute Academic English Speech Contest, and **National 2nd Prize** in the 18th iCAN Innovation & Entrepreneurship Competition, totaling **eight national awards**.
+  Awarded **National 2nd Prize** in the OS Design track of the 5th Computer System Development Capability Competition (**CSCC**), **National 1st Prizes** in the 6th and 7th Global Campus AI Algorithm Elite Competitions, **National 1st Prize** in the 7th University Student Competition Five Minute Research Presentation (**5MRP**), and **National 2nd Prize** in the 18th iCAN Innovation Contest Innovation Competition, totaling **eight national awards**.
 
   Core developer of the Dramara Newcar & BugDuck open-source teams (projects with nearly **1k stars** on GitHub), invited to present at COSCon'24, the **9th China Open Source Conference**, in both the main forum and the middleware/microservices forum. Founding core member of the Spark open-source community and the GXDE OS team, with multiple projects recognized as **Gitee Most Valuable Open Source Projects (GVP)** and **AtomGit G-Star graduation projects**, invited to speak at COSCon'25, the **10th China Open Source Conference**, in the open-source operating systems and supply chain forum.
 education:
@@ -276,10 +276,10 @@ projects:
     role: Tech Lead
     description:
       - An all-scenario assistive embodied agent for visually impaired users, focusing on scene understanding and intelligent interaction.
-      - Won 1st Prize in the university "Freshman Project Program" and National 1st Prize in the "5-minute Academic English Speech Contest".
+      - Won 1st Prize in the university "Freshman Project Program" and National 1st Prize in the "University Student Competition Five Minute Research Presentation (5MRP)".
     highlights:
       - kind: split
-        domain: Academic English Speech
+        domain: 5MRP
         value: National 1st Prize
         category: award
       - kind: split
@@ -326,9 +326,9 @@ awards:
   - date: 2025-12
     title: National 1st Prize (2nd place nationwide), 7th Global Campus AI Algorithm Elite Competition
   - date: 2025-11
-    title: National 3rd Prize, 19th iCAN Innovation & Entrepreneurship Competition
+    title: National 3rd Prize, 19th iCAN Innovation Contest Entrepreneurship Competition
   - date: 2025-11
-    title: Provincial 1st Prize, 2025 China Undergraduate Mathematical Contest in Modeling
+    title: Provincial 1st Prize, 2025 CUMCM (Contemporary Undergraduate Mathematical Contest in Modeling)
   - date: 2025-09
     title: National 3rd Prize, CCF SAC 2025 1st National University Smart Agriculture Competition
   - date: 2025-08
@@ -338,20 +338,20 @@ awards:
   - date: 2025-04
     title: Regional 3rd Prize, National Collegiate Software Innovation Contest
   - date: 2024-12
-    title: National 2nd Prize, 18th iCAN Innovation & Entrepreneurship Competition
+    title: National 2nd Prize, 18th iCAN Innovation Contest Innovation Competition
   - date: 2024-11
     title: National 1st Prize (2nd place nationwide), 6th Global Campus AI Algorithm Elite Competition
   - date: 2024-11
     title: National 1st Prize (Champion), People's Daily 2024 Intelligent Agent Development Contest
   - date: 2024-09
-    title: 1st Prize, 7th National 5-minute Academic English Speech Contest
+    title: 1st Prize, 7th University Student Competition Five Minute Research Presentation (5MRP)
   - date: 2024-07
     title: 1st Prize, Freshman Project Program (university level)
   - date: 2023-12
     title: "[HIT APP] App Creative Design Contest - Creative Group Third Prize"
 languages:
   - name: English
-    certificate: CET-6 (506) / National 1st Prize in Academic English Speech Contest
+    certificate: CET-6 (506) / National 1st Prize in 5MRP
 footer:
   onlineUrl: https://resume.jwyihao.top
   icp:
