@@ -5,7 +5,8 @@
     "paths": {
       "~/*": ["./app/*"],
       "@/*": ["./app/*"]
-    }
+    },
+    "types": ["node"]
   },
   "files": [],
   "references": [

@@ -27,4 +27,5 @@ async function run(scriptRelPath) {
 
 // Keep these in a single place so build/dev/generate behave consistently.
 await run("scripts/optimize-avatar.mjs");
+await run("scripts/cache-badges.mjs");
 await run("scripts/cache-github-heatmap.mjs");

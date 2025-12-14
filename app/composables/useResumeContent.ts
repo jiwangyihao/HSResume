@@ -28,8 +28,12 @@ export const useResumeContent = async (locale: Ref<ResumeLocale>) => {
     // appear false while a request is still in-flight, causing loading UI to end too early.
     "resume-entry",
     async () => {
-      const cached = resumeCache.value[locale.value];
-      if (cached !== undefined) return cached;
+      // In dev, Nuxt Content can refresh data on file changes. If we keep our own cache,
+      // it will mask updates and make HMR look "stuck".
+      if (!import.meta.dev) {
+        const cached = resumeCache.value[locale.value];
+        if (cached !== undefined) return cached;
+      }
 
       const primaryPath = locale.value === "zh" ? "/resume/zh" : "/resume/en";
       const samplePath =
@@ -41,7 +45,9 @@ export const useResumeContent = async (locale: Ref<ResumeLocale>) => {
 
       const meta = (entry as { meta?: Partial<ResumeEntry> } | null)?.meta;
       const resolved = meta ? (meta as ResumeEntry) : null;
-      resumeCache.value[locale.value] = resolved;
+      if (!import.meta.dev) {
+        resumeCache.value[locale.value] = resolved;
+      }
       return resolved;
     },
     { watch: [locale] }
