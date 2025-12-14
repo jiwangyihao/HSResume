@@ -112,8 +112,10 @@ projects:
       - 代表项目带队参加第五届全国大学生计算机系统能力大赛，荣获操作系统设计赛（功能挑战赛道）**全国二等奖**。
       - 受邀在**2025全国大学生计算机系统能力大赛技术培训会**上进行项目分享。
     links:
-      - label: 官网
+      - category: website
         url: https://www.gxde.top
+      - category: gitee
+        url: https://gitee.com/GXDE-OS
   - printWidth: 30
     period: "2020-08 至 至今"
     name: 星火计划-星火应用商店 (Spark Store)
@@ -142,8 +144,10 @@ projects:
       - 项目发起成员、核心开发者，负责多个项目核心组件的开发和维护。
       - 作为项目主要成员参加 COSCon'25 **第十届中国开源年会**（项目受邀在“开源操作系统及供应链”分论坛进行技术分享，主题为《APM——星火下一代软件分发解决方案》）。
     links:
-      - label: 官网
+      - category: website
         url: https://www.spark-app.store
+      - category: gitee
+        url: https://gitee.com/spark-store-project/spark-store
   - printWidth: 70
     period: "2024-04 至 2025-06"
     name: Newcar (JavaScript 生态的现代动画引擎)
@@ -171,13 +175,17 @@ projects:
       - 负责图表库开发，深度参与了 2.0.0 版本的核心重构及后继项目 VueMotion 的开发。
       - 作为项目主要成员参加 COSCon'24 **第九届中国开源年会**（项目受邀在主论坛闪电演讲及分论坛进行技术分享）。
     links:
-      - label: GitHub
+      - category: github
         url: https://github.com/dromara/newcar
   - printWidth: 70
     period: "2024-07 至 至今"
     name: Saturn AI (类 MoE 混合专家架构农业智能体)
     role: 技术负责人
     highlights:
+      - kind: svg
+        url: https://img.shields.io/github/stars/jiwangyihao/Saturn-Lib
+        alt: GitHub Stars
+        category: metric
       - kind: split
         domain: iCAN
         value: 国二
@@ -199,8 +207,10 @@ projects:
       - 设计 RACoT + 核心-细胞知识库推理路线，构建按图承保、按图定损的保险科技业务闭环。
       - 带队参加第十八届 iCAN 大学生创新创业大赛，负责物料设计、视频制作、答辩等关键环节，获**全国二等奖**。
     links:
-      - label: 官网
+      - category: website
         url: https://saturn.jwyihao.top
+      - category: github
+        url: https://github.com/jiwangyihao/Saturn-Lib
   - period: "2024-08 至 至今"
     name: Lordly·阅读 (手环在线阅读工具)
     role: 发起人 / 主要开发者
@@ -241,8 +251,12 @@ projects:
     responsibilities:
       - 发起并独立开发核心功能。
     links:
-      - label: 官网
+      - category: website
         url: https://read.lordly.vip
+      - category: github
+        url: https://github.com/Lordly-Tech/LordlyRead
+      - category: github
+        url: https://github.com/jiwangyihao/source-j-legado
   - period: "2022-10 至 至今"
     name: 应用配置 (App Config)
     role: 发起人 / 主要开发者
@@ -271,7 +285,7 @@ projects:
     responsibilities:
       - 发起并开发核心功能，实现应用布局及系统 API 注入修改。
     links:
-      - label: GitHub
+      - category: github
         url: https://github.com/jiwangyihao/app_config
   - period: "2023-11 至 2024-06"
     name: 小希全场景助盲具身智能体

@@ -112,8 +112,10 @@ projects:
       - Represented the project to win National 2nd Prize in the OS Design (Function Challenge) track of the 5th CSCC.
       - Invited to present the project at the 2025 CSCC technical training session.
     links:
-      - label: Website
+      - category: website
         url: https://www.gxde.top
+      - category: gitee
+        url: https://gitee.com/GXDE-OS
   - printWidth: 30
     period: "2020-08 to Present"
     name: Spark Store
@@ -142,8 +144,10 @@ projects:
       - Co-founder and core developer for multiple key components.
       - Presented "APM—Next-gen software distribution for Spark" at COSCon'25 (Open Source OS & Supply Chain forum).
     links:
-      - label: Website
+      - category: website
         url: https://www.spark-app.store
+      - category: gitee
+        url: https://gitee.com/spark-store-project/spark-store
   - printWidth: 70
     period: "2024-04 to 2025-06"
     name: Newcar (Modern animation engine for the JS ecosystem)
@@ -171,7 +175,7 @@ projects:
       - Built the charting library and deeply contributed to the 2.0.0 core refactor and follow-up project VueMotion.
       - Presented at COSCon'24 (main lightning talk and breakout sessions).
     links:
-      - label: GitHub
+      - category: github
         url: https://github.com/dromara/newcar
   - printWidth: 70
     period: "2024-07 to Present"
@@ -199,8 +203,10 @@ projects:
       - Designed RACoT + core–cell knowledge-base reasoning and built the insurance-tech loop for map-based underwriting and claim assessment.
       - Led the team at the 18th iCAN Competition; owned materials design, video production, and defense, earning National 2nd Prize (2024).
     links:
-      - label: Website
+      - category: website
         url: https://saturn.jwyihao.top
+      - category: github
+        url: https://github.com/jiwangyihao/Saturn-Lib
   - period: "2024-08 to Present"
     name: Lordly·Reading (wearable online reader)
     role: Founder / Lead Developer
@@ -241,7 +247,11 @@ projects:
     responsibilities:
       - Founded and built core features.
     links:
-      - label: Website
+      - category: github
+        url: https://github.com/Lordly-Tech/LordlyRead
+      - category: github
+        url: https://github.com/jiwangyihao/source-j-legado
+      - category: website
         url: https://read.lordly.vip
   - period: "2022-10 to Present"
     name: App Config
@@ -271,7 +281,7 @@ projects:
     responsibilities:
       - Built core features for layout and system API injection.
     links:
-      - label: GitHub
+      - category: github
         url: https://github.com/jiwangyihao/app_config
   - period: "2023-11 to 2024-06"
     name: All-scenario assistive embodied agent for the visually impaired
