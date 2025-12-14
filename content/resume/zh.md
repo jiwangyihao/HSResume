@@ -41,7 +41,7 @@ colors:
   languages: emerald
   github: sky
 summary: |
-  哈尔滨工业大学 2023 级软件工程专业本科生，个人开源项目在 GitHub 上累计获 **800+ star**。
+  预备党员，哈尔滨工业大学 2023 级软件工程专业本科生，开源开发者，个人开源项目在 GitHub 上累计获 **800+ star**。
 
   获第五届全国大学生计算机系统能力大赛**全国二等奖**，第六届、第七届全球校园人工智能算法精英大赛**全国一等奖**，第七届全国大学生 5 分钟科研英语演讲比赛**全国一等奖**，第十八届 iCAN 大学生创新创业大赛**全国二等奖**等**八项国家级奖项**。
 
@@ -66,6 +66,8 @@ education:
         category: tech
     honors:
       - text: 哈尔滨工业大学“优秀学兵” (2024)
+        category: award
+      - text: 哈工大-华为HarmonyOS菁英班“最佳实践小组”&“优秀个人” (2025)
         category: award
     scholarships:
       - text: 单项人民奖学金 (2025)

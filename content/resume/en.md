@@ -41,7 +41,7 @@ colors:
   languages: emerald
   github: sky
 summary: |
-  Software Engineering undergraduate at Harbin Institute of Technology (Class of 2023). Personal open-source projects have accumulated **800+ stars** on GitHub.
+  Probationary Member of the CPC, Software Engineering undergraduate at Harbin Institute of Technology (Class of 2023), open-source developer. Personal open-source projects have accumulated **800+ stars** on GitHub.
 
   Awarded **National 2nd Prize** in the OS Design track of the 5th Computer System Development Capability Competition (**CSCC**), **National 1st Prizes** in the 6th and 7th Global Campus AI Algorithm Elite Competitions, **National 1st Prize** in the 7th University Student Competition Five Minute Research Presentation (**5MRP**), and **National 2nd Prize** in the 18th iCAN Innovation Contest Innovation Competition, totaling **eight national awards**.
 
@@ -66,6 +66,8 @@ education:
         category: tech
     honors:
       - text: HIT "Excellent Student Soldier" (2024)
+        category: award
+      - text: HIT-Huawei HarmonyOS Elite Class "Best Practice Group" & "Excellent Individual" (2025)
         category: award
     scholarships:
       - text: Single-item People's Scholarship (2025)
