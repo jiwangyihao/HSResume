@@ -59,6 +59,24 @@ const strictGithubStats = isStrictEnabled(
   (publicRuntime as { strictGithubStats?: unknown }).strictGithubStats
 );
 
+// GitHub API is rate-limited for unauthenticated requests. During SSR/prerender (CI),
+// we can use a server-only token to avoid 403 rate limit exceeded.
+const githubToken = import.meta.server
+  ? (useRuntimeConfig() as { githubToken?: string }).githubToken ?? ""
+  : "";
+
+const githubApiHeaders = computed(() => {
+  if (!import.meta.server) return undefined;
+
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+
+  if (githubToken) headers.Authorization = `Bearer ${githubToken}`;
+  return headers;
+});
+
 // Client-side cache to avoid re-fetching when switching locale (or any other UI-only state)
 // that causes components to re-render. We scope by (user + orgs) so different resumes/users
 // don't collide.
@@ -94,18 +112,22 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
     try {
       const requests = [
         $fetch<GithubRepo[]>(
-          `https://api.github.com/users/${user}/repos?per_page=100&type=owner`
+          `https://api.github.com/users/${user}/repos?per_page=100&type=owner`,
+          { headers: githubApiHeaders.value }
         ),
         ...orgs.map((org: string) =>
           $fetch<GithubRepo[]>(
-            `https://api.github.com/orgs/${org}/repos?per_page=100&type=public`
+            `https://api.github.com/orgs/${org}/repos?per_page=100&type=public`,
+            { headers: githubApiHeaders.value }
           )
         ),
         $fetch<GitHubSearchResult>(
-          `https://api.github.com/search/issues?q=author:${user}+type:pr`
+          `https://api.github.com/search/issues?q=author:${user}+type:pr`,
+          { headers: githubApiHeaders.value }
         ),
         $fetch<GitHubSearchResult>(
-          `https://api.github.com/search/issues?q=author:${user}+type:issue`
+          `https://api.github.com/search/issues?q=author:${user}+type:issue`,
+          { headers: githubApiHeaders.value }
         ),
         $fetch<ContributionsAPI>(
           `https://github-contributions-api.jogruber.de/v4/${user}`

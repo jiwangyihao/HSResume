@@ -15,12 +15,23 @@ export default defineNuxtConfig({
   ],
 
   runtimeConfig: {
+    // Private runtime config (server-only). Populate via env (recommended in CI):
+    // - NUXT_GITHUB_TOKEN (GitHub Actions can set this from `${{ github.token }}`)
+    githubToken: "",
     public: {
       // Provided by CI (GitHub Pages workflow) via NUXT_PUBLIC_*.
       // We keep placeholders here so `useRuntimeConfig().public` always has these keys.
       buildTime: "",
       gitSha: "",
       strictGithubStats: "",
+    },
+  },
+
+  nitro: {
+    prerender: {
+      // If any prerendered route throws (e.g. strict GitHub stats fetch), fail the build.
+      // This ensures GitHub Actions will be marked as failed instead of silently publishing.
+      failOnError: true,
     },
   },
 
