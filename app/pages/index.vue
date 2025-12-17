@@ -150,68 +150,83 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
               !isSubtreeReady || !isLayoutReady,
           }"
         >
-          <ProfileSection
-            :resume="resumeView"
-            :title="labels.profile"
-            :icon-class="sectionSettings.profile.icon"
-            :theme-color="themeColorFor('profile', 'primary')"
-          />
+          <template v-for="section in resumeView.sectionOrder" :key="section">
+            <ProfileSection
+              v-if="section === 'profile'"
+              :resume="resumeView"
+              :title="labels.profile"
+              :icon-class="sectionSettings.profile.icon"
+              :theme-color="themeColorFor('profile', 'primary')"
+            />
 
-          <EducationSection
-            :resume="resumeView"
-            :title="labels.education"
-            :icon-class="sectionSettings.education.icon"
-            :marker-bg-class="sectionSettings.education.bg"
-            :theme-color="themeColorFor('education', 'primary')"
-          />
+            <EducationSection
+              v-else-if="
+                section === 'education' && resumeView.education?.length > 0
+              "
+              :resume="resumeView"
+              :title="labels.education"
+              :icon-class="sectionSettings.education.icon"
+              :marker-bg-class="sectionSettings.education.bg"
+              :theme-color="themeColorFor('education', 'primary')"
+            />
 
-          <GithubSection
-            :resume="resumeView"
-            :title="labels.github"
-            :icon-class="sectionSettings.github.icon"
-            :dot-bg-class="sectionSettings.github.bg"
-            :text-class="sectionSettings.github.text"
-            :theme-color="themeColorFor('github', 'sky')"
-            :stars-label="labels.stars"
-            :contributions-label="labels.contributions"
-            :prs-label="labels.prs"
-            :issues-label="labels.issues"
-            :repositories-label="labels.repositories"
-          />
+            <GithubSection
+              v-else-if="section === 'github' && resumeView.github"
+              :resume="resumeView"
+              :title="labels.github"
+              :icon-class="sectionSettings.github.icon"
+              :dot-bg-class="sectionSettings.github.bg"
+              :text-class="sectionSettings.github.text"
+              :theme-color="themeColorFor('github', 'sky')"
+              :stars-label="labels.stars"
+              :contributions-label="labels.contributions"
+              :prs-label="labels.prs"
+              :issues-label="labels.issues"
+              :repositories-label="labels.repositories"
+            />
 
-          <AwardsSection
-            :resume="resumeView"
-            :title="labels.awards"
-            :expand-label="labels.expand"
-            :icon-class="sectionSettings.awards.icon"
-            :accent-bg-class="sectionSettings.awards.bg"
-            :theme-color="themeColorFor('awards', 'yellow')"
-          />
+            <AwardsSection
+              v-else-if="section === 'awards' && resumeView.awards?.length > 0"
+              :resume="resumeView"
+              :title="labels.awards"
+              :expand-label="labels.expand"
+              :icon-class="sectionSettings.awards.icon"
+              :accent-bg-class="sectionSettings.awards.bg"
+              :theme-color="themeColorFor('awards', 'yellow')"
+            />
 
-          <ProjectsSection
-            :resume="resumeView"
-            :title="labels.projects"
-            :icon-class="sectionSettings.projects.icon"
-            :accent-bg-class="sectionSettings.projects.bg"
-            :role-text-class="sectionSettings.projects.text"
-            :theme-color="themeColorFor('projects', 'primary')"
-          />
+            <ProjectsSection
+              v-else-if="
+                section === 'projects' && resumeView.projects?.length > 0
+              "
+              :resume="resumeView"
+              :title="labels.projects"
+              :icon-class="sectionSettings.projects.icon"
+              :accent-bg-class="sectionSettings.projects.bg"
+              :role-text-class="sectionSettings.projects.text"
+              :theme-color="themeColorFor('projects', 'primary')"
+            />
 
-          <GamesSection
-            :resume="resumeView"
-            :title="labels.games"
-            :icon-class="sectionSettings.games.icon"
-            :accent-bg-class="sectionSettings.games.bg"
-            :theme-color="themeColorFor('games', 'purple')"
-          />
+            <GamesSection
+              v-else-if="section === 'games' && resumeView.games?.length > 0"
+              :resume="resumeView"
+              :title="labels.games"
+              :icon-class="sectionSettings.games.icon"
+              :accent-bg-class="sectionSettings.games.bg"
+              :theme-color="themeColorFor('games', 'purple')"
+            />
 
-          <LanguagesSection
-            :resume="resumeView"
-            :title="labels.languages"
-            :icon-class="sectionSettings.languages.icon"
-            :accent-bg-class="sectionSettings.languages.bg"
-            :theme-color="themeColorFor('languages', 'emerald')"
-          />
+            <LanguagesSection
+              v-else-if="
+                section === 'languages' && resumeView.languages?.length > 0
+              "
+              :resume="resumeView"
+              :title="labels.languages"
+              :icon-class="sectionSettings.languages.icon"
+              :accent-bg-class="sectionSettings.languages.bg"
+              :theme-color="themeColorFor('languages', 'emerald')"
+            />
+          </template>
         </div>
       </div>
     </div>

@@ -91,6 +91,14 @@ languages:
     certificate: CET-6 (600+)
   - name: 日语
     certificate: N2
+sectionOrder:
+  - profile
+  - education
+  - github
+  - awards
+  - projects
+  - games
+  - languages
 colors:
   profile: primary
   education: primary
