@@ -153,4 +153,5 @@ export type ResumeEntry = {
     user: string;
     orgs: string[];
   };
+  sectionOrder?: string[];
 };

@@ -47,6 +47,15 @@ export const useResumeContent = async (locale: Ref<ResumeLocale>) => {
       games: [],
       awards: [],
       languages: [],
+      sectionOrder: [
+        "profile",
+        "education",
+        "github",
+        "awards",
+        "projects",
+        "games",
+        "languages",
+      ],
     };
 
     const entry = (resume.value ?? {}) as Partial<ResumeEntry>;
@@ -63,6 +72,7 @@ export const useResumeContent = async (locale: Ref<ResumeLocale>) => {
       awards: entry.awards ?? base.awards,
       languages: entry.languages ?? base.languages,
       github: entry.github,
+      sectionOrder: entry.sectionOrder ?? base.sectionOrder,
     };
   });
 

@@ -93,6 +93,14 @@ languages:
     certificate: Native / Bilingual
   - name: Chinese
     certificate: Native
+sectionOrder:
+  - profile
+  - education
+  - github
+  - awards
+  - projects
+  - games
+  - languages
 colors:
   profile: primary
   education: primary
