@@ -32,6 +32,14 @@ github:
   orgs:
     - HIT-Fireworks
     - Lordly-Tech
+sectionOrder:
+  - profile
+  - education
+  - github
+  - awards
+  - projects
+  - games
+  - languages
 colors:
   profile: sky
   education: sky
