@@ -34,7 +34,7 @@ const DEFAULT_STATS: GithubStats = {
   totalContributions: 0,
 };
 
-const isStrictEnabled = (v: unknown) => v === "1" || v === true;
+const isStrictEnabled = (v: unknown) => v === "1" || v === 1 || v === true;
 
 type Props = {
   resume: ResumeEntry;
