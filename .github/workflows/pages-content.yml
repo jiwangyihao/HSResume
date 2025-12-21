@@ -88,3 +88,5 @@ jobs:
 
       - name: Deploy to EdgeOne Pages
         run: npx edgeone pages deploy .output/public -n ${{ vars.EDGEONE_PROJECT_NAME }} -t ${{ secrets.EDGEONE_TOKEN }}
+        env:
+          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_TOKEN }}
