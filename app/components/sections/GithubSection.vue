@@ -22,7 +22,7 @@ type GitHubSearchResult = {
 };
 
 type ContributionsAPI = {
-  contributions?: Array<{ date: string; count: number }>;
+  totalContributions?: number;
 };
 
 const DEFAULT_STATS: GithubStats = {
@@ -142,7 +142,7 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
           { headers: githubApiHeaders.value }
         ),
         $fetch<ContributionsAPI>(
-          `https://github-contributions-api.jogruber.de/v4/${user}`
+          `https://github-contributions-api.deno.dev/${user}.json`
         ),
       ];
 
@@ -155,7 +155,7 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
       // If any upstream returned an unexpected shape (often rate limit / error payload),
       // fail the build in strict mode so we don't publish wrong numbers.
       if (strictGithubStats) {
-        const contribOk = Array.isArray(contribResult?.contributions);
+        const contribOk = typeof contribResult?.totalContributions === "number";
         const prOk = typeof prResult?.total_count === "number";
         const issueOk = typeof issueResult?.total_count === "number";
         const reposOk = repoResults.every(Array.isArray);
@@ -184,27 +184,8 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
         0
       );
 
-      // Calculate total contributions for the last year (365 days)
-      const today = new Date();
-      const oneYearAgo = new Date(
-        today.getFullYear() - 1,
-        today.getMonth(),
-        today.getDate()
-      );
-      let totalContributions = 0;
-
-      if (contribResult?.contributions) {
-        totalContributions = contribResult.contributions.reduce(
-          (acc: number, day) => {
-            const date = new Date(day.date);
-            if (date >= oneYearAgo && date <= today) {
-              return acc + day.count;
-            }
-            return acc;
-          },
-          0
-        );
-      }
+      // The Deno API already provides totalContributions for the last year
+      const totalContributions = contribResult?.totalContributions ?? 0;
 
       const result = {
         stars,
