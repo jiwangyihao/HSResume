@@ -228,12 +228,12 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
             ? e.message
             : typeof e === "string"
             ? e
-            : undefined;
-        throw createError({
-          statusCode: 502,
-          statusMessage: "Failed to fetch GitHub stats (strict mode)",
-          message: msg,
-        });
+            : "Unknown error";
+        console.error(
+          `[FATAL] Failed to fetch GitHub stats in strict mode: ${msg}`
+        );
+        // createError alone doesn't stop prerender; force exit to fail the build.
+        process.exit(1);
       }
 
       // In dev, Nuxt forwards server logs to the client/devtools and stringifies them.
