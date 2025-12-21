@@ -59,36 +59,36 @@ jobs:
         with:
           path: .output/public
 
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v4
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Download Pages artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: .output/public
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
-      - name: Extract artifact
-        run: |
-          cd .output/public
-          tar -xvf artifact.tar
-          rm artifact.tar
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Download Pages artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: github-pages
+  #         path: .output/public
 
-      - name: Deploy to EdgeOne Pages
-        uses: TencentEdgeOne/edgeone-pages-action@v1
-        with:
-          token: ${{ secrets.EDGEONE_TOKEN }}
-          project-name: ${{ vars.EDGEONE_PROJECT_NAME }}
-          build-path: "./.output/public"
+  #     - name: Extract artifact
+  #       run: |
+  #         cd .output/public
+  #         tar -xvf artifact.tar
+  #         rm artifact.tar
+
+  #     - name: Deploy to EdgeOne Pages
+  #       uses: TencentEdgeOne/edgeone-pages-action@v1
+  #       with:
+  #         token: ${{ secrets.EDGEONE_TOKEN }}
+  #         project-name: ${{ vars.EDGEONE_PROJECT_NAME }}
+  #         build-path: "./.output/public"
