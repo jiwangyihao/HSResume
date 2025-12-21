@@ -59,6 +59,18 @@ const strictGithubStats = isStrictEnabled(
   (publicRuntime as { strictGithubStats?: unknown }).strictGithubStats
 );
 
+// Debug: log the actual value received for strictGithubStats
+if (import.meta.server) {
+  console.log(
+    "[DEBUG] strictGithubStats raw value:",
+    JSON.stringify(
+      (publicRuntime as { strictGithubStats?: unknown }).strictGithubStats
+    ),
+    "| isEnabled:",
+    strictGithubStats
+  );
+}
+
 // GitHub API is rate-limited for unauthenticated requests. During SSR/prerender (CI),
 // we can use a server-only token to avoid 403 rate limit exceeded.
 const githubToken = import.meta.server
