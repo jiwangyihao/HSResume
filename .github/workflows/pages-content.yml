@@ -87,6 +87,8 @@ jobs:
           rm artifact.tar
 
       - name: Deploy to EdgeOne Pages
-        run: npx edgeone pages deploy .output/public -n ${{ vars.EDGEONE_PROJECT_NAME }} -t ${{ secrets.EDGEONE_TOKEN }}
-        env:
-          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_TOKEN }}
+        uses: TencentEdgeOne/edgeone-pages-action@v1
+        with:
+          token: ${{ secrets.EDGEONE_TOKEN }}
+          project-name: ${{ vars.EDGEONE_PROJECT_NAME }}
+          build-path: "./.output/public"
