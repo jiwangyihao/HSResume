@@ -66,6 +66,12 @@ importers:
       '@iconify-json/icon-park-solid':
         specifier: ^1.2.4
         version: 1.2.4
+      '@iconify-json/lucide':
+        specifier: ^1.2.82
+        version: 1.2.82
+      '@iconify-json/material-icon-theme':
+        specifier: ^1.2.45
+        version: 1.2.45
       '@iconify-json/mingcute':
         specifier: ^1.2.6
         version: 1.2.6
@@ -81,6 +87,9 @@ importers:
       '@iconify-json/streamline':
         specifier: ^1.2.5
         version: 1.2.5
+      '@iconify-json/tabler':
+        specifier: ^1.2.25
+        version: 1.2.25
       '@types/culori':
         specifier: ^4.0.1
         version: 4.0.1
@@ -702,6 +711,12 @@ packages:
   '@iconify-json/icon-park-solid@1.2.4':
     resolution: {integrity: sha512-030MChSP6lCY7N+U5J5R7YguHTGcm7qQEI/ivBjk77El/i8yJatoj568cwwXGM8c6HEU/kIxEE4m3O/6w0WBGg==}
 
+  '@iconify-json/lucide@1.2.82':
+    resolution: {integrity: sha512-fHZWegspOZonl5GNTvOkHsjnTMdSslFh3EzpzUtRyLxO8bOonqk2OTU3hCl0k4VXzViMjqpRK3X1sotnuBXkFA==}
+
+  '@iconify-json/material-icon-theme@1.2.45':
+    resolution: {integrity: sha512-np2zHS5qp+Ljs78t2ylamU7qCgnJtgJDrvO6mFnbAUcGVD/PT9/RxaGfMNN52fYlWL0ORPOnrRJ3RNU+GRaY2g==}
+
   '@iconify-json/mingcute@1.2.6':
     resolution: {integrity: sha512-mXvLsBgsZz9jiAUKtU+EHsD5/tLzWAHQ0z0Qk255NjUnZqtbmIhSNoUHq59tO776K2Q48A4D+Y3LYce2niY3CQ==}
 
@@ -716,6 +731,9 @@ packages:
 
   '@iconify-json/streamline@1.2.5':
     resolution: {integrity: sha512-u6l9BOJoIIPjjDXWl6D/hPDzeBk5WiaEHZ+U9SbkQ14N9hgotaYyIZVMfgF175CG1TTS06j8k15D3FM2OYaFIw==}
+
+  '@iconify-json/tabler@1.2.25':
+    resolution: {integrity: sha512-yU0aipjN4moGTqeCbdA9m7Wl7CZ9PUqnlwQXng/iGXod43FiSZHNUyMbc1+mu0cR8BV7gf8rkQZJy+as8gWAEw==}
 
   '@iconify/collections@1.0.627':
     resolution: {integrity: sha512-IG6Gv+JQJEyJxwrKjOIpOizUzK82RrpDI2Rk92iTJWbfK3hY+LrBK6YhjXT3b9zAN5wYqseCpPznQHgRacmogg==}
@@ -6103,6 +6121,14 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
+  '@iconify-json/lucide@1.2.82':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/material-icon-theme@1.2.45':
+    dependencies:
+      '@iconify/types': 2.0.0
+
   '@iconify-json/mingcute@1.2.6':
     dependencies:
       '@iconify/types': 2.0.0
@@ -6120,6 +6146,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/streamline@1.2.5':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/tabler@1.2.25':
     dependencies:
       '@iconify/types': 2.0.0
 
