@@ -157,6 +157,64 @@ projects:
       - category: gitee
         url: https://gitee.com/spark-store-project/spark-store
   - printWidth: 70
+    period: "2024-10 to 2024-12"
+    name: LS-BO Enhanced Multi-modal Skeleton Action Recognition for UAV Scenarios
+    role: Core Developer
+    highlights:
+      - kind: split
+        domain: AiCOMP
+        value: National 1st Prize
+        category: award
+      - kind: text
+        label: PyTorch
+        category: tech
+        icon: i-simple-icons-pytorch
+      - kind: text
+        label: GCN
+        category: tech
+      - kind: text
+        label: Transformer
+        category: tech
+    description:
+      - Multi-model ensemble solution for skeleton action recognition on the UAV-Human dataset, awarded **National 1st Prize (2nd place)** in the 6th Global Campus AI Algorithm Elite Competition (AiCOMP).
+      - Proposed a **Least-Squares enhanced Bayesian Optimization** fusion strategy—using pseudo-inverse least-squares for globally optimal initial weights, then fine-tuning via Gaussian process-based BO.
+      - Integrated Skeleton-MixFormer, FR-Head, SiT-MLP, BlockGCN, and CHASE, combining Transformer long-range spatiotemporal dependency modeling with GCN local topology feature extraction.
+    responsibilities:
+      - Reproduced and engineered five model families (Skeleton-MixFormer, FR-Head, SiT-MLP, BlockGCN, CHASE).
+      - Extended each model's Feeder class to support UAV-Human; adapted graph structures and Hierarchical Graph modules.
+      - Implemented the LS-BO weight fusion core algorithm and completed training and inference for the weighted ensemble model.
+  - printWidth: 70
+    period: "2025-08 to 2025-12"
+    name: Guided LLM Extraction and MILP-Optimized Travel Planning System
+    role: Core Developer
+    highlights:
+      - kind: split
+        domain: AiCOMP
+        value: National 1st Prize
+        category: award
+      - kind: text
+        label: Qwen
+        category: tech
+        icon: i-hugeicons-qwen
+      - kind: text
+        label: vLLM
+        category: tech
+      - kind: text
+        label: MILP
+        category: tech
+      - kind: text
+        label: HiGHS
+        category: tech
+    description:
+      - Intelligent planning system that transforms natural language travel requests into structured, feasible itineraries, awarded **National 1st Prize (2nd place)** in the 7th Global Campus AI Algorithm Elite Competition (AiCOMP).
+      - Adopted an **Extraction–Planning dual-modal decoupled architecture**—LLM handles semantic understanding and intent extraction, while a MILP solver performs globally optimal spatiotemporal resource allocation.
+      - Built a **MILP global optimization + Minimal-constraint fast fallback dual-layer planning architecture**, achieving 85+ to near-perfect scores across the Phase2/Medium/Human test sets.
+    responsibilities:
+      - Designed the LLM information extraction module, implementing **dynamic Schema-guided decoding**, **multi-trajectory parallel reasoning**, and **hierarchical consensus distillation** strategies.
+      - Designed the minimal-constraint planner, using greedy strategies and dynamic relaxation to guarantee feasible fallback solutions under extreme scenarios.
+      - Improved the MILP planner architecture by optimizing **anchor-aware spatial pruning** and **flow-conservation constraint modeling** to enhance solver efficiency and solution quality.
+      - Responsible for full-stack engineering implementation and on-site presentation.
+  - printWidth: 70
     period: "2024-04 to 2025-06"
     name: Newcar (Modern animation engine for the JS ecosystem)
     role: Core Developer
@@ -185,11 +243,15 @@ projects:
     links:
       - category: github
         url: https://github.com/dromara/newcar
-  - printWidth: 70
+  - printWidth: 30
     period: "2024-07 to Present"
     name: Saturn AI (MoE-like agricultural agent)
     role: Tech Lead
     highlights:
+      - kind: svg
+        url: https://img.shields.io/github/stars/jiwangyihao/Saturn-Lib
+        alt: GitHub Stars
+        category: metric
       - kind: split
         domain: iCAN
         value: National 2nd Prize
@@ -215,7 +277,8 @@ projects:
         url: https://saturn.jwyihao.top
       - category: github
         url: https://github.com/jiwangyihao/Saturn-Lib
-  - period: "2024-08 to Present"
+  - printWidth: 70
+    period: "2024-08 to Present"
     name: Lordly·Reading (wearable online reader)
     role: Founder / Lead Developer
     highlights:
@@ -255,12 +318,30 @@ projects:
     responsibilities:
       - Founded and built core features.
     links:
+      - category: website
+        url: https://read.lordly.vip
       - category: github
         url: https://github.com/Lordly-Tech/LordlyRead
       - category: github
         url: https://github.com/jiwangyihao/source-j-legado
-      - category: website
-        url: https://read.lordly.vip
+  - period: "2023-11 to 2024-06"
+    name: All-scenario assistive embodied agent for the visually impaired
+    role: Tech Lead
+    description:
+      - An all-scenario assistive embodied agent for visually impaired users, focusing on scene understanding and intelligent interaction.
+      - Won 1st Prize in the university "Freshman Project Program" and National 1st Prize in the "University Student Competition Five Minute Research Presentation (5MRP)".
+    highlights:
+      - kind: split
+        domain: 5MRP
+        value: National 1st Prize
+        category: award
+      - kind: split
+        domain: Freshman Project Program
+        value: Univ. 1st Prize
+        category: award
+    responsibilities:
+      - Led architecture design and large-model implementation.
+      - Drove delivery and presentations leading to the awards.
   - period: "2022-10 to Present"
     name: App Config
     role: Founder / Lead Developer
@@ -291,24 +372,6 @@ projects:
     links:
       - category: github
         url: https://github.com/jiwangyihao/app_config
-  - period: "2023-11 to 2024-06"
-    name: All-scenario assistive embodied agent for the visually impaired
-    role: Tech Lead
-    description:
-      - An all-scenario assistive embodied agent for visually impaired users, focusing on scene understanding and intelligent interaction.
-      - Won 1st Prize in the university "Freshman Project Program" and National 1st Prize in the "University Student Competition Five Minute Research Presentation (5MRP)".
-    highlights:
-      - kind: split
-        domain: 5MRP
-        value: National 1st Prize
-        category: award
-      - kind: split
-        domain: Freshman Project Program
-        value: Univ. 1st Prize
-        category: award
-    responsibilities:
-      - Led architecture design and large-model implementation.
-      - Drove delivery and presentations leading to the awards.
 games:
   - name: "Honkai: Star Rail"
     detail: Online, active 2+ years; since launch, 924 days logged; max level, full story cleared.

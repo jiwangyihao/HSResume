@@ -157,6 +157,64 @@ projects:
       - category: gitee
         url: https://gitee.com/spark-store-project/spark-store
   - printWidth: 70
+    period: "2024-10 至 2024-12"
+    name: 面向 UAV 场景的 LS-BO 增强多模态骨架动作识别
+    role: 核心开发者
+    highlights:
+      - kind: split
+        domain: AiCOMP
+        value: 国一
+        category: award
+      - kind: text
+        label: PyTorch
+        category: tech
+        icon: i-simple-icons-pytorch
+      - kind: text
+        label: GCN
+        category: tech
+      - kind: text
+        label: Transformer
+        category: tech
+    description:
+      - 面向 UAV-Human 数据集的骨架动作识别多模型集成解决方案，获第六届全球校园人工智能算法精英大赛**全国一等奖（第二名）**。
+      - 提出**最小二乘增强贝叶斯优化权重融合**策略，通过伪逆法最小二乘求解获取全局最优初始权重，再以高斯过程贝叶斯优化进行微调。
+      - 集成 Skeleton-MixFormer、FR-Head、SiT-MLP、BlockGCN、CHASE 五类先进模型，融合 Transformer 长距离时空依赖建模与 GCN 局部拓扑特征提取能力。
+    responsibilities:
+      - 负责 Skeleton-MixFormer、FR-Head、SiT-MLP、BlockGCN、CHASE 五类论文算法的复现与工程实现。
+      - 扩展各模型的 Feeder 类以支持 UAV-Human 数据集，完成图结构与 Hierarchical Graph 的适配优化。
+      - 实现最小二乘增强贝叶斯优化权重融合核心算法，完成加权融合模型的训练与推理。
+  - printWidth: 70
+    period: "2025-8 至 2025-12"
+    name: 引导式 LLM 提取与 MILP 优化的旅行规划系统
+    role: 核心开发者
+    highlights:
+      - kind: split
+        domain: AiCOMP
+        value: 国一
+        category: award
+      - kind: text
+        label: Qwen
+        category: tech
+        icon: i-hugeicons-qwen
+      - kind: text
+        label: vLLM
+        category: tech
+      - kind: text
+        label: MILP
+        category: tech
+      - kind: text
+        label: HiGHS
+        category: tech
+    description:
+      - 将自然语言旅游需求转化为结构化可行行程的智能规划系统，获第七届全球校园人工智能算法精英大赛**全国一等奖（第二名）**。
+      - 采用**提取-规划双模态解耦架构**，LLM 负责语义理解与意图提取，MILP 求解器执行全局最优的时空资源分配。
+      - 构建**MILP 全局寻优 + 最小约束极速兜底双层规划架构**，在 Phase2/Medium/Human 三大测试集均获 85+ 至近满分。
+    responsibilities:
+      - 设计 LLM 信息提取模块，实现**基于动态 Schema 的引导式解码**、**多轨迹并行推理**及**层次化共识蒸馏**策略。
+      - 设计最小约束规划器技术方案，通过贪婪策略与动态松弛机制实现极端场景下的可行解兜底。
+      - 改进 MILP 规划器架构，优化**锚点感知空间剪枝**与**流转守恒约束建模**，提升求解效率与解质量。
+      - 负责全部模块的工程实现与现场答辩。
+  - printWidth: 70
     period: "2024-04 至 2025-06"
     name: Newcar (JavaScript 生态的现代动画引擎)
     role: 核心开发者
@@ -185,7 +243,7 @@ projects:
     links:
       - category: github
         url: https://github.com/dromara/newcar
-  - printWidth: 70
+  - printWidth: 30
     period: "2024-07 至 至今"
     name: Saturn AI (类 MoE 混合专家架构农业智能体)
     role: 技术负责人
@@ -219,7 +277,8 @@ projects:
         url: https://saturn.jwyihao.top
       - category: github
         url: https://github.com/jiwangyihao/Saturn-Lib
-  - period: "2024-08 至 至今"
+  - printWidth: 70
+    period: "2024-08 至 至今"
     name: Lordly·阅读 (手环在线阅读工具)
     role: 发起人 / 主要开发者
     highlights:
@@ -265,6 +324,25 @@ projects:
         url: https://github.com/Lordly-Tech/LordlyRead
       - category: github
         url: https://github.com/jiwangyihao/source-j-legado
+  - period: "2023-11 至 2024-06"
+    name: 小希全场景助盲具身智能体
+    role: 技术负责人
+    description:
+      - 面向视障用户的全场景助盲具身智能体，聚焦场景理解与智能交互。
+      - 获第七届全国大学生 5 分钟科研英语演讲比赛**全国一等奖**。
+      - 获校级“大一年度项目计划”**一等奖**。
+    highlights:
+      - kind: split
+        domain: 5MRP
+        value: 国一
+        category: award
+      - kind: split
+        domain: 年度项目
+        value: 一等
+        category: award
+    responsibilities:
+      - 负责整体技术架构设计及大模型部分的开发与实现。
+      - 牵头项目落地与答辩，推进获奖成果。
   - period: "2022-10 至 至今"
     name: 应用配置 (App Config)
     role: 发起人 / 主要开发者
@@ -295,25 +373,6 @@ projects:
     links:
       - category: github
         url: https://github.com/jiwangyihao/app_config
-  - period: "2023-11 至 2024-06"
-    name: 小希全场景助盲具身智能体
-    role: 技术负责人
-    description:
-      - 面向视障用户的全场景助盲具身智能体，聚焦场景理解与智能交互。
-      - 获第七届全国大学生 5 分钟科研英语演讲比赛**全国一等奖**。
-      - 获校级“大一年度项目计划”**一等奖**。
-    highlights:
-      - kind: split
-        domain: 5MRP
-        value: 国一
-        category: award
-      - kind: split
-        domain: 年度项目
-        value: 一等
-        category: award
-    responsibilities:
-      - 负责整体技术架构设计及大模型部分的开发与实现。
-      - 牵头项目落地与答辩，推进获奖成果。
 games:
   - name: "崩坏：星穹铁道"
     detail: 网游活跃 2 年+；开服全勤（924 天），满级全剧情通关。
