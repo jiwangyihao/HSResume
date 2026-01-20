@@ -68,7 +68,7 @@ education:
         category: representation
       - text: 校学生代表 (2025)
         category: representation
-      - text: 薪火笔记社技术支持部部长
+      - text: 薪火笔记社社长 (2026)
         category: leadership
       - text: HITLUG 开源学生俱乐部干事
         category: tech

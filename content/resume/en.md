@@ -68,7 +68,7 @@ education:
         category: representation
       - text: University Student Representative (2025)
         category: representation
-      - text: Tech Support Dept. Lead, Spark Notes Club
+      - text: Fireworks Notes Club President (2026)
         category: leadership
       - text: Officer, HITLUG open-source student club
         category: tech
