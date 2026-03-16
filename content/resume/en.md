@@ -411,6 +411,8 @@ awards:
   - date: 2025-11
     title: National 3rd Prize, 19th iCAN Innovation Contest Entrepreneurship Competition
   - date: 2025-11
+    title: Provincial 1st Prize (Silver Award), China International College Students' Innovation Competition (2025)
+  - date: 2025-11
     title: Provincial 1st Prize, 2025 CUMCM (Contemporary Undergraduate Mathematical Contest in Modeling)
   - date: 2025-09
     title: National 3rd Prize, CCF SAC 2025 1st National University Smart Agriculture Competition
