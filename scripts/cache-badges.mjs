@@ -73,7 +73,7 @@ function parseSvgViewBoxSize(svgText) {
   const svgTag = svgText.match(/<svg\b[^>]*>/i)?.[0] ?? "";
 
   // Prefer viewBox: viewBox="minX minY w h"
-  const m = svgTag.match(/viewBox\s*=\s*['\"]\s*[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)\s*['\"]/i);
+  const m = svgTag.match(/viewBox\s*=\s*["']\s*[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)\s*["']/i);
   if (m) {
     const w = Number.parseFloat(m[1]);
     const h = Number.parseFloat(m[2]);
@@ -81,8 +81,8 @@ function parseSvgViewBoxSize(svgText) {
   }
 
   // Fallback: width/height attributes
-  const mw = svgTag.match(/\bwidth\s*=\s*['\"]\s*([\d.]+)(?:px)?\s*['\"]/i);
-  const mh = svgTag.match(/\bheight\s*=\s*['\"]\s*([\d.]+)(?:px)?\s*['\"]/i);
+  const mw = svgTag.match(/\bwidth\s*=\s*["']\s*([\d.]+)(?:px)?\s*["']/i);
+  const mh = svgTag.match(/\bheight\s*=\s*["']\s*([\d.]+)(?:px)?\s*["']/i);
   if (mw && mh) {
     const w = Number.parseFloat(mw[1]);
     const h = Number.parseFloat(mh[1]);
@@ -101,11 +101,11 @@ function patchAtomgitSvgWidth(svgText) {
   if (!outerTagMatch) return { patched: false, svgText };
 
   const outerTag = outerTagMatch[0];
-  if (/data-hsresume-width-adjusted\s*=\s*['\"]atomgit-5['\"]/i.test(outerTag)) {
+  if (/data-hsresume-width-adjusted\s*=\s*["']atomgit-5["']/i.test(outerTag)) {
     return { patched: false, svgText };
   }
 
-  const widthMatch = outerTag.match(/\bwidth\s*=\s*['\"]\s*([\d.]+)(?:px)?\s*['\"]/i);
+  const widthMatch = outerTag.match(/\bwidth\s*=\s*["']\s*([\d.]+)(?:px)?\s*["']/i);
   if (!widthMatch) return { patched: false, svgText };
 
   const rawWidth = Number.parseFloat(widthMatch[1]);
@@ -115,7 +115,7 @@ function patchAtomgitSvgWidth(svgText) {
 
   // Replace width value and inject marker attribute.
   const newOuterTag = outerTag
-    .replace(widthMatch[0], `width=\"${newWidth}\"`)
+    .replace(widthMatch[0], `width="${newWidth}"`)
     .replace(/<svg\b/i, '<svg data-hsresume-width-adjusted="atomgit-5"');
 
   const patched = svgText.replace(outerTag, newOuterTag);
@@ -254,9 +254,7 @@ function collectSvgBadgeUrls(value) {
 
     const obj = cur;
     // Badge: { kind: 'svg', url: string }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const kind = (obj).kind;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const url = (obj).url;
 
     if (kind === "svg" && typeof url === "string" && url.startsWith("http")) {

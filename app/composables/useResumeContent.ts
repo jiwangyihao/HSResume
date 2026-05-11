@@ -1,6 +1,10 @@
 import { queryCollection } from "#imports";
 import type { ResumeEntry, ResumeLocale } from "~/types/resume";
 
+type ContentResumeDocument = {
+  meta?: ResumeEntry;
+} | null | undefined;
+
 export const useResumeContent = async (locale: Ref<ResumeLocale>) => {
   // Fetch all resume data at once (server-side / build-time)
   // This avoids running queryCollection on the client, which would trigger SQLite WASM loading.
@@ -17,7 +21,7 @@ export const useResumeContent = async (locale: Ref<ResumeLocale>) => {
       queryCollection("content").path("/resume/en.sample").first(),
     ]);
 
-    const resolveEntry = (entry: any, sample: any) => {
+    const resolveEntry = (entry: ContentResumeDocument, sample: ContentResumeDocument) => {
       const final = entry ?? sample;
       return (final?.meta as ResumeEntry) || null;
     };

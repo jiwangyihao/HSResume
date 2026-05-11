@@ -11,14 +11,14 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const chunk = <T>(items: T[], size: number): T[][] => {
+function chunk<T>(items: T[], size: number): T[][] {
   const safeSize = Math.max(1, Math.floor(size));
   const out: T[][] = [];
   for (let i = 0; i < items.length; i += safeSize) {
     out.push(items.slice(i, i + safeSize));
   }
   return out;
-};
+}
 
 const chunkedGames = computed(() => {
   const games = props.resume.games || [];
@@ -68,7 +68,9 @@ const chunkedGames = computed(() => {
             v-if="game.notes"
             class="text-xs text-gray-600 dark:text-gray-300 italic"
           >
-            "<Markdown :source="game.notes" tag="span" unwrap="p" />"
+            <span>"</span>
+            <Markdown :source="game.notes" tag="span" unwrap="p" />
+            <span>"</span>
           </div>
         </div>
       </SectionCard>

@@ -268,7 +268,7 @@ const heatmapSrc = computed(() => {
           <div
             class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full ring-4 ring-white dark:ring-gray-900"
             :class="dotBgClass"
-          ></div>
+          />
           <h3 class="font-bold text-gray-900 dark:text-white">GitHub Stats</h3>
           <div class="text-sm text-gray-500 mb-2">
             @{{ resume.github.user }}
@@ -332,7 +332,7 @@ const heatmapSrc = computed(() => {
           :src="heatmapSrc"
           alt="GitHub Contribution Graph"
           class="w-full dark:invert dark:hue-rotate-180"
-        />
+        >
       </SectionCard>
     </section>
   </template>

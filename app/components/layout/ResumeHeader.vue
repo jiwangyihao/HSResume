@@ -51,27 +51,27 @@ const optimizedAvatar = computed(() => {
             type="image/avif"
             :srcset="optimizedAvatar.avif"
             :sizes="optimizedAvatar.sizes"
-          />
+          >
           <source
             type="image/webp"
             :srcset="optimizedAvatar.webp"
             :sizes="optimizedAvatar.sizes"
-          />
+          >
           <img
             :src="avatarSrc"
             alt="Avatar"
-            @error="onAvatarError"
             class="rounded-full object-cover w-0 min-w-full h-full"
-          />
+            @error="onAvatarError"
+          >
         </picture>
 
         <img
           v-else
           :src="avatarSrc"
           alt="Avatar"
-          @error="onAvatarError"
           class="rounded-full object-cover w-0 min-w-full h-full"
-        />
+          @error="onAvatarError"
+        >
       </div>
     </div>
 

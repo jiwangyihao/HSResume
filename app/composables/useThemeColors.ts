@@ -98,7 +98,8 @@ export const resolveHexColor = (colorName: string) => {
   let colorValue: string = defaultColor;
 
   if (palette && typeof palette === "object" && "600" in palette) {
-    colorValue = (palette as any)[600];
+    const colorScale = palette as { 600?: string };
+    colorValue = colorScale[600] ?? defaultColor;
   } else if (typeof palette === "string") {
     // e.g. black, white
     colorValue = palette;
