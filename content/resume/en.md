@@ -51,7 +51,7 @@ colors:
 summary: |
   Probationary Member of the CPC, Software Engineering undergraduate at Harbin Institute of Technology (Class of 2023), open-source developer. Personal open-source projects have accumulated **1k+ stars** on GitHub.
 
-  Awarded **National 2nd Prize** in the OS Design track of the 5th Computer System Development Capability Competition (**CSCC**), **National 1st Prizes** in the 6th and 7th Global Campus AI Algorithm Elite Competitions, **National 1st Prize** in the 7th University Student Competition Five Minute Research Presentation (**5MRP**), and **National 2nd Prize** in the 18th iCAN Innovation Contest Innovation Competition, totaling **eight national awards**.
+  Awarded **National 2nd Prize** in the OS Design track of the 5th Computer System Development Capability Competition (**CSCC**), **National 1st Prizes** in the 6th and 7th Global Campus AI Algorithm Elite Competitions, **National 1st Prize** in the 7th University Student Competition Five Minute Research Presentation (**5MRP**), **National 2nd Prize** in the 18th iCAN Innovation Contest Innovation Competition, and **National 3rd Prize** in the 19th National Collegiate Software Innovation Contest, totaling **nine national awards**.
 
   Core developer of the Dramara Newcar & BugDuck open-source teams (projects with nearly **1k stars** on GitHub), invited to present at COSCon'24, the **9th China Open Source Conference**, in both the main forum and the middleware/microservices forum. Founding core member of the Spark open-source community and the GXDE OS team, with multiple projects recognized as **Gitee Most Valuable Open Source Projects (GVP)** and **AtomGit G-Star graduation projects**, invited to speak at COSCon'25, the **10th China Open Source Conference**, in the open-source operating systems and supply chain forum.
 education:
@@ -156,6 +156,38 @@ projects:
         url: https://www.spark-app.store
       - category: gitee
         url: https://gitee.com/spark-store-project/spark-store
+  - printWidth: 70
+    period: "2025-12 to 2026-05"
+    name: JiXia - AI Learning Assistant for Fragmented Learning
+    role: Team Lead / Technical Lead
+    highlights:
+      - kind: split
+        domain: SWC
+        value: National 3rd Prize
+        category: award
+      - kind: text
+        label: Flutter
+        category: tech
+        icon: i-simple-icons-flutter
+      - kind: text
+        label: Bun/Elysia
+        category: tech
+      - kind: text
+        label: Agentic RAG
+        category: tech
+        icon: i-mingcute-ai-fill
+      - kind: text
+        label: BullMQ
+        category: tech
+    description:
+      - Designed an AI learning assistant for fragmented learning scenarios, integrating historical knowledge content, multi-agent discussion, interactive creation, learning retention, and wearable reminders into a continuous learning loop; awarded **National 3rd Prize** in the 19th National Collegiate Software Innovation Contest.
+      - Built with Flutter cross-device clients and a Bun/Elysia cloud service, using PostgreSQL/pgvector, Redis/BullMQ, Agentic Retrieval/RAG, and controlled DSL rendering for content generation, knowledge retrieval, async jobs, and cloud-device collaboration.
+    responsibilities:
+      - As team lead, owned product planning, technical direction, overall architecture design, and core code development across mobile clients, backend services, data storage, and AI capability boundaries.
+      - Designed the cloud-device architecture, integrating the mobile app, wearable lightweight client, backend APIs, async queues, vector retrieval, and content-generation pipeline into a demonstrable and reviewable software product.
+      - Implemented the knowledge production pipeline based on Agentic Retrieval and RAG, covering event ingestion, evidence persistence, persona and knowledge-entity modeling, vector retrieval, and learning-content generation.
+      - Designed controlled DSL schemas, validation, and action allowlists to keep generative interactions within explicit safety boundaries and reduce uncontrolled generated-UI risk.
+      - Established unit, functional, and system-level validation for API contracts, persistence, async queue recovery, cross-device consistency, and controlled rendering boundaries.
   - printWidth: 70
     period: "2024-10 to 2024-12"
     name: LS-BO Enhanced Multi-modal Skeleton Action Recognition for UAV Scenarios
@@ -406,6 +438,8 @@ awardsFoldingRules:
   importantTitlePattern: (national|global|international)
 awardsPrintWidth: 70
 awards:
+  - date: 2026-05
+    title: National 3rd Prize, 19th National Collegiate Software Innovation Contest
   - date: 2025-12
     title: National 1st Prize (2nd place nationwide), 7th Global Campus AI Algorithm Elite Competition
   - date: 2025-11

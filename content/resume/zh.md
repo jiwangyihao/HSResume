@@ -51,7 +51,7 @@ colors:
 summary: |
   预备党员，哈尔滨工业大学 2023 级软件工程专业本科生，开源开发者，个人开源项目在 GitHub 上累计获 **1k+ star**。
 
-  获第五届全国大学生计算机系统能力大赛**全国二等奖**，第六届、第七届全球校园人工智能算法精英大赛**全国一等奖**，第七届全国大学生 5 分钟科研英语演讲比赛**全国一等奖**，第十八届 iCAN 大学生创新创业大赛**全国二等奖**等**八项国家级奖项**。
+  获第五届全国大学生计算机系统能力大赛**全国二等奖**，第六届、第七届全球校园人工智能算法精英大赛**全国一等奖**，第七届全国大学生 5 分钟科研英语演讲比赛**全国一等奖**，第十八届 iCAN 大学生创新创业大赛**全国二等奖**，第十九届全国大学生软件创新大赛**全国三等奖**等**九项国家级奖项**。
 
   作为 Dramara Newcar & BugDuck 开源团队核心开发者，项目在 GitHub 上获得近 **1k star**，受邀在 COSCon'24 **第九届中国开源年会**主论坛及中间件/微服务分论坛进行技术分享。作为星火开源社区及 GXDE OS 开源团队创始核心成员，多个项目获评 **Gitee 最有价值开源项目**及 **AtomGit G-Star 毕业项目**，受邀在 COSCon'25 **第十届中国开源年会**开源操作系统及供应链分论坛进行技术分享。
 education:
@@ -156,6 +156,38 @@ projects:
         url: https://www.spark-app.store
       - category: gitee
         url: https://gitee.com/spark-store-project/spark-store
+  - printWidth: 70
+    period: "2025-12 至 2026-05"
+    name: 稷下 JiXia - 面向碎片化学习的 AI 学习辅助系统
+    role: 队长 / 技术负责人
+    highlights:
+      - kind: split
+        domain: 软创
+        value: 国三
+        category: award
+      - kind: text
+        label: Flutter
+        category: tech
+        icon: i-simple-icons-flutter
+      - kind: text
+        label: Bun/Elysia
+        category: tech
+      - kind: text
+        label: Agentic RAG
+        category: tech
+        icon: i-mingcute-ai-fill
+      - kind: text
+        label: BullMQ
+        category: tech
+    description:
+      - 面向碎片化学习场景设计 AI 学习辅助系统，将历史知识内容、多智能体讨论、互动创作、学习沉淀与穿戴端提醒整合为连续学习闭环，获第十九届全国大学生软件创新大赛**全国三等奖**。
+      - 采用 Flutter 跨端客户端与 Bun/Elysia 云端服务，结合 PostgreSQL/pgvector、Redis/BullMQ、Agentic Retrieval/RAG 和受控 DSL 渲染，支撑内容生成、知识检索、异步任务与端云协同。
+    responsibilities:
+      - 作为队长负责项目规划、技术路线、整体架构设计与核心代码开发，统一移动端、服务端、数据层与 AI 能力边界。
+      - 设计端云协同架构，将移动端主应用、穿戴端轻应用、后端 API、异步队列、向量检索与内容生成链路整合为可演示、可验收的软件作品。
+      - 实现基于 Agentic Retrieval 与 RAG 的知识生产链路，覆盖事件抓取、证据归档、人物与知识实体建模、向量化检索和学习内容生成。
+      - 设计受控 DSL、Schema 校验与动作白名单机制，将生成式交互限制在安全边界内，降低自由生成 UI 带来的不可控风险。
+      - 建立单元、功能、系统三级验证口径，覆盖接口契约、数据持久化、异步队列恢复、跨端一致性与受控渲染等关键边界。
   - printWidth: 70
     period: "2024-10 至 2024-12"
     name: 面向 UAV 场景的 LS-BO 增强多模态骨架动作识别
@@ -405,6 +437,8 @@ awardsFoldingRules:
   importantTitlePattern: (全国|全球|international|national|global)
 awardsPrintWidth: 70
 awards:
+  - date: 2026-05
+    title: 第十九届全国大学生软件创新大赛 - 全国三等奖
   - date: 2025-12
     title: 第七届全球校园人工智能算法精英大赛 - 全国一等奖 (第二名)
   - date: 2025-11
