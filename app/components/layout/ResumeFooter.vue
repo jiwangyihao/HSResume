@@ -68,7 +68,7 @@ defineProps<Props>();
           target="_blank"
           class="flex items-center gap-1 text-gray-500! dark:text-gray-400! hover:underline underline-offset-2 hover:text-gray-500! dark:hover:text-gray-400!"
         >
-          <img :src="resume.footer.psb.icon" alt="PSB" class="w-4 h-4" />
+          <img :src="resume.footer.psb.icon" alt="PSB" class="w-4 h-4">
           {{ resume.footer.psb.text }}
         </a>
       </div>

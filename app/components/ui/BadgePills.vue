@@ -269,7 +269,7 @@ const tagKey = (tag: Badge) =>
           decoding="async"
           loading="lazy"
           @error="onSvgBadgeError(tag.url)"
-        />
+        >
       </span>
 
       <div

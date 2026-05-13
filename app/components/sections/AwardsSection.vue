@@ -164,10 +164,6 @@ const groupedAwards = computed<AwardGroup[]>(() => {
           :key="sub.title"
           tabindex="0"
           class="relative bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 p-3 rounded-xl shadow-sm transition-all duration-500 ease-out origin-top group/card hover:mt-2! focus:mt-2! hover:shadow-md focus:shadow-md outline-none overflow-hidden"
-          @mouseenter="hoveredCardTitle = sub.title"
-          @mouseleave="hoveredCardTitle = null"
-          @focus="hoveredCardTitle = sub.title"
-          @blur="hoveredCardTitle = null"
           :style="{
             marginTop: isAwardsHovered ? '-8px' : '-48px',
             zIndex: 5 - sIndex,
@@ -179,11 +175,15 @@ const groupedAwards = computed<AwardGroup[]>(() => {
           :class="{
             'print:-mt-2! print:opacity-100! print:scale-100!': true,
           }"
+          @mouseenter="hoveredCardTitle = sub.title"
+          @mouseleave="hoveredCardTitle = null"
+          @focus="hoveredCardTitle = sub.title"
+          @blur="hoveredCardTitle = null"
         >
           <div
             class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl opacity-50"
             :class="accentBgClass"
-          ></div>
+          />
           <div class="relative z-10 flex items-center gap-3 pl-2">
             <UIcon
               name="i-heroicons-star"

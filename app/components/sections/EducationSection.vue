@@ -81,7 +81,7 @@ const resolveEducationItemIconClass = (
         <div
           class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full ring-4 ring-white dark:ring-gray-900"
           :class="markerBgClass"
-        ></div>
+        />
 
         <h3 class="font-bold text-gray-900 dark:text-white">
           {{ edu.school }}
