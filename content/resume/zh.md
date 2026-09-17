@@ -49,7 +49,7 @@ colors:
   languages: emerald
   github: sky
 summary: |
-  预备党员，哈尔滨工业大学 2023 级软件工程专业本科生，开源开发者，个人开源项目在 GitHub 上累计获 **1k+ star**。
+  预备党员，哈尔滨工业大学 2023 级软件工程专业本科生，开源开发者，个人开源项目在 GitHub 上累计获 **1k+ star**。现任 **ByteDance / Lark Office Suite 前端开发实习生**（转正实习），也是开源 coding agent 项目 **oh-my-pi**（GitHub **28k+ star**）的主要贡献者（默认分支贡献者排名 **第 12**）。
 
   获第五届全国大学生计算机系统能力大赛**全国二等奖**，第六届、第七届全球校园人工智能算法精英大赛**全国一等奖**，第七届全国大学生 5 分钟科研英语演讲比赛**全国一等奖**，第十八届 iCAN 大学生创新创业大赛**全国二等奖**，第十九届全国大学生软件创新大赛**全国三等奖**等**九项国家级奖项**。
 
@@ -83,6 +83,58 @@ education:
 internships: []
 work: []
 projects:
+  - printWidth: 70
+    period: "2026-07 至 至今"
+    name: ByteDance / Lark Office Suite - 前端基础设施
+    role: 前端开发实习生（转正实习）
+    highlights:
+      - kind: text
+        label: Rspack
+        category: tech
+      - kind: text
+        label: Rolldown
+        category: tech
+      - kind: text
+        label: SDK
+        category: tech
+    description:
+      - 在 Lark Office Engineering - CCM-Creation Frontend - Infra 团队从事飞书文档 SDK 构建链路改造与前端基础设施开发。
+      - 通过 **bundless 源码 + 依赖 bundle 化混合架构**，结合 Rspack 与 Rolldown，减少外部宿主（含豆包）依赖对构建结果的干扰，同时兼容旧链路。
+    responsibilities:
+      - 负责飞书文档 SDK 仓库构建链路改造，设计并落地 bundless/bundle 混合方案。
+      - 参与 SDK Bug 修复、组件开发、前端基础设施建设。
+      - 参与防劣化质量门禁与线上性能优化。
+  - printWidth: 70
+    period: "2026-05 至 至今"
+    name: oh-my-pi (开源 Coding Agent)
+    role: 主要贡献者
+    highlights:
+      - kind: svg
+        url: https://img.shields.io/github/stars/can1357/oh-my-pi
+        alt: GitHub Stars
+        category: metric
+      - kind: split
+        domain: 贡献者
+        value: "#12"
+        category: metric
+      - kind: text
+        label: TypeScript
+        category: tech
+        icon: i-simple-icons-typescript
+      - kind: text
+        label: ACP
+        category: tech
+    description:
+      - 开源 IDE 集成式 coding agent，GitHub **28k+ Star**，GitHub 默认分支贡献者排名**第 12**。
+      - 贡献覆盖 **GitLab Duo Agent provider 接入**、**ACP 工具调用与取消处理**、异步 continuation 所有权、checkpoint 语义、JavaScript 执行状态、浏览器启动可靠性及 Windows 兼容性。
+    responsibilities:
+      - 实现 GitLab Duo Agent provider 接入与 provider 治理。
+      - 处理 ACP 工具调用详情、权限、取消、异步 continuation 和 idle cleanup。
+      - 修复工具调用批次 checkpoint/stall 检测、重复事件和深层 HTML 导出栈溢出等问题。
+      - 改进 Windows SSH ControlMaster 兼容性、插件发现和 legacy 扩展动态导入。
+    links:
+      - category: github
+        url: https://github.com/can1357/oh-my-pi
   - printWidth: 30
     period: "2024-09 至 至今"
     name: GXDE OS (Gorgeous eXtended Deepin Environment)

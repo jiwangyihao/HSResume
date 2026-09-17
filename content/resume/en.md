@@ -49,7 +49,7 @@ colors:
   languages: emerald
   github: sky
 summary: |
-  Probationary Member of the CPC, Software Engineering undergraduate at Harbin Institute of Technology (Class of 2023), open-source developer. Personal open-source projects have accumulated **1k+ stars** on GitHub.
+  Probationary Member of the CPC, Software Engineering undergraduate at Harbin Institute of Technology (Class of 2023), open-source developer. Currently a **frontend development intern (conversion-track) at ByteDance / Lark Office Suite** and a **major contributor to oh-my-pi**, an open-source coding agent with **28k+ GitHub stars** (ranked **12th** in the default-branch contributor list).
 
   Awarded **National 2nd Prize** in the OS Design track of the 5th Computer System Development Capability Competition (**CSCC**), **National 1st Prizes** in the 6th and 7th Global Campus AI Algorithm Elite Competitions, **National 1st Prize** in the 7th University Student Competition Five Minute Research Presentation (**5MRP**), **National 2nd Prize** in the 18th iCAN Innovation Contest Innovation Competition, and **National 3rd Prize** in the 19th National Collegiate Software Innovation Contest, totaling **nine national awards**.
 
@@ -83,6 +83,58 @@ education:
 internships: []
 work: []
 projects:
+  - printWidth: 70
+    period: "2026-07 to Present"
+    name: ByteDance / Lark Office Suite - Frontend Infrastructure
+    role: Frontend Development Intern (Conversion-Track)
+    highlights:
+      - kind: text
+        label: Rspack
+        category: tech
+      - kind: text
+        label: Rolldown
+        category: tech
+      - kind: text
+        label: SDK
+        category: tech
+    description:
+      - Working on Lark Docs SDK build pipeline and frontend infrastructure in the Lark Office Engineering - CCM-Creation Frontend - Infra team.
+      - Redesigned the build pipeline using a **hybrid bundless source + bundled dependencies architecture** with Rspack and Rolldown to reduce interference from external host dependencies (including Doubao) while maintaining legacy compatibility.
+    responsibilities:
+      - Lead the Lark Docs SDK build pipeline refactoring, designing and implementing the bundless/bundle hybrid approach.
+      - Contribute to SDK bug fixes, component development, and frontend infrastructure.
+      - Participate in regression-prevention quality gates and online performance optimization.
+  - printWidth: 70
+    period: "2026-05 to Present"
+    name: oh-my-pi (Open-Source Coding Agent)
+    role: Major Contributor
+    highlights:
+      - kind: svg
+        url: https://img.shields.io/github/stars/can1357/oh-my-pi
+        alt: GitHub Stars
+        category: metric
+      - kind: split
+        domain: Contributor
+        value: "#12"
+        category: metric
+      - kind: text
+        label: TypeScript
+        category: tech
+        icon: i-simple-icons-typescript
+      - kind: text
+        label: ACP
+        category: tech
+    description:
+      - Open-source IDE-integrated coding agent with **28k+ GitHub stars**, ranked **12th** in the default-branch contributor list.
+      - Contributions span **GitLab Duo Agent provider integration**, **ACP tool call and cancellation handling**, asynchronous continuation ownership, checkpoint semantics, JavaScript execution state, browser startup reliability, and Windows compatibility.
+    responsibilities:
+      - Implemented GitLab Duo Agent provider integration and provider governance.
+      - Handled ACP tool call details, permissions, cancellation, asynchronous continuations, and idle cleanup.
+      - Fixed tool-call batch checkpoint/stall detection, duplicate events, and deep HTML export stack overflow.
+      - Improved Windows SSH ControlMaster compatibility, plugin discovery, and legacy extension dynamic imports.
+    links:
+      - category: github
+        url: https://github.com/can1357/oh-my-pi
   - printWidth: 30
     period: "2024-09 to Present"
     name: GXDE OS (Gorgeous eXtended Deepin Environment)
