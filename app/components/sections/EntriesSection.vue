@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import type {
-  ProcessedProject,
-  ResumeEntry,
-  ResumeProject,
-} from "~/types/resume";
+import type { ProcessedProject, ResumeProject } from "~/types/resume";
 
 const clampInt = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, Math.round(value)));
 
 type Props = {
-  resume: ResumeEntry;
+  entries: ResumeProject[];
   title: string;
   iconClass: string;
   accentBgClass: string;
@@ -20,9 +16,7 @@ type Props = {
 const props = defineProps<Props>();
 
 const items = computed<ProcessedProject[]>(() => {
-  const projects = (props.resume.projects || []) as ResumeProject[];
-
-  return projects.map((p) => {
+  return props.entries.map((p) => {
     const links = p.links || [];
     const responsibilities = p.responsibilities || [];
 
