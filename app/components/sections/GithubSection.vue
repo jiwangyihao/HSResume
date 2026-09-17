@@ -3,12 +3,12 @@ import type { ResumeEntry } from "~/types/resume";
 import type { ComputedRef } from "vue";
 
 type GithubStats = {
-  stars: number;
-  forks: number;
-  repoCount: number;
-  prs: number;
-  issues: number;
-  totalContributions: number;
+  stars: number | null;
+  forks: number | null;
+  repoCount: number | null;
+  prs: number | null;
+  issues: number | null;
+  totalContributions: number | null;
 };
 
 type GithubRepo = {
@@ -27,12 +27,12 @@ type ContributionsAPI = {
 };
 
 const DEFAULT_STATS: GithubStats = {
-  stars: 0,
-  forks: 0,
-  repoCount: 0,
-  prs: 0,
-  issues: 0,
-  totalContributions: 0,
+  stars: null,
+  forks: null,
+  repoCount: null,
+  prs: null,
+  issues: null,
+  totalContributions: null,
 };
 
 const isStrictEnabled = (v: unknown) => v === "1" || v === 1 || v === true;
@@ -60,17 +60,6 @@ const strictGithubStats = isStrictEnabled(
   (publicRuntime as { strictGithubStats?: unknown }).strictGithubStats
 );
 
-// Debug: log the actual value received for strictGithubStats
-if (import.meta.server) {
-  console.log(
-    "[DEBUG] strictGithubStats raw value:",
-    JSON.stringify(
-      (publicRuntime as { strictGithubStats?: unknown }).strictGithubStats
-    ),
-    "| isEnabled:",
-    strictGithubStats
-  );
-}
 
 // GitHub API is rate-limited for unauthenticated requests. During SSR/prerender (CI),
 // we can use a server-only token to avoid 403 rate limit exceeded.
@@ -288,7 +277,7 @@ const heatmapSrc = computed(() => {
                 class="w-4 h-4 mt-0.5 shrink-0"
                 :class="textClass"
               />
-              {{ starsLabel }}: {{ githubStats?.stars || 0 }}
+              {{ starsLabel }}: {{ githubStats?.stars ?? "—" }}
             </li>
             <li class="flex items-start gap-2">
               <UIcon
@@ -297,7 +286,7 @@ const heatmapSrc = computed(() => {
                 :class="textClass"
               />
               {{ contributionsLabel }}:
-              {{ githubStats?.totalContributions || 0 }}
+              {{ githubStats?.totalContributions ?? "—" }}
             </li>
             <li class="flex items-start gap-2">
               <UIcon
@@ -305,7 +294,7 @@ const heatmapSrc = computed(() => {
                 class="w-4 h-4 mt-0.5 shrink-0"
                 :class="textClass"
               />
-              {{ prsLabel }}: {{ githubStats?.prs || 0 }}
+              {{ prsLabel }}: {{ githubStats?.prs ?? "—" }}
             </li>
             <li class="flex items-start gap-2">
               <UIcon
@@ -313,7 +302,7 @@ const heatmapSrc = computed(() => {
                 class="w-4 h-4 mt-0.5 shrink-0"
                 :class="textClass"
               />
-              {{ issuesLabel }}: {{ githubStats?.issues || 0 }}
+              {{ issuesLabel }}: {{ githubStats?.issues ?? "—" }}
             </li>
             <li class="flex items-start gap-2">
               <UIcon
@@ -321,7 +310,7 @@ const heatmapSrc = computed(() => {
                 class="w-4 h-4 mt-0.5 shrink-0"
                 :class="textClass"
               />
-              {{ repositoriesLabel }}: {{ githubStats?.repoCount || 0 }}
+              {{ repositoriesLabel }}: {{ githubStats?.repoCount ?? "—" }}
             </li>
           </ul>
         </div>
