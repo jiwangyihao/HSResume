@@ -116,6 +116,7 @@ export const useThemeColors = (resumeView: ComputedRef<ResumeEntry>) => {
     return {
       profile: getThemeColor(c.profile || "primary"),
       education: getThemeColor(c.education || "primary"),
+      internships: getThemeColor(c.internships || "sky"),
       projects: getThemeColor(c.projects || "primary"),
       games: getThemeColor(c.games || "purple"),
       awards: getThemeColor(c.awards || "yellow"),

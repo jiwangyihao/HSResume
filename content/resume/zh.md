@@ -35,6 +35,7 @@ github:
 sectionOrder:
   - profile
   - education
+  - internships
   - github
   - awards
   - projects
@@ -43,6 +44,7 @@ sectionOrder:
 colors:
   profile: sky
   education: sky
+  internships: sky
   projects: sky
   games: purple
   awards: amber
@@ -80,9 +82,7 @@ education:
     scholarships:
       - text: 单项人民奖学金 (2025)
         category: scholarship
-internships: []
-work: []
-projects:
+internships:
   - printWidth: 70
     period: "2026-07 至 至今"
     name: ByteDance / Lark Office Suite - 前端基础设施
@@ -104,6 +104,8 @@ projects:
       - 负责飞书文档 SDK 仓库构建链路改造，设计并落地 bundless/bundle 混合方案。
       - 参与 SDK Bug 修复、组件开发、前端基础设施建设。
       - 参与防劣化质量门禁与线上性能优化。
+work: []
+projects:
   - printWidth: 70
     period: "2026-05 至 至今"
     name: oh-my-pi (开源 Coding Agent)

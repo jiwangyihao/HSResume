@@ -170,6 +170,18 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
               :theme-color="themeColorFor('education', 'primary')"
             />
 
+            <EntriesSection
+              v-else-if="
+                section === 'internships' && resumeView.internships?.length > 0
+              "
+              :entries="resumeView.internships"
+              :title="labels.internships"
+              :icon-class="sectionSettings.internships.icon"
+              :accent-bg-class="sectionSettings.internships.bg"
+              :role-text-class="sectionSettings.internships.text"
+              :theme-color="themeColorFor('internships', 'sky')"
+            />
+
             <GithubSection
               v-else-if="section === 'github' && resumeView.github"
               :resume="resumeView"
@@ -195,11 +207,11 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
               :theme-color="themeColorFor('awards', 'yellow')"
             />
 
-            <ProjectsSection
+            <EntriesSection
               v-else-if="
                 section === 'projects' && resumeView.projects?.length > 0
               "
-              :resume="resumeView"
+              :entries="resumeView.projects"
               :title="labels.projects"
               :icon-class="sectionSettings.projects.icon"
               :accent-bg-class="sectionSettings.projects.bg"

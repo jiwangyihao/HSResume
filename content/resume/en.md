@@ -35,6 +35,7 @@ github:
 sectionOrder:
   - profile
   - education
+  - internships
   - github
   - awards
   - projects
@@ -43,6 +44,7 @@ sectionOrder:
 colors:
   profile: sky
   education: sky
+  internships: sky
   projects: sky
   games: purple
   awards: amber
@@ -80,9 +82,7 @@ education:
     scholarships:
       - text: Single-item People's Scholarship (2025)
         category: scholarship
-internships: []
-work: []
-projects:
+internships:
   - printWidth: 70
     period: "2026-07 to Present"
     name: ByteDance / Lark Office Suite - Frontend Infrastructure
@@ -104,6 +104,8 @@ projects:
       - Lead the Lark Docs SDK build pipeline refactoring, designing and implementing the bundless/bundle hybrid approach.
       - Contribute to SDK bug fixes, component development, and frontend infrastructure.
       - Participate in regression-prevention quality gates and online performance optimization.
+work: []
+projects:
   - printWidth: 70
     period: "2026-05 to Present"
     name: oh-my-pi (Open-Source Coding Agent)

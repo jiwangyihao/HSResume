@@ -130,8 +130,8 @@ export type ResumeEntry = {
   homepages: ResumeLink[];
   summary: string;
   education: ResumeEducation[];
-  internships: unknown[];
-  work: unknown[];
+  internships: ResumeProject[];
+  work: ResumeProject[];
   projects: ResumeProject[];
   games: ResumeGame[];
   awards: ResumeAward[];
@@ -143,6 +143,7 @@ export type ResumeEntry = {
   colors?: {
     profile?: string;
     education?: string;
+    internships?: string;
     projects?: string;
     games?: string;
     awards?: string;
