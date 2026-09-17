@@ -22,7 +22,8 @@ type GitHubSearchResult = {
 };
 
 type ContributionsAPI = {
-  totalContributions?: number;
+  total?: Record<string, number>;
+  contributions?: Array<{ date: string; count: number; level: number }>;
 };
 
 const DEFAULT_STATS: GithubStats = {
@@ -142,7 +143,7 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
           { headers: githubApiHeaders.value }
         ),
         $fetch<ContributionsAPI>(
-          `https://github-contributions-api.deno.dev/${user}.json`
+          `https://github-contributions-api.jogruber.de/v4/${user}`
         ),
       ];
 
@@ -154,8 +155,10 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
 
       // If any upstream returned an unexpected shape (often rate limit / error payload),
       // fail the build in strict mode so we don't publish wrong numbers.
-      if (strictGithubStats) {
-        const contribOk = typeof contribResult?.totalContributions === "number";
+        const contribOk =
+          typeof contribResult?.total === "object" &&
+          contribResult?.total !== null &&
+          Object.keys(contribResult.total).length > 0;
         const prOk = typeof prResult?.total_count === "number";
         const issueOk = typeof issueResult?.total_count === "number";
         const reposOk = repoResults.every(Array.isArray);
@@ -184,8 +187,10 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
         0
       );
 
-      // The Deno API already provides totalContributions for the last year
-      const totalContributions = contribResult?.totalContributions ?? 0;
+      // Sum yearly totals from the jogruber API response
+      const totalContributions = Object.values(
+        contribResult?.total ?? {}
+      ).reduce((acc: number, v: number) => acc + v, 0);
 
       const result = {
         stars,
