@@ -23,7 +23,16 @@ type GitHubSearchResult = {
 
 type ContributionsAPI = {
   total?: Record<string, number>;
-  contributions?: Array<{ date: string; count: number; level: number }>;
+};
+
+type GitHubContributionsResponse = {
+  data?: {
+    user?: {
+      contributionsCollection?: {
+        contributionCalendar?: { totalContributions?: number };
+      };
+    };
+  };
 };
 
 const DEFAULT_STATS: GithubStats = {
@@ -112,6 +121,35 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
     }
 
     try {
+      const useGitHubGraphQL = import.meta.server && Boolean(githubToken);
+      const contributionRequest: Promise<number> = useGitHubGraphQL
+        ? $fetch<GitHubContributionsResponse>("https://api.github.com/graphql", {
+            method: "POST",
+            headers: githubApiHeaders.value,
+            body: {
+              query:
+                "query Contributions($login: String!) { user(login: $login) { contributionsCollection { contributionCalendar { totalContributions } } } }",
+              variables: { login: user },
+            },
+          }).then((response) => {
+            const total =
+              response.data?.user?.contributionsCollection?.contributionCalendar
+                ?.totalContributions;
+            if (typeof total !== "number") {
+              throw new Error("GitHub GraphQL contributions payload invalid");
+            }
+            return total;
+          })
+        : $fetch<ContributionsAPI>(
+            `https://github-contributions-api.jogruber.de/v4/${user}`
+          ).then((response) => {
+            const totals = Object.values(response.total ?? {});
+            if (totals.length === 0) {
+              throw new Error("GitHub contributions payload invalid");
+            }
+            return totals.reduce((sum, value) => sum + value, 0);
+          });
+
       const requests = [
         $fetch<GithubRepo[]>(
           `https://api.github.com/users/${user}/repos?per_page=100&type=owner`,
@@ -131,9 +169,7 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
           `https://api.github.com/search/issues?q=author:${user}+type:issue`,
           { headers: githubApiHeaders.value }
         ),
-        $fetch<ContributionsAPI>(
-          `https://github-contributions-api.jogruber.de/v4/${user}`
-        ),
+        contributionRequest,
       ];
 
       const settled = await Promise.allSettled(requests);
@@ -152,18 +188,15 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
         settled[settled.length - 2]?.status === "fulfilled"
           ? (settled[settled.length - 2].value as GitHubSearchResult)
           : null;
-      const contribResult =
+      const contributionResult =
         settled[settled.length - 1]?.status === "fulfilled"
-          ? (settled[settled.length - 1].value as ContributionsAPI)
+          ? (settled[settled.length - 1].value as number)
           : null;
 
       const reposOk = repoResults.every((result) => result !== null);
       const prOk = typeof prResult?.total_count === "number";
       const issueOk = typeof issueResult?.total_count === "number";
-      const contribOk =
-        typeof contribResult?.total === "object" &&
-        contribResult.total !== null &&
-        Object.keys(contribResult.total).length > 0;
+      const contribOk = typeof contributionResult === "number";
 
       // In strict mode, do not publish incomplete statistics.
       if (strictGithubStats && (!reposOk || !prOk || !issueOk || !contribOk)) {
@@ -188,12 +221,7 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
         (acc, repo) => acc + (repo.forks_count || 0),
         0
       );
-      const totalContributions = contribOk
-        ? Object.values(contribResult.total).reduce(
-            (acc: number, value: number) => acc + value,
-            0
-          )
-        : null;
+      const totalContributions = contributionResult;
 
       const result = {
         stars: reposOk ? stars : null,
