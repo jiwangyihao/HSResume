@@ -76,11 +76,6 @@ const strictGithubStats = isStrictEnabled(
 const githubToken = import.meta.server
   ? (useRuntimeConfig() as { githubToken?: string }).githubToken ?? ""
   : "";
-if (import.meta.server) {
-  console.info(
-    `[DEBUG-github-token-presence] ${githubToken ? "present" : "absent"}`
-  );
-}
 
 const githubApiHeaders = computed(() => {
   if (!import.meta.server) return undefined;
