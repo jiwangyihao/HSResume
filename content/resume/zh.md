@@ -35,8 +35,8 @@ github:
 sectionOrder:
   - profile
   - education
-  - internships
   - github
+  - internships
   - awards
   - projects
   - games
@@ -83,7 +83,7 @@ education:
       - text: 单项人民奖学金 (2025)
         category: scholarship
 internships:
-  - printWidth: 70
+  - printWidth: 100
     period: "2026-07 至 至今"
     name: ByteDance / PDI-Seed-Lark Office Engineering-CCM-Creation-Infra
     role: 前端开发实习生（转正实习）

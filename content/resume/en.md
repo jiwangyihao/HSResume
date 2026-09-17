@@ -35,8 +35,8 @@ github:
 sectionOrder:
   - profile
   - education
-  - internships
   - github
+  - internships
   - awards
   - projects
   - games
@@ -83,7 +83,7 @@ education:
       - text: Single-item People's Scholarship (2025)
         category: scholarship
 internships:
-  - printWidth: 70
+  - printWidth: 100
     period: "2026-07 to Present"
     name: ByteDance / PDI-Seed-Lark Office Engineering-CCM-Creation-Infra
     role: Frontend Development Intern (Conversion-Track)
