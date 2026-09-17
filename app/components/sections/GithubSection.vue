@@ -155,6 +155,7 @@ const { data: githubStats } = useAsyncData<GithubStats | null>(
 
       // If any upstream returned an unexpected shape (often rate limit / error payload),
       // fail the build in strict mode so we don't publish wrong numbers.
+      if (strictGithubStats) {
         const contribOk =
           typeof contribResult?.total === "object" &&
           contribResult?.total !== null &&
