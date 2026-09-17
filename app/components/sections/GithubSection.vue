@@ -66,6 +66,7 @@ const resumeView = computed(() => props.resume) as ComputedRef<ResumeEntry>;
 
 const { public: publicRuntime } = useRuntimeConfig();
 const strictGithubStats = isStrictEnabled(
+
   (publicRuntime as { strictGithubStats?: unknown }).strictGithubStats
 );
 
@@ -75,6 +76,11 @@ const strictGithubStats = isStrictEnabled(
 const githubToken = import.meta.server
   ? (useRuntimeConfig() as { githubToken?: string }).githubToken ?? ""
   : "";
+if (import.meta.server) {
+  console.info(
+    `[DEBUG-github-token-presence] ${githubToken ? "present" : "absent"}`
+  );
+}
 
 const githubApiHeaders = computed(() => {
   if (!import.meta.server) return undefined;
