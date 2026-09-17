@@ -85,7 +85,7 @@ education:
 internships:
   - printWidth: 70
     period: "2026-07 至 至今"
-    name: ByteDance / Lark Office Suite - 前端基础设施
+    name: ByteDance / PDI-Seed-Lark Office Engineering-CCM-Creation-Infra
     role: 前端开发实习生（转正实习）
     highlights:
       - kind: text
@@ -98,7 +98,7 @@ internships:
         label: SDK
         category: tech
     description:
-      - 在 Lark Office Engineering - CCM-Creation Frontend - Infra 团队从事飞书文档 SDK 构建链路改造与前端基础设施开发。
+      - 在 PDI-Seed-Lark Office Engineering-CCM-Creation-Infra 团队从事飞书文档 SDK 构建链路改造与前端基础设施开发。
       - 通过 **bundless 源码 + 依赖 bundle 化混合架构**，结合 Rspack 与 Rolldown，减少外部宿主（含豆包）依赖对构建结果的干扰，同时兼容旧链路。
     responsibilities:
       - 负责飞书文档 SDK 仓库构建链路改造，设计并落地 bundless/bundle 混合方案。

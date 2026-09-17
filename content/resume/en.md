@@ -85,7 +85,7 @@ education:
 internships:
   - printWidth: 70
     period: "2026-07 to Present"
-    name: ByteDance / Lark Office Suite - Frontend Infrastructure
+    name: ByteDance / PDI-Seed-Lark Office Engineering-CCM-Creation-Infra
     role: Frontend Development Intern (Conversion-Track)
     highlights:
       - kind: text
@@ -98,7 +98,7 @@ internships:
         label: SDK
         category: tech
     description:
-      - Working on Lark Docs SDK build pipeline and frontend infrastructure in the Lark Office Engineering - CCM-Creation Frontend - Infra team.
+      - Working on Lark Docs SDK build pipeline and frontend infrastructure in the PDI-Seed-Lark Office Engineering-CCM-Creation-Infra team.
       - Redesigned the build pipeline using a **hybrid bundless source + bundled dependencies architecture** with Rspack and Rolldown to reduce interference from external host dependencies (including Doubao) while maintaining legacy compatibility.
     responsibilities:
       - Lead the Lark Docs SDK build pipeline refactoring, designing and implementing the bundless/bundle hybrid approach.
