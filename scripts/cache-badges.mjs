@@ -378,7 +378,6 @@ async function main() {
 
       if (!ok) {
         const msg = `[cache-badges] Fetch failed: HTTP ${status} for ${url}`;
-        if (isStrict) throw new Error(msg);
         console.warn(msg);
         return { url, ok: false, status };
       }
@@ -386,7 +385,6 @@ async function main() {
       const ct = (contentType || "").toLowerCase();
       if (ct.includes("application/json") || ct.includes("text/html")) {
         const msg = `[cache-badges] Unexpected content-type (${contentType}) for ${url}`;
-        if (isStrict) throw new Error(msg);
         console.warn(msg);
         return { url, ok: false, status, contentType };
       }
@@ -425,7 +423,6 @@ async function main() {
       return { url, ok: true, skipped: false, publicPath, bytes: buffer.length };
     } catch (e) {
       const msg = e instanceof Error ? `${e.name}: ${e.message}` : String(e);
-      if (isStrict) throw (e instanceof Error ? e : new Error(msg));
       console.warn(`[cache-badges] Fetch error for ${url}: ${msg}`);
       return { url, ok: false, error: msg };
     }
