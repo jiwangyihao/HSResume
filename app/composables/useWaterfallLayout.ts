@@ -72,7 +72,7 @@ export const useWaterfallLayout = (options: UseWaterfallLayoutOptions) => {
 
     const container = waterfallContainer.value;
     const items = Array.from(
-      container.querySelectorAll(":scope > .waterfall-item")
+      container.querySelectorAll(".waterfall-item")
     ) as HTMLElement[];
     const awardsSection = container.querySelector(
       "#awards-section"
@@ -88,10 +88,8 @@ export const useWaterfallLayout = (options: UseWaterfallLayoutOptions) => {
     container.style.gridAutoRows = "auto";
     container.style.alignItems = "start";
 
-    // Unlock awards section height for accurate measurement
-    if (awardsSection) {
-      awardsSection.style.height = "";
-    }
+    // 屏幕上的悬停叠卡保持原有高度锁定；打印样式单独恢复自然高度。
+    if (awardsSection) awardsSection.style.height = "";
 
     // 2. Reset item spans to let them flow naturally
     items.forEach((el) => {
@@ -110,7 +108,6 @@ export const useWaterfallLayout = (options: UseWaterfallLayoutOptions) => {
       return Math.max(1, span);
     });
 
-    // Lock awards section height to prevent layout shift on hover
     if (awardsSection) {
       awardsSection.style.height = `${awardsSection.offsetHeight}px`;
     }
@@ -131,7 +128,7 @@ export const useWaterfallLayout = (options: UseWaterfallLayoutOptions) => {
 
     const obs = observer;
     obs.observe(waterfallContainer.value);
-    Array.from(waterfallContainer.value.children).forEach((child) => {
+    waterfallContainer.value.querySelectorAll(".waterfall-item").forEach((child) => {
       obs.observe(child);
     });
   };

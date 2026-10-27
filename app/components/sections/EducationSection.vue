@@ -63,7 +63,7 @@ const resolveEducationItemIconClass = (
 
 <template>
   <section
-    class="break-inside-avoid waterfall-item col-span-1 md:col-start-1 print:col-span-6 print:col-start-auto"
+    class="break-inside-avoid waterfall-item col-span-1 md:col-start-1"
   >
     <SectionHeader
       :title="title"

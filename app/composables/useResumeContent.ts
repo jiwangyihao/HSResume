@@ -52,9 +52,7 @@ export const useResumeContent = async (locale: Ref<ResumeLocale>) => {
       awards: [],
       languages: [],
       sectionOrder: [
-        "profile",
-        "education",
-        "github",
+        "overview",
         "awards",
         "projects",
         "games",

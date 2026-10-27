@@ -53,6 +53,13 @@ a.resume-link,
   display: flow-root;
 }
 
+/* 概览子板块在屏幕上仍参与原有瀑布流，仅在打印时组合布局。 */
+.resume-overview,
+.resume-overview-columns,
+.resume-overview-sidebar {
+  display: contents;
+}
+
 @media (min-width: 768px) {
   .waterfall-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -101,6 +108,63 @@ a.resume-link,
     grid-row-end: auto !important;
     grid-column: span var(--print-col-span, 6);
     padding: 0.5rem;
+  }
+
+  .resume-overview {
+    display: flow-root;
+    grid-column: 1 / -1;
+    break-inside: avoid;
+    padding: 0.5rem;
+  }
+
+  .resume-overview-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .resume-overview-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .resume-overview .waterfall-item {
+    grid-column: auto;
+    grid-row: auto !important;
+    padding: 0;
+  }
+
+  .resume-overview .resume-overview-profile {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .resume-overview-summary,
+  .resume-overview-summary > div {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .resume-overview-summary {
+    font-size: 0.875rem;
+  }
+
+  .resume-overview-summary > div {
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .resume-overview-summary p {
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  .resume-overview-heatmap {
+    margin-top: 1rem;
   }
 
   /* Ensure background colors print (limit to waterfall content to avoid surprises). */

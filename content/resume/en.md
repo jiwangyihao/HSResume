@@ -33,9 +33,7 @@ github:
     - HIT-Fireworks
     - Lordly-Tech
 sectionOrder:
-  - profile
-  - education
-  - github
+  - overview
   - internships
   - awards
   - projects
@@ -106,7 +104,7 @@ internships:
       - Participate in regression-prevention quality gates and online performance optimization.
 work: []
 projects:
-  - printWidth: 70
+  - printWidth: 30
     period: "2026-05 to Present"
     name: oh-my-pi (Open-Source Coding Agent)
     role: Major Contributor
@@ -137,7 +135,150 @@ projects:
     links:
       - category: github
         url: https://github.com/can1357/oh-my-pi
-  - printWidth: 30
+  - printWidth: 70
+    period: "2025-08 to 2025-12"
+    name: Guided LLM Extraction and MILP-Optimized Travel Planning System
+    role: Core Developer
+    highlights:
+      - kind: split
+        domain: AiCOMP
+        value: National 1st Prize
+        category: award
+      - kind: text
+        label: Qwen
+        category: tech
+        icon: i-hugeicons-qwen
+      - kind: text
+        label: vLLM
+        category: tech
+      - kind: text
+        label: MILP
+        category: tech
+      - kind: text
+        label: HiGHS
+        category: tech
+    description:
+      - Intelligent planning system that transforms natural language travel requests into structured, feasible itineraries, awarded **National 1st Prize (2nd place)** in the 7th Global Campus AI Algorithm Elite Competition (AiCOMP).
+      - Adopted an **Extraction–Planning dual-modal decoupled architecture**—LLM handles semantic understanding and intent extraction, while a MILP solver performs globally optimal spatiotemporal resource allocation.
+      - Built a **MILP global optimization + Minimal-constraint fast fallback dual-layer planning architecture**, achieving 85+ to near-perfect scores across the Phase2/Medium/Human test sets.
+    responsibilities:
+      - Designed the LLM information extraction module, implementing **dynamic Schema-guided decoding**, **multi-trajectory parallel reasoning**, and **hierarchical consensus distillation** strategies.
+      - Designed the minimal-constraint planner, using greedy strategies and dynamic relaxation to guarantee feasible fallback solutions under extreme scenarios.
+      - Improved the MILP planner architecture by optimizing **anchor-aware spatial pruning** and **flow-conservation constraint modeling** to enhance solver efficiency and solution quality.
+      - Responsible for full-stack engineering implementation and on-site presentation.
+  - printWidth: 70
+    period: "2024-10 to 2024-12"
+    name: LS-BO Enhanced Multi-modal Skeleton Action Recognition for UAV Scenarios
+    role: Core Developer
+    highlights:
+      - kind: split
+        domain: AiCOMP
+        value: National 1st Prize
+        category: award
+      - kind: text
+        label: PyTorch
+        category: tech
+        icon: i-simple-icons-pytorch
+      - kind: text
+        label: GCN
+        category: tech
+      - kind: text
+        label: Transformer
+        category: tech
+    description:
+      - Multi-model ensemble solution for skeleton action recognition on the UAV-Human dataset, awarded **National 1st Prize (2nd place)** in the 6th Global Campus AI Algorithm Elite Competition (AiCOMP).
+      - Proposed a **Least-Squares enhanced Bayesian Optimization** fusion strategy—using pseudo-inverse least-squares for globally optimal initial weights, then fine-tuning via Gaussian process-based BO.
+      - Integrated Skeleton-MixFormer, FR-Head, SiT-MLP, BlockGCN, and CHASE, combining Transformer long-range spatiotemporal dependency modeling with GCN local topology feature extraction.
+    responsibilities:
+      - Reproduced and engineered five model families (Skeleton-MixFormer, FR-Head, SiT-MLP, BlockGCN, CHASE).
+      - Extended each model's Feeder class to support UAV-Human; adapted graph structures and Hierarchical Graph modules.
+      - Implemented the LS-BO weight fusion core algorithm and completed training and inference for the weighted ensemble model.
+  - printWidth: 42
+    period: "2025-12 to 2026-05"
+    name: JiXia - AI Learning Assistant for Fragmented Learning
+    role: Team Lead / Technical Lead
+    highlights:
+      - kind: split
+        domain: SWC
+        value: National 3rd Prize
+        category: award
+      - kind: text
+        label: Flutter
+        category: tech
+        icon: i-simple-icons-flutter
+      - kind: text
+        label: Bun/Elysia
+        category: tech
+      - kind: text
+        label: Agentic RAG
+        category: tech
+        icon: i-mingcute-ai-fill
+      - kind: text
+        label: BullMQ
+        category: tech
+    description:
+      - Designed an AI learning assistant for fragmented learning scenarios, integrating historical knowledge content, multi-agent discussion, interactive creation, learning retention, and wearable reminders into a continuous learning loop; awarded **National 3rd Prize** in the 19th National Collegiate Software Innovation Contest.
+      - Built with Flutter cross-device clients and a Bun/Elysia cloud service, using PostgreSQL/pgvector, Redis/BullMQ, Agentic Retrieval/RAG, and controlled DSL rendering for content generation, knowledge retrieval, async jobs, and cloud-device collaboration.
+    responsibilities:
+      - As team lead, owned product planning, technical direction, overall architecture design, and core code development across mobile clients, backend services, data storage, and AI capability boundaries.
+      - Designed the cloud-device architecture, integrating the mobile app, wearable lightweight client, backend APIs, async queues, vector retrieval, and content-generation pipeline into a demonstrable and reviewable software product.
+      - Implemented the knowledge production pipeline based on Agentic Retrieval and RAG, covering event ingestion, evidence persistence, persona and knowledge-entity modeling, vector retrieval, and learning-content generation.
+      - Designed controlled DSL schemas, validation, and action allowlists to keep generative interactions within explicit safety boundaries and reduce uncontrolled generated-UI risk.
+      - Established unit, functional, and system-level validation for API contracts, persistence, async queue recovery, cross-device consistency, and controlled rendering boundaries.
+  - printWidth: 58
+    period: "2024-07 to Present"
+    name: Saturn AI (MoE-like agricultural agent)
+    role: Tech Lead
+    highlights:
+      - kind: svg
+        url: https://img.shields.io/github/stars/jiwangyihao/Saturn-Lib
+        alt: GitHub Stars
+        category: metric
+      - kind: split
+        domain: iCAN
+        value: National 2nd Prize
+        category: award
+      - kind: text
+        label: National College Student Innovation & Entrepreneurship Program
+        category: award
+      - kind: split
+        domain: CCF SAC
+        value: National 3rd Prize
+        category: award
+    description:
+      - MoE-inspired agricultural agent built around a perception–cognition–action loop, fusing satellite/IoT/weather and farm records to power digital twins and end-to-end decisions.
+      - Uses in-house RACoT (Retrieval-Augmented Chain of Thought) and a core–cell knowledge base for high-confidence QA, risk alerts, and map-based underwriting/claim assessment.
+      - Recognized as a **National College Student Innovation and Entrepreneurship Program** project.
+    responsibilities:
+      - Designed overall architecture and multi-source cell knowledge base; integrated RAG.
+      - Led multimodal data pipelines and digital-twin implementation, unifying remote sensing, IoT, weather, and agronomic logs.
+      - Designed RACoT + core–cell knowledge-base reasoning and built the insurance-tech loop for map-based underwriting and claim assessment.
+      - Led the team at the 18th iCAN Competition; owned materials design, video production, and defense, earning National 2nd Prize (2024).
+    links:
+      - category: website
+        url: https://saturn.jwyihao.top
+      - category: github
+        url: https://github.com/jiwangyihao/Saturn-Lib
+  - printWidth: 58
+    period: "2023-11 to 2024-06"
+    name: All-scenario assistive embodied agent for the visually impaired
+    role: Tech Lead
+    description:
+      - An all-scenario assistive embodied agent for visually impaired users, focusing on scene understanding and intelligent interaction.
+      - Won 1st Prize in the university "Freshman Project Program" and National 1st Prize in the "University Student Competition Five Minute Research Presentation (5MRP)".
+    highlights:
+      - kind: split
+        domain: 5MRP
+        value: National 1st Prize
+        category: award
+      - kind: split
+        domain: Freshman Project Program
+        value: Univ. 1st Prize
+        category: award
+    responsibilities:
+      - Led architecture design and large-model implementation.
+      - Drove delivery and presentations leading to the awards.
+  - printWidth: 42
     period: "2024-09 to Present"
     name: GXDE OS (Gorgeous eXtended Deepin Environment)
     role: Core Developer
@@ -178,7 +319,7 @@ projects:
         url: https://www.gxde.top
       - category: gitee
         url: https://gitee.com/GXDE-OS
-  - printWidth: 30
+  - printWidth: 58
     period: "2020-08 to Present"
     name: Spark Store
     role: Co-founder / Core Developer
@@ -210,97 +351,7 @@ projects:
         url: https://www.spark-app.store
       - category: gitee
         url: https://gitee.com/spark-store-project/spark-store
-  - printWidth: 70
-    period: "2025-12 to 2026-05"
-    name: JiXia - AI Learning Assistant for Fragmented Learning
-    role: Team Lead / Technical Lead
-    highlights:
-      - kind: split
-        domain: SWC
-        value: National 3rd Prize
-        category: award
-      - kind: text
-        label: Flutter
-        category: tech
-        icon: i-simple-icons-flutter
-      - kind: text
-        label: Bun/Elysia
-        category: tech
-      - kind: text
-        label: Agentic RAG
-        category: tech
-        icon: i-mingcute-ai-fill
-      - kind: text
-        label: BullMQ
-        category: tech
-    description:
-      - Designed an AI learning assistant for fragmented learning scenarios, integrating historical knowledge content, multi-agent discussion, interactive creation, learning retention, and wearable reminders into a continuous learning loop; awarded **National 3rd Prize** in the 19th National Collegiate Software Innovation Contest.
-      - Built with Flutter cross-device clients and a Bun/Elysia cloud service, using PostgreSQL/pgvector, Redis/BullMQ, Agentic Retrieval/RAG, and controlled DSL rendering for content generation, knowledge retrieval, async jobs, and cloud-device collaboration.
-    responsibilities:
-      - As team lead, owned product planning, technical direction, overall architecture design, and core code development across mobile clients, backend services, data storage, and AI capability boundaries.
-      - Designed the cloud-device architecture, integrating the mobile app, wearable lightweight client, backend APIs, async queues, vector retrieval, and content-generation pipeline into a demonstrable and reviewable software product.
-      - Implemented the knowledge production pipeline based on Agentic Retrieval and RAG, covering event ingestion, evidence persistence, persona and knowledge-entity modeling, vector retrieval, and learning-content generation.
-      - Designed controlled DSL schemas, validation, and action allowlists to keep generative interactions within explicit safety boundaries and reduce uncontrolled generated-UI risk.
-      - Established unit, functional, and system-level validation for API contracts, persistence, async queue recovery, cross-device consistency, and controlled rendering boundaries.
-  - printWidth: 70
-    period: "2024-10 to 2024-12"
-    name: LS-BO Enhanced Multi-modal Skeleton Action Recognition for UAV Scenarios
-    role: Core Developer
-    highlights:
-      - kind: split
-        domain: AiCOMP
-        value: National 1st Prize
-        category: award
-      - kind: text
-        label: PyTorch
-        category: tech
-        icon: i-simple-icons-pytorch
-      - kind: text
-        label: GCN
-        category: tech
-      - kind: text
-        label: Transformer
-        category: tech
-    description:
-      - Multi-model ensemble solution for skeleton action recognition on the UAV-Human dataset, awarded **National 1st Prize (2nd place)** in the 6th Global Campus AI Algorithm Elite Competition (AiCOMP).
-      - Proposed a **Least-Squares enhanced Bayesian Optimization** fusion strategy—using pseudo-inverse least-squares for globally optimal initial weights, then fine-tuning via Gaussian process-based BO.
-      - Integrated Skeleton-MixFormer, FR-Head, SiT-MLP, BlockGCN, and CHASE, combining Transformer long-range spatiotemporal dependency modeling with GCN local topology feature extraction.
-    responsibilities:
-      - Reproduced and engineered five model families (Skeleton-MixFormer, FR-Head, SiT-MLP, BlockGCN, CHASE).
-      - Extended each model's Feeder class to support UAV-Human; adapted graph structures and Hierarchical Graph modules.
-      - Implemented the LS-BO weight fusion core algorithm and completed training and inference for the weighted ensemble model.
-  - printWidth: 70
-    period: "2025-08 to 2025-12"
-    name: Guided LLM Extraction and MILP-Optimized Travel Planning System
-    role: Core Developer
-    highlights:
-      - kind: split
-        domain: AiCOMP
-        value: National 1st Prize
-        category: award
-      - kind: text
-        label: Qwen
-        category: tech
-        icon: i-hugeicons-qwen
-      - kind: text
-        label: vLLM
-        category: tech
-      - kind: text
-        label: MILP
-        category: tech
-      - kind: text
-        label: HiGHS
-        category: tech
-    description:
-      - Intelligent planning system that transforms natural language travel requests into structured, feasible itineraries, awarded **National 1st Prize (2nd place)** in the 7th Global Campus AI Algorithm Elite Competition (AiCOMP).
-      - Adopted an **Extraction–Planning dual-modal decoupled architecture**—LLM handles semantic understanding and intent extraction, while a MILP solver performs globally optimal spatiotemporal resource allocation.
-      - Built a **MILP global optimization + Minimal-constraint fast fallback dual-layer planning architecture**, achieving 85+ to near-perfect scores across the Phase2/Medium/Human test sets.
-    responsibilities:
-      - Designed the LLM information extraction module, implementing **dynamic Schema-guided decoding**, **multi-trajectory parallel reasoning**, and **hierarchical consensus distillation** strategies.
-      - Designed the minimal-constraint planner, using greedy strategies and dynamic relaxation to guarantee feasible fallback solutions under extreme scenarios.
-      - Improved the MILP planner architecture by optimizing **anchor-aware spatial pruning** and **flow-conservation constraint modeling** to enhance solver efficiency and solution quality.
-      - Responsible for full-stack engineering implementation and on-site presentation.
-  - printWidth: 70
+  - printWidth: 58
     period: "2024-04 to 2025-06"
     name: Newcar (Modern animation engine for the JS ecosystem)
     role: Core Developer
@@ -329,41 +380,7 @@ projects:
     links:
       - category: github
         url: https://github.com/dromara/newcar
-  - printWidth: 30
-    period: "2024-07 to Present"
-    name: Saturn AI (MoE-like agricultural agent)
-    role: Tech Lead
-    highlights:
-      - kind: svg
-        url: https://img.shields.io/github/stars/jiwangyihao/Saturn-Lib
-        alt: GitHub Stars
-        category: metric
-      - kind: split
-        domain: iCAN
-        value: National 2nd Prize
-        category: award
-      - kind: text
-        label: National College Student Innovation & Entrepreneurship Program
-        category: award
-      - kind: split
-        domain: CCF SAC
-        value: National 3rd Prize
-        category: award
-    description:
-      - MoE-inspired agricultural agent built around a perception–cognition–action loop, fusing satellite/IoT/weather and farm records to power digital twins and end-to-end decisions.
-      - Uses in-house RACoT (Retrieval-Augmented Chain of Thought) and a core–cell knowledge base for high-confidence QA, risk alerts, and map-based underwriting/claim assessment.
-      - Recognized as a **National College Student Innovation and Entrepreneurship Program** project.
-    responsibilities:
-      - Designed overall architecture and multi-source cell knowledge base; integrated RAG.
-      - Led multimodal data pipelines and digital-twin implementation, unifying remote sensing, IoT, weather, and agronomic logs.
-      - Designed RACoT + core–cell knowledge-base reasoning and built the insurance-tech loop for map-based underwriting and claim assessment.
-      - Led the team at the 18th iCAN Competition; owned materials design, video production, and defense, earning National 2nd Prize (2024).
-    links:
-      - category: website
-        url: https://saturn.jwyihao.top
-      - category: github
-        url: https://github.com/jiwangyihao/Saturn-Lib
-  - printWidth: 70
+  - printWidth: 50
     period: "2024-08 to Present"
     name: Lordly·Reading (wearable online reader)
     role: Founder / Lead Developer
@@ -410,25 +427,8 @@ projects:
         url: https://github.com/Lordly-Tech/LordlyRead
       - category: github
         url: https://github.com/jiwangyihao/source-j-legado
-  - period: "2023-11 to 2024-06"
-    name: All-scenario assistive embodied agent for the visually impaired
-    role: Tech Lead
-    description:
-      - An all-scenario assistive embodied agent for visually impaired users, focusing on scene understanding and intelligent interaction.
-      - Won 1st Prize in the university "Freshman Project Program" and National 1st Prize in the "University Student Competition Five Minute Research Presentation (5MRP)".
-    highlights:
-      - kind: split
-        domain: 5MRP
-        value: National 1st Prize
-        category: award
-      - kind: split
-        domain: Freshman Project Program
-        value: Univ. 1st Prize
-        category: award
-    responsibilities:
-      - Led architecture design and large-model implementation.
-      - Drove delivery and presentations leading to the awards.
-  - period: "2022-10 to Present"
+  - printWidth: 50
+    period: "2022-10 to Present"
     name: App Config
     role: Founder / Lead Developer
     description:
@@ -490,7 +490,7 @@ awardsFoldingRules:
   # If an award title matches this regex, it is treated as important
   # and will start a new visible group.
   importantTitlePattern: (national|global|international)
-awardsPrintWidth: 70
+awardsPrintWidth: 100
 awards:
   - date: 2026-05
     title: National 3rd Prize, 19th National Collegiate Software Innovation Contest

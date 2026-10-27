@@ -94,9 +94,7 @@ languages:
   - name: Chinese
     certificate: Native
 sectionOrder:
-  - profile
-  - education
-  - github
+  - overview
   - awards
   - projects
   - games

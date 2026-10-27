@@ -13,7 +13,7 @@ defineProps<Props>();
 
 <template>
   <section
-    class="break-inside-avoid waterfall-item col-span-1 md:col-start-1 print:col-span-6 print:col-start-1"
+    class="resume-overview-profile break-inside-avoid waterfall-item col-span-1 md:col-start-1"
   >
     <SectionHeader
       :title="title"
@@ -24,7 +24,7 @@ defineProps<Props>();
     <Markdown
       :source="resume.summary"
       tag="div"
-      class="text-gray-600 dark:text-gray-300 leading-relaxed"
+      class="resume-overview-summary text-gray-600 dark:text-gray-300 leading-relaxed"
     />
   </section>
 </template>

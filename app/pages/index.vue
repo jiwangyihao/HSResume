@@ -151,24 +151,52 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
           }"
         >
           <template v-for="section in resumeView.sectionOrder" :key="section">
-            <ProfileSection
-              v-if="section === 'profile'"
-              :resume="resumeView"
-              :title="labels.profile"
-              :icon-class="sectionSettings.profile.icon"
-              :theme-color="themeColorFor('profile', 'primary')"
-            />
-
-            <EducationSection
-              v-else-if="
-                section === 'education' && resumeView.education?.length > 0
-              "
-              :resume="resumeView"
-              :title="labels.education"
-              :icon-class="sectionSettings.education.icon"
-              :marker-bg-class="sectionSettings.education.bg"
-              :theme-color="themeColorFor('education', 'primary')"
-            />
+            <section v-if="section === 'overview'" class="resume-overview">
+              <div class="resume-overview-columns">
+                <ProfileSection
+                  :resume="resumeView"
+                  :title="labels.profile"
+                  :icon-class="sectionSettings.profile.icon"
+                  :theme-color="themeColorFor('profile', 'primary')"
+                />
+                <div class="resume-overview-sidebar">
+                  <EducationSection
+                    v-if="resumeView.education?.length > 0"
+                    :resume="resumeView"
+                    :title="labels.education"
+                    :icon-class="sectionSettings.education.icon"
+                    :marker-bg-class="sectionSettings.education.bg"
+                    :theme-color="themeColorFor('education', 'primary')"
+                  />
+                  <GithubSection
+                    v-if="resumeView.github"
+                    :resume="resumeView"
+                    :title="labels.github"
+                    :icon-class="sectionSettings.github.icon"
+                    :dot-bg-class="sectionSettings.github.bg"
+                    :text-class="sectionSettings.github.text"
+                    :theme-color="themeColorFor('github', 'sky')"
+                    :stars-label="labels.stars"
+                    :contributions-label="labels.contributions"
+                    :prs-label="labels.prs"
+                    :issues-label="labels.issues"
+                    :repositories-label="labels.repositories"
+                  />
+                </div>
+              </div>
+              <section
+                v-if="resumeView.github?.user"
+                class="resume-overview-heatmap waterfall-item col-span-1 md:col-start-1"
+              >
+                <SectionCard class="p-2">
+                  <img
+                    src="/github-heatmap.svg"
+                    alt="GitHub Contribution Graph"
+                    class="w-full dark:invert dark:hue-rotate-180"
+                  >
+                </SectionCard>
+              </section>
+            </section>
 
             <EntriesSection
               v-else-if="
@@ -180,21 +208,6 @@ const setHeaderInfoEl = (el: Element | ComponentPublicInstance | null) => {
               :accent-bg-class="sectionSettings.internships.bg"
               :role-text-class="sectionSettings.internships.text"
               :theme-color="themeColorFor('internships', 'sky')"
-            />
-
-            <GithubSection
-              v-else-if="section === 'github' && resumeView.github"
-              :resume="resumeView"
-              :title="labels.github"
-              :icon-class="sectionSettings.github.icon"
-              :dot-bg-class="sectionSettings.github.bg"
-              :text-class="sectionSettings.github.text"
-              :theme-color="themeColorFor('github', 'sky')"
-              :stars-label="labels.stars"
-              :contributions-label="labels.contributions"
-              :prs-label="labels.prs"
-              :issues-label="labels.issues"
-              :repositories-label="labels.repositories"
             />
 
             <AwardsSection

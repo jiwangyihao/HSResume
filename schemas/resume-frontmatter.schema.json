@@ -27,6 +27,15 @@
       "type": "array",
       "items": { "$ref": "#/$defs/ResumeLink" }
     },
+    "sectionOrder": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["overview", "internships", "awards", "projects", "games", "languages"]
+      },
+      "description": "板块顺序；overview 仅在打印时将个人信息、教育与开源贡献组合为等高双栏，屏幕布局保持瀑布流。"
+    },
     "summary": { "type": "string" },
     "education": {
       "type": "array",

@@ -95,12 +95,25 @@ const groupedAwards = computed<AwardGroup[]>(() => {
 
   return groups;
 });
+
+const toPrintedAward = (award: ResumeAward) => {
+  const divider = award.title.lastIndexOf(" - ");
+  const eventName = divider < 0 ? award.title : award.title.slice(0, divider);
+  const distinction = divider < 0 ? "" : award.title.slice(divider + 3);
+  return { title: award.title, date: award.date, eventName, distinction };
+};
+
+const printedAwards = computed(() => groupedAwards.value.map((group) => ({
+  main: toPrintedAward(group.main),
+  subs: group.subs.map(toPrintedAward),
+})));
+
 </script>
 
 <template>
   <section
     id="awards-section"
-    class="break-inside-avoid group/section waterfall-item col-span-1 md:col-start-2 print:col-start-auto relative"
+    class="break-inside-avoid group/section waterfall-item col-span-1 md:col-start-2 print:col-start-auto print:h-auto! relative"
     :class="{ 'z-50': isAwardsHovered }"
     :style="{ '--print-col-span': awardsPrintSpan }"
     @mouseenter="isAwardsHovered = true"
@@ -121,7 +134,7 @@ const groupedAwards = computed<AwardGroup[]>(() => {
       </template>
     </SectionHeader>
 
-    <div class="space-y-4">
+    <div class="space-y-4 print:hidden">
       <div
         v-for="(group, gIndex) in groupedAwards"
         :key="gIndex"
@@ -172,9 +185,6 @@ const groupedAwards = computed<AwardGroup[]>(() => {
               : `scale(${1 - (sIndex + 1) * 0.04})`,
             opacity: 1,
           }"
-          :class="{
-            'print:-mt-2! print:opacity-100! print:scale-100!': true,
-          }"
           @mouseenter="hoveredCardTitle = sub.title"
           @mouseleave="hoveredCardTitle = null"
           @focus="hoveredCardTitle = sub.title"
@@ -214,7 +224,7 @@ const groupedAwards = computed<AwardGroup[]>(() => {
               >
                 <div class="overflow-hidden">
                   <div
-                    class="text-xs text-gray-500 mt-0.5 transition-opacity duration-300 print:hidden"
+                    class="text-xs text-gray-500 mt-0.5 transition-opacity duration-300"
                     :class="{
                       'opacity-0': isAwardsHovered && !isCardHovered(sub.title),
                       'opacity-100':
@@ -230,5 +240,110 @@ const groupedAwards = computed<AwardGroup[]>(() => {
         </div>
       </div>
     </div>
+    <ol class="awards-print hidden print:grid" :style="{ '--honor-accent': themeColor }">
+      <li v-for="(group, index) in printedAwards" :key="index" class="honor-group">
+        <Markdown :source="group.main.eventName" tag="div" unwrap="p" class="honor-name inline-content" />
+        <div class="honor-details">
+          <Markdown
+            v-if="group.main.distinction"
+            :source="group.main.distinction"
+            tag="span"
+            unwrap="p"
+            class="honor-distinction inline-content"
+          />
+          <time class="honor-date">{{ group.main.date }}</time>
+        </div>
+        <ol v-if="group.subs.length" class="honor-subs">
+          <li v-for="sub in group.subs" :key="sub.title" class="honor-sub">
+            <Markdown :source="sub.eventName" tag="div" unwrap="p" class="honor-name inline-content" />
+            <div class="honor-details">
+              <Markdown
+                v-if="sub.distinction"
+                :source="sub.distinction"
+                tag="span"
+                unwrap="p"
+                class="honor-distinction inline-content"
+              />
+              <time class="honor-date">{{ sub.date }}</time>
+            </div>
+          </li>
+        </ol>
+      </li>
+    </ol>
+
   </section>
 </template>
+
+<style scoped>
+@media print {
+  .awards-print {
+    margin: 0;
+    padding: 1.25rem;
+    list-style: none;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    grid-template-rows: masonry;
+    align-items: start;
+    gap: 0.5rem 2rem;
+  }
+
+  .honor-group {
+    min-width: 0;
+    break-inside: avoid;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-gray-200);
+  }
+
+  .honor-name {
+    color: var(--color-gray-900);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-wrap: balance;
+  }
+
+  .honor-details {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.125rem;
+  }
+
+  .honor-distinction {
+    min-width: 0;
+    color: color-mix(in srgb, var(--honor-accent) 65%, black);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .honor-date {
+    margin-left: auto;
+    color: var(--color-gray-500);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .honor-subs {
+    margin: 0.5rem 0 0;
+    padding: 0 0 0 0.75rem;
+    border-left: 2px solid var(--color-gray-200);
+    list-style: none;
+  }
+
+  .honor-sub + .honor-sub {
+    margin-top: 0.375rem;
+  }
+
+  .honor-sub .honor-name,
+  .honor-sub .honor-distinction {
+    color: var(--color-gray-600);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+}
+</style>

@@ -33,9 +33,7 @@ github:
     - HIT-Fireworks
     - Lordly-Tech
 sectionOrder:
-  - profile
-  - education
-  - github
+  - overview
   - internships
   - awards
   - projects
@@ -106,7 +104,7 @@ internships:
       - 参与防劣化质量门禁与线上性能优化。
 work: []
 projects:
-  - printWidth: 70
+  - printWidth: 30
     period: "2026-05 至 至今"
     name: oh-my-pi (开源 Coding Agent)
     role: 主要贡献者
@@ -137,7 +135,151 @@ projects:
     links:
       - category: github
         url: https://github.com/can1357/oh-my-pi
-  - printWidth: 30
+  - printWidth: 70
+    period: "2025-8 至 2025-12"
+    name: 引导式 LLM 提取与 MILP 优化的旅行规划系统
+    role: 核心开发者
+    highlights:
+      - kind: split
+        domain: AiCOMP
+        value: 国一
+        category: award
+      - kind: text
+        label: Qwen
+        category: tech
+        icon: i-hugeicons-qwen
+      - kind: text
+        label: vLLM
+        category: tech
+      - kind: text
+        label: MILP
+        category: tech
+      - kind: text
+        label: HiGHS
+        category: tech
+    description:
+      - 将自然语言旅游需求转化为结构化可行行程的智能规划系统，获第七届全球校园人工智能算法精英大赛**全国一等奖（第二名）**。
+      - 采用**提取-规划双模态解耦架构**，LLM 负责语义理解与意图提取，MILP 求解器执行全局最优的时空资源分配。
+      - 构建**MILP 全局寻优 + 最小约束极速兜底双层规划架构**，在 Phase2/Medium/Human 三大测试集均获 85+ 至近满分。
+    responsibilities:
+      - 设计 LLM 信息提取模块，实现**基于动态 Schema 的引导式解码**、**多轨迹并行推理**及**层次化共识蒸馏**策略。
+      - 设计最小约束规划器技术方案，通过贪婪策略与动态松弛机制实现极端场景下的可行解兜底。
+      - 改进 MILP 规划器架构，优化**锚点感知空间剪枝**与**流转守恒约束建模**，提升求解效率与解质量。
+      - 负责全部模块的工程实现与现场答辩。
+  - printWidth: 70
+    period: "2024-10 至 2024-12"
+    name: 面向 UAV 场景的 LS-BO 增强多模态骨架动作识别
+    role: 核心开发者
+    highlights:
+      - kind: split
+        domain: AiCOMP
+        value: 国一
+        category: award
+      - kind: text
+        label: PyTorch
+        category: tech
+        icon: i-simple-icons-pytorch
+      - kind: text
+        label: GCN
+        category: tech
+      - kind: text
+        label: Transformer
+        category: tech
+    description:
+      - 面向 UAV-Human 数据集的骨架动作识别多模型集成解决方案，获第六届全球校园人工智能算法精英大赛**全国一等奖（第二名）**。
+      - 提出**最小二乘增强贝叶斯优化权重融合**策略，通过伪逆法最小二乘求解获取全局最优初始权重，再以高斯过程贝叶斯优化进行微调。
+      - 集成 Skeleton-MixFormer、FR-Head、SiT-MLP、BlockGCN、CHASE 五类先进模型，融合 Transformer 长距离时空依赖建模与 GCN 局部拓扑特征提取能力。
+    responsibilities:
+      - 负责 Skeleton-MixFormer、FR-Head、SiT-MLP、BlockGCN、CHASE 五类论文算法的复现与工程实现。
+      - 扩展各模型的 Feeder 类以支持 UAV-Human 数据集，完成图结构与 Hierarchical Graph 的适配优化。
+      - 实现最小二乘增强贝叶斯优化权重融合核心算法，完成加权融合模型的训练与推理。
+  - printWidth: 42
+    period: "2025-12 至 2026-05"
+    name: 稷下 JiXia - 面向碎片化学习的 AI 学习辅助系统
+    role: 队长 / 技术负责人
+    highlights:
+      - kind: split
+        domain: 软创
+        value: 国三
+        category: award
+      - kind: text
+        label: Flutter
+        category: tech
+        icon: i-simple-icons-flutter
+      - kind: text
+        label: Bun/Elysia
+        category: tech
+      - kind: text
+        label: Agentic RAG
+        category: tech
+        icon: i-mingcute-ai-fill
+      - kind: text
+        label: BullMQ
+        category: tech
+    description:
+      - 面向碎片化学习场景设计 AI 学习辅助系统，将历史知识内容、多智能体讨论、互动创作、学习沉淀与穿戴端提醒整合为连续学习闭环，获第十九届全国大学生软件创新大赛**全国三等奖**。
+      - 采用 Flutter 跨端客户端与 Bun/Elysia 云端服务，结合 PostgreSQL/pgvector、Redis/BullMQ、Agentic Retrieval/RAG 和受控 DSL 渲染，支撑内容生成、知识检索、异步任务与端云协同。
+    responsibilities:
+      - 作为队长负责项目规划、技术路线、整体架构设计与核心代码开发，统一移动端、服务端、数据层与 AI 能力边界。
+      - 设计端云协同架构，将移动端主应用、穿戴端轻应用、后端 API、异步队列、向量检索与内容生成链路整合为可演示、可验收的软件作品。
+      - 实现基于 Agentic Retrieval 与 RAG 的知识生产链路，覆盖事件抓取、证据归档、人物与知识实体建模、向量化检索和学习内容生成。
+      - 设计受控 DSL、Schema 校验与动作白名单机制，将生成式交互限制在安全边界内，降低自由生成 UI 带来的不可控风险。
+      - 建立单元、功能、系统三级验证口径，覆盖接口契约、数据持久化、异步队列恢复、跨端一致性与受控渲染等关键边界。
+  - printWidth: 58
+    period: "2024-07 至 至今"
+    name: Saturn AI (类 MoE 混合专家架构农业智能体)
+    role: 技术负责人
+    highlights:
+      - kind: svg
+        url: https://img.shields.io/github/stars/jiwangyihao/Saturn-Lib
+        alt: GitHub Stars
+        category: metric
+      - kind: split
+        domain: iCAN
+        value: 国二
+        category: award
+      - kind: text
+        label: 国家级大创项目
+        category: award
+      - kind: split
+        domain: CCF SAC
+        value: 国三
+        category: award
+    description:
+      - 面向农业知识领域的类 MoE 架构智能体，围绕“感知-认知-行动”闭环，融合卫星遥感/物联网/气象等多源异构数据，支撑农业数字孪生与全周期决策。
+      - 基于自主检索增强思维链（RACoT）与核心-细胞知识库结构，实现高置信度问答、风险预警与按图承保/定损。
+      - 获评**国家级大创项目**。
+    responsibilities:
+      - 设计整体技术架构与多源细胞知识库，集成 RAG。
+      - 牵头多模态数据管线与数字孪生方案落地，打通遥感、物联网、气象与农事记录的融合。
+      - 设计 RACoT + 核心-细胞知识库推理路线，构建按图承保、按图定损的保险科技业务闭环。
+      - 带队参加第十八届 iCAN 大学生创新创业大赛，负责物料设计、视频制作、答辩等关键环节，获**全国二等奖**。
+    links:
+      - category: website
+        url: https://saturn.jwyihao.top
+      - category: github
+        url: https://github.com/jiwangyihao/Saturn-Lib
+  - printWidth: 58
+    period: "2023-11 至 2024-06"
+    name: 小希全场景助盲具身智能体
+    role: 技术负责人
+    description:
+      - 面向视障用户的全场景助盲具身智能体，聚焦场景理解与智能交互。
+      - 获第七届全国大学生 5 分钟科研英语演讲比赛**全国一等奖**。
+      - 获校级“大一年度项目计划”**一等奖**。
+    highlights:
+      - kind: split
+        domain: 5MRP
+        value: 国一
+        category: award
+      - kind: split
+        domain: 年度项目
+        value: 一等
+        category: award
+    responsibilities:
+      - 负责整体技术架构设计及大模型部分的开发与实现。
+      - 牵头项目落地与答辩，推进获奖成果。
+  - printWidth: 42
     period: "2024-09 至 至今"
     name: GXDE OS (Gorgeous eXtended Deepin Environment)
     role: 核心开发者
@@ -178,7 +320,7 @@ projects:
         url: https://www.gxde.top
       - category: gitee
         url: https://gitee.com/GXDE-OS
-  - printWidth: 30
+  - printWidth: 58
     period: "2020-08 至 至今"
     name: 星火计划-星火应用商店 (Spark Store)
     role: 项目发起成员 / 核心开发者
@@ -210,97 +352,7 @@ projects:
         url: https://www.spark-app.store
       - category: gitee
         url: https://gitee.com/spark-store-project/spark-store
-  - printWidth: 70
-    period: "2025-12 至 2026-05"
-    name: 稷下 JiXia - 面向碎片化学习的 AI 学习辅助系统
-    role: 队长 / 技术负责人
-    highlights:
-      - kind: split
-        domain: 软创
-        value: 国三
-        category: award
-      - kind: text
-        label: Flutter
-        category: tech
-        icon: i-simple-icons-flutter
-      - kind: text
-        label: Bun/Elysia
-        category: tech
-      - kind: text
-        label: Agentic RAG
-        category: tech
-        icon: i-mingcute-ai-fill
-      - kind: text
-        label: BullMQ
-        category: tech
-    description:
-      - 面向碎片化学习场景设计 AI 学习辅助系统，将历史知识内容、多智能体讨论、互动创作、学习沉淀与穿戴端提醒整合为连续学习闭环，获第十九届全国大学生软件创新大赛**全国三等奖**。
-      - 采用 Flutter 跨端客户端与 Bun/Elysia 云端服务，结合 PostgreSQL/pgvector、Redis/BullMQ、Agentic Retrieval/RAG 和受控 DSL 渲染，支撑内容生成、知识检索、异步任务与端云协同。
-    responsibilities:
-      - 作为队长负责项目规划、技术路线、整体架构设计与核心代码开发，统一移动端、服务端、数据层与 AI 能力边界。
-      - 设计端云协同架构，将移动端主应用、穿戴端轻应用、后端 API、异步队列、向量检索与内容生成链路整合为可演示、可验收的软件作品。
-      - 实现基于 Agentic Retrieval 与 RAG 的知识生产链路，覆盖事件抓取、证据归档、人物与知识实体建模、向量化检索和学习内容生成。
-      - 设计受控 DSL、Schema 校验与动作白名单机制，将生成式交互限制在安全边界内，降低自由生成 UI 带来的不可控风险。
-      - 建立单元、功能、系统三级验证口径，覆盖接口契约、数据持久化、异步队列恢复、跨端一致性与受控渲染等关键边界。
-  - printWidth: 70
-    period: "2024-10 至 2024-12"
-    name: 面向 UAV 场景的 LS-BO 增强多模态骨架动作识别
-    role: 核心开发者
-    highlights:
-      - kind: split
-        domain: AiCOMP
-        value: 国一
-        category: award
-      - kind: text
-        label: PyTorch
-        category: tech
-        icon: i-simple-icons-pytorch
-      - kind: text
-        label: GCN
-        category: tech
-      - kind: text
-        label: Transformer
-        category: tech
-    description:
-      - 面向 UAV-Human 数据集的骨架动作识别多模型集成解决方案，获第六届全球校园人工智能算法精英大赛**全国一等奖（第二名）**。
-      - 提出**最小二乘增强贝叶斯优化权重融合**策略，通过伪逆法最小二乘求解获取全局最优初始权重，再以高斯过程贝叶斯优化进行微调。
-      - 集成 Skeleton-MixFormer、FR-Head、SiT-MLP、BlockGCN、CHASE 五类先进模型，融合 Transformer 长距离时空依赖建模与 GCN 局部拓扑特征提取能力。
-    responsibilities:
-      - 负责 Skeleton-MixFormer、FR-Head、SiT-MLP、BlockGCN、CHASE 五类论文算法的复现与工程实现。
-      - 扩展各模型的 Feeder 类以支持 UAV-Human 数据集，完成图结构与 Hierarchical Graph 的适配优化。
-      - 实现最小二乘增强贝叶斯优化权重融合核心算法，完成加权融合模型的训练与推理。
-  - printWidth: 70
-    period: "2025-8 至 2025-12"
-    name: 引导式 LLM 提取与 MILP 优化的旅行规划系统
-    role: 核心开发者
-    highlights:
-      - kind: split
-        domain: AiCOMP
-        value: 国一
-        category: award
-      - kind: text
-        label: Qwen
-        category: tech
-        icon: i-hugeicons-qwen
-      - kind: text
-        label: vLLM
-        category: tech
-      - kind: text
-        label: MILP
-        category: tech
-      - kind: text
-        label: HiGHS
-        category: tech
-    description:
-      - 将自然语言旅游需求转化为结构化可行行程的智能规划系统，获第七届全球校园人工智能算法精英大赛**全国一等奖（第二名）**。
-      - 采用**提取-规划双模态解耦架构**，LLM 负责语义理解与意图提取，MILP 求解器执行全局最优的时空资源分配。
-      - 构建**MILP 全局寻优 + 最小约束极速兜底双层规划架构**，在 Phase2/Medium/Human 三大测试集均获 85+ 至近满分。
-    responsibilities:
-      - 设计 LLM 信息提取模块，实现**基于动态 Schema 的引导式解码**、**多轨迹并行推理**及**层次化共识蒸馏**策略。
-      - 设计最小约束规划器技术方案，通过贪婪策略与动态松弛机制实现极端场景下的可行解兜底。
-      - 改进 MILP 规划器架构，优化**锚点感知空间剪枝**与**流转守恒约束建模**，提升求解效率与解质量。
-      - 负责全部模块的工程实现与现场答辩。
-  - printWidth: 70
+  - printWidth: 58
     period: "2024-04 至 2025-06"
     name: Newcar (JavaScript 生态的现代动画引擎)
     role: 核心开发者
@@ -329,41 +381,7 @@ projects:
     links:
       - category: github
         url: https://github.com/dromara/newcar
-  - printWidth: 30
-    period: "2024-07 至 至今"
-    name: Saturn AI (类 MoE 混合专家架构农业智能体)
-    role: 技术负责人
-    highlights:
-      - kind: svg
-        url: https://img.shields.io/github/stars/jiwangyihao/Saturn-Lib
-        alt: GitHub Stars
-        category: metric
-      - kind: split
-        domain: iCAN
-        value: 国二
-        category: award
-      - kind: text
-        label: 国家级大创项目
-        category: award
-      - kind: split
-        domain: CCF SAC
-        value: 国三
-        category: award
-    description:
-      - 面向农业知识领域的类 MoE 架构智能体，围绕“感知-认知-行动”闭环，融合卫星遥感/物联网/气象等多源异构数据，支撑农业数字孪生与全周期决策。
-      - 基于自主检索增强思维链（RACoT）与核心-细胞知识库结构，实现高置信度问答、风险预警与按图承保/定损。
-      - 获评**国家级大创项目**。
-    responsibilities:
-      - 设计整体技术架构与多源细胞知识库，集成 RAG。
-      - 牵头多模态数据管线与数字孪生方案落地，打通遥感、物联网、气象与农事记录的融合。
-      - 设计 RACoT + 核心-细胞知识库推理路线，构建按图承保、按图定损的保险科技业务闭环。
-      - 带队参加第十八届 iCAN 大学生创新创业大赛，负责物料设计、视频制作、答辩等关键环节，获**全国二等奖**。
-    links:
-      - category: website
-        url: https://saturn.jwyihao.top
-      - category: github
-        url: https://github.com/jiwangyihao/Saturn-Lib
-  - printWidth: 70
+  - printWidth: 50
     period: "2024-08 至 至今"
     name: Lordly·阅读 (手环在线阅读工具)
     role: 发起人 / 主要开发者
@@ -410,26 +428,8 @@ projects:
         url: https://github.com/Lordly-Tech/LordlyRead
       - category: github
         url: https://github.com/jiwangyihao/source-j-legado
-  - period: "2023-11 至 2024-06"
-    name: 小希全场景助盲具身智能体
-    role: 技术负责人
-    description:
-      - 面向视障用户的全场景助盲具身智能体，聚焦场景理解与智能交互。
-      - 获第七届全国大学生 5 分钟科研英语演讲比赛**全国一等奖**。
-      - 获校级“大一年度项目计划”**一等奖**。
-    highlights:
-      - kind: split
-        domain: 5MRP
-        value: 国一
-        category: award
-      - kind: split
-        domain: 年度项目
-        value: 一等
-        category: award
-    responsibilities:
-      - 负责整体技术架构设计及大模型部分的开发与实现。
-      - 牵头项目落地与答辩，推进获奖成果。
-  - period: "2022-10 至 至今"
+  - printWidth: 50
+    period: "2022-10 至 至今"
     name: 应用配置 (App Config)
     role: 发起人 / 主要开发者
     description:
@@ -489,7 +489,7 @@ awardsFoldingRules:
   unimportantTitlePattern: (校级|省级|区域|创意组|regional|university|creative group)
   # 若奖项标题匹配该正则，将被视为“重要”，会开始一个新的可见分组。
   importantTitlePattern: (全国|全球|international|national|global)
-awardsPrintWidth: 70
+awardsPrintWidth: 100
 awards:
   - date: 2026-05
     title: 第十九届全国大学生软件创新大赛 - 全国三等奖

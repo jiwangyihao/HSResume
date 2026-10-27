@@ -92,9 +92,7 @@ languages:
   - name: 日语
     certificate: N2
 sectionOrder:
-  - profile
-  - education
-  - github
+  - overview
   - awards
   - projects
   - games
